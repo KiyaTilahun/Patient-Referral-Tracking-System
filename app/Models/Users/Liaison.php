@@ -10,6 +10,12 @@ class Liaison extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'liaison_officer',
+        'phone_number',
+        'hospital_id'
+    ];
+    
 
     public function liaison(){
         return $this->belongsTo(Liaison::class);

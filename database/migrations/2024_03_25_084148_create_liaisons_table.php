@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('liaison_officer');
             $table->string('phone_number');
-            $table->foreignId('hospital_id');
+            $table->foreignId('hospital_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

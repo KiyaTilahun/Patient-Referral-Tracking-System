@@ -10,6 +10,11 @@ class Department extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'name',
+    ];
+
+    
     public function hospitals(){
         return $this->belongsToMany(Hospital::class)->using(
             DepartmentHospital::class )->withPivot('active')->withTimestamps();

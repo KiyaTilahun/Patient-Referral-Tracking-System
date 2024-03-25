@@ -9,7 +9,9 @@ class Type extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [
+        'name',
+    ];
     public function hospitals()
     {
         return  $this->hasMany(Hospital::class);

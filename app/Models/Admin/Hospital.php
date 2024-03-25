@@ -12,7 +12,20 @@ class Hospital extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'phone',
+        'zone',
+        'woreda',
+        'country',
+        'email',
+        'status',
+        'type_id',
+        'region_id'
+    ];
 
+
+    // relationship functions
     public function users()
     {
         $this->hasMany(User::class);
