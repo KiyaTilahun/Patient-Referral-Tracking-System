@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\HospitalController;
 use App\Livewire\Dashboard;
+use App\Livewire\Hospital\Register;
+use App\Models\Admin\Hospital;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +21,9 @@ Route::get('/', function(){
 
     return redirect('/login');
 });
+Route::get('/registerhealth',[HospitalController::class,'index'])->name('registerhealth');
+// Route::get('/registerhealth',Register::class)->name('registerhealth');
+
 
 Route::get('dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])

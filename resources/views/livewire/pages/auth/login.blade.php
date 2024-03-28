@@ -23,9 +23,17 @@ new #[Layout('layouts.guest')] class extends Component
 
         $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
     }
+   
 }; ?>
 
+
 <div>
+    <div class="toast toast-top toast-end">
+        
+        <div class="alert alert-success">
+          <a href="{{route('registerhealth')}}">Register Health Centre</a>
+        </div>
+      </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
