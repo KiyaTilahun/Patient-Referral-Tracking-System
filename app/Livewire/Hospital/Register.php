@@ -3,11 +3,13 @@
 namespace App\Livewire\Hospital;
 
 use App\Models\Admin\Department;
+use App\Models\Admin\Hospital;
 use App\Models\Admin\Region;
 use App\Models\Users\Liaison;
 
 use App\Models\Admin\Type;
 use App\Models\Admin\Zone;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
@@ -30,13 +32,18 @@ class Register extends Component
     public $email;
     public $status = 0;
     public $type;
-    public $region;
+public $departmentlist=[];
     public $file;
 
    public $phone_number;
    public $liaison_officer;
    public $liaisonemail;
 
+public $validated;
+public $liasionvalidation;
+
+
+public $registeredEmail;
 
 
 
@@ -53,12 +60,19 @@ class Register extends Component
     }
     public function mount(){
         $this->currentStep = 1;
+        $this->registeredEmail;
     }
 
     public function increaseStep(){
         $this->resetErrorBag();
         // dd("hello");
-        $validated=$this->validate();
+        if($this->currentStep==1){
+            $this->validated=$this->validate();
+        }
+        else{
+            $this->liasionvalidation=$this->validate();
+
+        }
         $this->resetValidation();
         // $this->reset();
     $this->currentStep++;
@@ -85,11 +99,12 @@ class Register extends Component
                'name'=>'required|unique:hospitals',
                 'selectedregion'=>'required|string',
                 'email'=>'required|unique:hospitals',
-                'phone'=>'required',
+                'phone'=>'required|numeric',
+                'zone'=>'required',
                 'selectedregion'=>'required',
                 'woreda'=>'required|numeric',
                 'type'=>'required',
-                // 'file'=>'mimes:pdf|max:2048',
+                'file'=>'required|mimes:pdf|max:2048',
 
           
           ];}
@@ -109,10 +124,44 @@ class Register extends Component
     public function register()
     {
         // ...
-        $this->validate();
+        // $this->validate();
+        $extension=$this->validated['file']->getClientOriginalExtension();
+        $namereplace=str_replace(' ', '_', $this->validated['name']);
+        $name=$namereplace.'_'.now()->format('Ymd').'.'.$extension;
+
+        $this->validated['file']->storeAs('admin/register',$name,'public');
+       
+        // dd($name);
+        $this->validated['file']=$name;
+        
+
+$this->registeredEmail=$this->validated['email'];
+
+        $hospital = Hospital::create([
+            'name' => $this->validated['name'],
+            'region_id' => $this->validated['selectedregion'],
+            'filename' => $this->validated['file'],
+            'email' => $this->validated['email'],
+            'phone' => '+251'.$this->validated['phone'],
+            'zone' => $this->validated['zone'],
+            'woreda' => $this->validated['woreda'],
+            'type_id' => $this->validated['type']
+           , 
+        ]);
+
+
+
+
+
+$this->currentStep=4;
         session()->flash('status', 'Registration was  successfully check your email for approval.');
- 
-        $this->redirect('/login');
+       
+      
+
+
+    }
+    public function logout(){
+   $this->redirect('/login');
     }
     public function updatedSelectedRegion($region_id)
     {

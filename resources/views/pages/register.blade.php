@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html >
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +24,7 @@
      
         
            
-        <div class="fixed">
+        <div class="fixed left-2 top-2">
            @include('utils.theme')
   
                 <!-- this hidden checkbox controls the state -->

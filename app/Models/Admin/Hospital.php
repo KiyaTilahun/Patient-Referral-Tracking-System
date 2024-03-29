@@ -21,7 +21,8 @@ class Hospital extends Model
         'email',
         'status',
         'type_id',
-        'region_id'
+        'region_id',
+        'filename'
     ];
 
 

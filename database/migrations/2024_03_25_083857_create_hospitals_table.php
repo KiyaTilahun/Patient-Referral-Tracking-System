@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('woreda')->nullable();
             $table->string('country')->default('ETHIOPIA');
             $table->string('email')->unique();
+            $table->string('filename')->default('no file');
             $table->boolean('status')->default(0);
             $table->timestamps();
             $table->foreignId('type_id')->constrained();
