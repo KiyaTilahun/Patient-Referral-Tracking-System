@@ -7,7 +7,7 @@
         <div class="container max-w-screen-lg mx-auto pt-20 relative">
             <div class="absolute top-10 left-1/2  flex flex-col items-center">
                 <div>Step</div>
-                <div class="w-6  h-6 rounded-full bg-lime-400 text-white text-center ">{{ $currentStep }}</div>
+                <div class="w-8  h-8 rounded-full bg-[#00ca92] text-white text-center flex justify-center items-center"><div>{{ $currentStep }}</div></div>
              
              
             </div>
@@ -40,7 +40,7 @@
                                         @error('name')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
@@ -61,7 +61,7 @@
                                         @error('phone')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
@@ -73,21 +73,21 @@
                                                 <span class="label-text">Center Email</span>
 
                                             </div>
-                                            <input type="text" placeholder="email"
+                                            <input type="email" placeholder="email"
                                                 class="input input-bordered w-full max-w-xs" wire:model='email' />
 
                                         </label>
                                         @error('email')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
                                     </div>
 
 
-                                    <div class="md:col-span-2">
+                                    <div class="md:col-span-3">
                                         <label class="form-control w-full max-w-xs">
                                             <div class="label">
                                                 <span class="label-text">Region</span>
@@ -103,7 +103,7 @@
                                         @error('selectedregion')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
@@ -134,7 +134,7 @@
                                         @error('zone')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
@@ -152,7 +152,7 @@
                                         @error('woreda')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
@@ -176,12 +176,31 @@
                                         @error('type')
                                             
                                       
-                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
                                             <span class="font-medium">{{$message}}</span> 
                                           </div>
                                           @enderror
                                     </div>
-
+                                    <div  class="md:col-span-5 w-full">
+                                        <label class="form-control w-full ">
+                                            <div class="label">
+                                              <span class="label-text">Attach All the necessary Files as one pdf file
+                                                <span class="badge badge-accent badge-outline">Max 2mb</span>
+                                             </span>
+                                           
+                                             
+                                            </div>
+                                            <input type="file" class="file-input file-input-bordered w-full " accept=".pdf" wire:model="file"/>
+                                           
+                                          </label>
+                                          @error('file')
+                                            
+                                      
+                                          <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
+                                              <span class="font-medium">{{$message}}</span> 
+                                            </div>
+                                            @enderror
+                                    </div>
 
                                     <div wire:ignore class="md:col-span-5 w-full">
                                         <label class="form-control w-full ">
@@ -198,12 +217,18 @@
                                             </select>
                                         </label>
                                     </div>
+                                   
 
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
+
+
+
+
+
                 @if ($currentStep == 2)
                     <div class=" rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
@@ -221,9 +246,16 @@
 
                                             </div>
                                             <input type="text" placeholder="name"
-                                                class="input input-bordered w-full max-w-xs" />
+                                                class="input input-bordered w-full max-w-xs" wire:model='liaison_officer' />
 
                                         </label>
+                                        @error('liaison_officer')
+                                            
+                                      
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
+                                            <span class="font-medium">{{$message}}</span> 
+                                          </div>
+                                          @enderror
                                     </div>
                                     <div class="md:col-span-3">
                                         <label class="form-control w-full max-w-xs">
@@ -234,23 +266,19 @@
                                             <label class="input input-bordered flex items-center ">
                                                 +251
                                                 <input type="text" pattern="[0-9]{9}" maxlength=9 minlength="9"
-                                                    class="grow outline-none" placeholder="Phone Number" />
+                                                    class="grow outline-none" placeholder="Phone Number" wire:model='phone_number' />
                                             </label>
 
                                         </label>
+                                        @error('phone_number')
+                                            
+                                      
+                                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
+                                            <span class="font-medium">{{$message}}</span> 
+                                          </div>
+                                          @enderror
                                     </div>
 
-                                    <div class="md:col-span-2">
-                                        <label class="form-control w-full ">
-                                            <div class="label">
-                                                <span class="label-text">Officer  Email</span>
-
-                                            </div>
-                                            <input type="text" placeholder="email"
-                                                class="input input-bordered w-full max-w-xs" />
-
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +297,7 @@
                     <button type="button" class="btn btn-active" wire:click="decreaseStep()" >Back</button>
                 @endif
 
-                @if ($currentStep == 1  )
+                @if ($currentStep == 1 ||$currentStep == 2  )
                     <button type="button" class="btn btn-md btn-success" wire:click="increaseStep" >Next
                          <div
                       wire:loading>
@@ -277,7 +305,7 @@
                   </div>
                 </button>
                 @endif
-                @if ($currentStep == 2)
+                @if ($currentStep == 3)
                 <button type="submit" class="btn btn-md btn-primary">Submit</button>
            @endif
             </div>

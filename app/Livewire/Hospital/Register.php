@@ -4,17 +4,20 @@ namespace App\Livewire\Hospital;
 
 use App\Models\Admin\Department;
 use App\Models\Admin\Region;
+use App\Models\Users\Liaison;
+
 use App\Models\Admin\Type;
 use App\Models\Admin\Zone;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\WithFileUploads;
 
 use function Livewire\Volt\layout;
 
 class Register extends Component
 {
 
-
+    use WithFileUploads;
 
     public $selectedregion = null;
     public $zones;
@@ -28,8 +31,12 @@ class Register extends Component
     public $status = 0;
     public $type;
     public $region;
-   public $liaisonname;
-   public $phoneonname;
+    public $file;
+
+   public $phone_number;
+   public $liaison_officer;
+   public $liaisonemail;
+
 
 
 
@@ -52,7 +59,8 @@ class Register extends Component
         $this->resetErrorBag();
         // dd("hello");
         $validated=$this->validate();
-        $this->reset();
+        $this->resetValidation();
+        // $this->reset();
     $this->currentStep++;
    
 
@@ -72,7 +80,7 @@ class Register extends Component
     {
 
        
-          
+          if($this->currentStep==1){
             return[
                'name'=>'required|unique:hospitals',
                 'selectedregion'=>'required|string',
@@ -80,9 +88,18 @@ class Register extends Component
                 'phone'=>'required',
                 'selectedregion'=>'required',
                 'woreda'=>'required|numeric',
-                'type'=>'required'
+                'type'=>'required',
+                // 'file'=>'mimes:pdf|max:2048',
+
           
-          ];
+          ];}
+          else{
+            return[
+                'phone_number'=>'required|unique:liaisons',
+                'liaison_officer'=>'required|string',
+
+          
+          ];}
         
        
         
@@ -92,7 +109,7 @@ class Register extends Component
     public function register()
     {
         // ...
- 
+        $this->validate();
         session()->flash('status', 'Registration was  successfully check your email for approval.');
  
         $this->redirect('/login');

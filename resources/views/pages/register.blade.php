@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html >
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,12 +24,18 @@
      
         
            
+        <div class="fixed">
+           @include('utils.theme')
+  
+                <!-- this hidden checkbox controls the state -->
+            
+        </div>
 
                
                 <div class="h-screen flex justify-center">
                     <div class="container ">
                               <div class="col-md-6 offset-md-3">
-                                  <h1>Multi Step form</h1><hr>
+                                  
                                   <livewire:hospital.register>
                               </div>
                         
@@ -37,6 +43,22 @@
                 </div>
 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    const themeToggle = document.getElementById('themeToggle');
+                    const html = document.querySelector('html');
+            
+                    themeToggle.addEventListener('change', () => {
+                        if (themeToggle.checked) {
+                            html.setAttribute('data-theme', 'light');
+                            html.classList.add('light');
+                            html.classList.remove('dark');
+                        } else {
+                            html.setAttribute('data-theme', 'dark');
+                            html.classList.add('dark');
+                            html.classList.remove('light');
+                        }
+                    });
+                </script>
     </body>
 </html>
 
