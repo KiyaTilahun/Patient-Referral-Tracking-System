@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HospitalController;
 use App\Livewire\Dashboard;
+use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
 use App\Models\Admin\Hospital;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,12 @@ Route::get('dashboard', Dashboard::class)
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+
+    // live wire routes
+
+    Route::get('/pending', PendingIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('pending');
 
 require __DIR__.'/auth.php';

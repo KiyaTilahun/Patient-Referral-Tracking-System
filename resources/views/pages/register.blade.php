@@ -24,13 +24,14 @@
      
         
            
-        <div class="fixed left-2 top-2">
+        <div class="fixed right-2 bottom-2">
            @include('utils.theme')
   
                 <!-- this hidden checkbox controls the state -->
             
         </div>
 
+        
                
                 <div class="h-screen flex justify-center">
                     <div class="container ">
