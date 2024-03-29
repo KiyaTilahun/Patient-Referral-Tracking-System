@@ -6,6 +6,7 @@ use App\Models\Admin\Department;
 use App\Models\Admin\Hospital;
 use App\Models\Admin\Region;
 use App\Models\Users\Liaison;
+use Illuminate\Support\Str;
 
 use App\Models\Admin\Type;
 use App\Models\Admin\Zone;
@@ -99,7 +100,7 @@ public $registeredEmail;
                'name'=>'required|unique:hospitals',
                 'selectedregion'=>'required|string',
                 'email'=>'required|unique:hospitals',
-                'phone'=>'required|numeric',
+                'phone'=>'required|min:9|numeric',
                 'zone'=>'required',
                 'selectedregion'=>'required',
                 'woreda'=>'required|numeric',
@@ -110,7 +111,7 @@ public $registeredEmail;
           ];}
           else{
             return[
-                'phone_number'=>'required|unique:liaisons',
+                'phone_number'=>'required|unique:liaisons|min:9|numeric',
                 'liaison_officer'=>'required|string',
 
           
@@ -138,7 +139,9 @@ public $registeredEmail;
 $this->registeredEmail=$this->validated['email'];
 
         $hospital = Hospital::create([
-            'name' => $this->validated['name'],
+       
+          
+            'name' =>   Str::of(Str::replace(' ', '_', $this->validated['name']))->upper(),
             'region_id' => $this->validated['selectedregion'],
             'filename' => $this->validated['file'],
             'email' => $this->validated['email'],

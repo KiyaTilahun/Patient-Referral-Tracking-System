@@ -183,7 +183,7 @@
 
                                                 </div>
                                                 <input type="number" placeholder="Type here"
-                                                    class="input input-bordered w-full max-w-xs" min="1"
+                                                    class="input input-bordered w-full max-w-xs" min="1" max="20"
                                                     wire:model='woreda' />
 
                                             </label>
