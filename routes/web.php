@@ -40,5 +40,9 @@ Route::view('profile', 'profile')
     Route::get('/pending', PendingIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('pending');
+    Route::get('/healthcenters/all', PendingIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('healthcenters.all');
+
 
 require __DIR__.'/auth.php';

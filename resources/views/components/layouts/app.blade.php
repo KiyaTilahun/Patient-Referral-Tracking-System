@@ -36,7 +36,7 @@
 
 
 
-{{-- 
+
             <script>
                 const themeToggle = document.getElementById('themeToggle');
                 const html = document.querySelector('html');
@@ -52,7 +52,7 @@
                         html.classList.remove('light');
                     }
                 });
-            </script> --}}
+            </script>
 
             
             @livewireScripts

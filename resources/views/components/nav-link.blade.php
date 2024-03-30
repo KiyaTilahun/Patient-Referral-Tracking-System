@@ -8,6 +8,6 @@ $classes = ($active ?? false)
 
 
 
-<a {{ $attributes->merge(['class' => $classes]) }} >
+<a {{ $attributes->merge(['class' => $classes]) }} wire:navigate>
     {{$slot}}
  </a>
