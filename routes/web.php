@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\HospitalController;
 use App\Livewire\Dashboard;
+use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
+use App\Mail\RegisterEmail;
 use App\Models\Admin\Hospital;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +30,7 @@ Route::get('/registerhealth',[HospitalController::class,'index'])->name('registe
 
 
 Route::get('dashboard', Dashboard::class)
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified','role:superadmin'])
     ->name('dashboard');
 
 Route::view('profile', 'profile')
@@ -40,9 +43,13 @@ Route::view('profile', 'profile')
     Route::get('/pending', PendingIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('pending');
-    Route::get('/healthcenters/all', PendingIndex::class)
+    Route::get('/centers/all', CenterIndex::class)
     ->middleware(['auth', 'verified'])
-    ->name('healthcenters.all');
+    ->name('centers.all');
 
+    // Route::get(/rolepermission,)
+// Route::get('/contact',function(){
+//     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));
+// });
 
 require __DIR__.'/auth.php';

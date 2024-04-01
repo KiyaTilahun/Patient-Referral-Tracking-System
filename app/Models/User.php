@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Admin\Region;
+use App\Models\Admin\Zone;
 use App\Models\Users\Doctor;
 use App\Models\Users\Liaison;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,5 +55,9 @@ class User extends Authenticatable
     }
     public function liaisons(){
         return $this->hasMany(Liaison::class);
+    }
+    public function zone(){
+        return $this->hasOneThrough(Zone::class,Region::class);
+
     }
 }

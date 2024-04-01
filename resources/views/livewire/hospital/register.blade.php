@@ -174,7 +174,7 @@
                                                             <option value="">No zone</option>
                                                         @else
                                                             @foreach ($zones as $zone)
-                                                                <option value="{{ $zone->id }}">{{ $zone->name }}
+                                                                <option value="{{ $zone->name }}">{{ $zone->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endif

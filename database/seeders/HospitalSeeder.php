@@ -28,7 +28,7 @@ class HospitalSeeder extends Seeder
 // super admin hospital
 
 
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < 20; $i++) {
         Hospital::create([
             'name' => $faker->unique()->company . ' Hospital',
             'phone' => $faker->phoneNumber(),
@@ -37,7 +37,7 @@ class HospitalSeeder extends Seeder
             'region_id' => $regions->random(),
             'country' => 'ETHIOPIA',
             'woreda' => '1',
-            'zone' => '2',
+            'zone' => 'other',
             'remember_token' => Hash::make('password') // Temporary placeholder for the remember_token
         ]);
     }
