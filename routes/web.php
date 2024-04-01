@@ -5,6 +5,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
+use App\Livewire\RolePermission\RpIndex;
 use App\Mail\RegisterEmail;
 use App\Models\Admin\Hospital;
 use Illuminate\Support\Facades\Mail;
@@ -47,6 +48,9 @@ Route::view('profile', 'profile')
     ->middleware(['auth', 'verified'])
     ->name('centers.all');
 
+    Route::get('/rolepermission', RpIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('rolepermission');
     // Route::get(/rolepermission,)
 // Route::get('/contact',function(){
 //     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));
