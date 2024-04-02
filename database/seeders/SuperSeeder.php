@@ -43,6 +43,6 @@ class SuperSeeder extends Seeder
             'password' => Hash::make('12345678'), // Replace 'your_password_here' with the desired password
             // Assuming you have a column named 'role' to store user roles
             'remember_token' => Str::random(10),
-        ])->assignRole('admin');
+        ])->assignRole('doctor');
     }
 }

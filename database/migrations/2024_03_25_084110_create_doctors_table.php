@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->foreignId('department_id')->constrained();
             $table->foreignId('hospital_id')->constrained();

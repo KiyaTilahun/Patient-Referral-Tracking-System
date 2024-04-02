@@ -25,4 +25,18 @@ class EmailController extends Controller
    dd($response);
 
   }
+
+  public function sendmaildoctor($doctor){
+
+
+    $password=Str::random(10);
+    // dd(now());
+   $user=User::create(
+    ['name'=>$doctor->name,'email'=>$doctor->email,'email_verified_at'=> now(),'hospital_id'=>$doctor->hospital_id,'password'=>Hash::make($password)]
+   )->assignRole('doctor');
+   
+   $response=Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
+   dd($response);
+
+  }
 }

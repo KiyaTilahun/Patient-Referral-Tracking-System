@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
+        "owenvoke/blade-fontawesome": "^2.6",
         "robsontenorio/mary": "^1.26",
         "spatie/laravel-permission": "^6.4"
     },

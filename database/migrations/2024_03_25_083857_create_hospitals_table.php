@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('country')->default('ETHIOPIA');
             $table->string('email')->unique();
             $table->string('filename')->default('no file');
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
+            $table->boolean('registered')->default(0);
             $table->timestamps();
             $table->foreignId('type_id')->constrained();
             $table->foreignId('region_id')->constrained();

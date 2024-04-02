@@ -100,18 +100,18 @@ text:"Will be saved if you choose OK!",
  window.addEventListener('swal_saved',function(e){
     Swal.fire({
   icon: "warning",
-  title : 'Are you sure to activate center? ',
+  title : 'Are you sure to Register center? ',
   showCancelButton: true,
 text:"Will be saved if you choose OK!",
   confirmButtonColor: "#00ca92",
   cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, activate it!"
+  confirmButtonText: "Yes, Register it!"
 }).then((result) => {
   if (result.isConfirmed) {
     @this.dispatch('gosave');
     Swal.fire({
-      title: "Activated!",
-      text: "Centered  has been activated.",
+      title: "Registered!",
+      text: "Centered  has been Registered.",
       icon: "success"
     });
   }

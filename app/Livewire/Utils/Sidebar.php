@@ -12,7 +12,7 @@ class Sidebar extends Component
     
     public function render()
     {
-        $pending=Hospital::where('status','0')->get();
+        $pending=Hospital::where('registered','0')->get();
         return view('livewire.utils.sidebar',['pending'=>$pending]);
     }
 }

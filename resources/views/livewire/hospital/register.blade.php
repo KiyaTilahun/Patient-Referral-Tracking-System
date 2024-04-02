@@ -1,51 +1,52 @@
 <div>
     <div class="fixed right-4 ">
         <button type="button" class="md:inline-flex gap-7 pt-5 hidden" wire:click='logout'>
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00ca92" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-            <path d="M3 12h13l-3 -3" />
-            <path d="M13 15l3 -3" />
-          </svg>
-    <span class="text-[#00ca92]"> Login Instead</span></button>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login-2" width="20"
+                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00ca92" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                <path d="M3 12h13l-3 -3" />
+                <path d="M13 15l3 -3" />
+            </svg>
+            <span class="text-[#00ca92]"> Login Instead</span></button>
 
-             <!-- this hidden checkbox controls the state -->
-         
-     </div>
+        <!-- this hidden checkbox controls the state -->
+
+    </div>
     <form wire:submit.prevent="register">
 
         <!-- component -->
         <div class="min-h-screen p-16 flex  justify-center">
-            <div class="{{ (!($currentStep==4)) ? ' pt-20' : 'pt-0' }} container max-w-screen-lg mx-auto relative">
-                @if (!($currentStep==4))
-                    
-               
-                <div class="absolute top-[-10px] left-1/2  flex flex-col items-center">
-                    <div>
-                        Step
-                    </div>
-                    <div
-                        class="w-8  h-8 rounded-full bg-[#00ca92] text-white text-center flex justify-center items-center">
-                        <div> {{ $currentStep }}</div>
+            <div class="{{ !($currentStep == 4) ? ' pt-20' : 'pt-0' }} container max-w-screen-lg mx-auto relative">
+                @if (!($currentStep == 4))
+
+
+                    <div class="absolute top-[-10px] left-1/2  flex flex-col items-center">
+                        <div>
+                            Step
+                        </div>
+                        <div
+                            class="w-8  h-8 rounded-full bg-[#00ca92] text-white text-center flex justify-center items-center">
+                            <div> {{ $currentStep }}</div>
+
+                        </div>
+
+                        @if ($currentStep == 1)
+                            <!-- Code to execute if condition1 is true -->
+                            <p class="">Health Center Information.</p>
+                        @elseif($currentStep == 2)
+                            <!-- Code to execute if condition2 is true -->
+                            <p>Liaison Office Information.</p>
+                        @elseif($currentStep == 3)
+                            <!-- Code to execute if condition2 is true -->
+                            <p>Check Your Entry</p>
+                            <!-- Code to execute if neither condition1 nor condition2 is true -->
+                        @endif
+
+
 
                     </div>
-                
-                    @if(($currentStep==1))
-                    <!-- Code to execute if condition1 is true -->
-                    <p class="">Health Center Information.</p>
-                @elseif(($currentStep==2))
-                    <!-- Code to execute if condition2 is true -->
-                    <p >Liaison Office Information.</p>
-                    @elseif(($currentStep==3))
-                    <!-- Code to execute if condition2 is true -->
-                    <p>Check Your Entry</p>
-                    <!-- Code to execute if neither condition1 nor condition2 is true -->
-                 
-                @endif
-                    
-
-
-                </div>
                 @endif
                 <div>
 
@@ -58,22 +59,27 @@
                                 <div class="text-gray-600">
                                     <p class="font-medium text-lg">Health Center Details</p>
                                     <p>
-                                        
-<h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this instuction while registering requirements</h2>
-<ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-   
-    <x-checkmark>Enter the full name of the health center (use single quotes if needed)
-    </x-checkmark>
-    <x-checkmark>Enter a valid working  number for approval purpose</x-checkmark>
-    <x-checkmark>Enter a valid working  number for approval purpose</x-checkmark>
-    <x-checkmark>Choose the center respective Region ...zones will be automatically available</x-checkmark>
-    <x-checkmark>Enter a real woreda number if there is no one kebele number can be used </x-checkmark>
+
+                                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this
+                                        instuction while registering requirements</h2>
+                                    <ul
+                                        class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+
+                                        <x-checkmark>Enter the full name of the health center (use single quotes if
+                                            needed)
+                                        </x-checkmark>
+                                        <x-checkmark>Enter a valid working number for approval purpose</x-checkmark>
+                                        <x-checkmark>Enter a valid working number for approval purpose</x-checkmark>
+                                        <x-checkmark>Choose the center respective Region ...zones will be automatically
+                                            available</x-checkmark>
+                                        <x-checkmark>Enter a real woreda number if there is no one kebele number can be
+                                            used </x-checkmark>
 
 
 
 
 
-</ul>
+                                    </ul>
 
                                     </p>
                                 </div>
@@ -168,7 +174,9 @@
                                                     <span class="label-text">Choose Zone</span>
 
                                                 </div>
-                                                <select class="select select-bordered {{ (!is_null($zones) ? ' select-accent' : 'select-bordered') }} " wire:model="zone">
+                                                <select
+                                                    class="select select-bordered {{ !is_null($zones) ? ' select-accent' : 'select-bordered' }} "
+                                                    wire:model="zone">
                                                     @if (!is_null($zones))
                                                         @if (count($zones) == 0)
                                                             <option value="">No zone</option>
@@ -195,8 +203,8 @@
 
                                                 </div>
                                                 <input type="number" placeholder="Type here"
-                                                    class="input input-bordered w-full max-w-xs" min="1" max="20"
-                                                    wire:model='woreda' />
+                                                    class="input input-bordered w-full max-w-xs" min="1"
+                                                    max="20" wire:model='woreda' />
 
                                             </label>
                                             @error('woreda')
@@ -285,15 +293,18 @@
                                 <div class="text-gray-600">
                                     <p class="font-medium text-lg">Liaison Office Details</p>
                                     <p>
-                                        <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this instuction while registering requirements</h2>
-<ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-   
-    <x-checkmark>Enter the health center Liaison Officer Full Name
-    </x-checkmark>
-    <x-checkmark>Enter a valid and working Liaison Office Phone Number </x-checkmark>
-   
+                                    <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this
+                                        instuction while registering requirements</h2>
+                                    <ul
+                                        class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
 
-                                    </p>
+                                        <x-checkmark>Enter the health center Liaison Officer Full Name
+                                        </x-checkmark>
+                                        <x-checkmark>Enter a valid and working Liaison Office Phone Number
+                                        </x-checkmark>
+
+
+                                        </p>
                                 </div>
 
                                 <div class="lg:col-span-2">
@@ -528,7 +539,7 @@
                                                 wire:model='liaison_officer' disabled />
 
                                         </label>
-                                        
+
                                     </div>
                                     <div class="md:col-span-3">
                                         <label class="form-control w-full max-w-xs">
@@ -538,13 +549,13 @@
                                             </div>
                                             <label class="input input-bordered flex items-center ">
                                                 +251
-                                                <input type="text" pattern="[0-9]{9}" maxlength=9
-                                                    minlength="9" class="grow outline-none"
-                                                    placeholder="Phone Number" wire:model='phone_number' disabled />
+                                                <input type="text" pattern="[0-9]{9}" maxlength=9 minlength="9"
+                                                    class="grow outline-none" placeholder="Phone Number"
+                                                    wire:model='phone_number' disabled />
                                             </label>
 
                                         </label>
-                                    
+
                                     </div>
 
                                 </div>
@@ -554,24 +565,31 @@
 
                 @endif
                 @if ($currentStep == 4)
+                    <div class=" rounded shadow-lg p-4 px-4 md:p-8 mb-6">
 
-                <div class=" rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                        <div class="hero min-h-screen">
+                            <div class="hero-content text-center">
+                                <div class="">
+                                    <div class="flex justify-center"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="200px" height="200px" viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M8.81802 12.3107L10.9393 14.432L15.182 10.1893M21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12Z"
+                                                stroke="#00ca92" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg></div>
+                                    <h1 class="text-5xl font-bold">You Succeffully Registered</h1>
 
-                <div class="hero min-h-screen" >
-                    <div class="hero-content text-center">
-                      <div class="">
-                       <div  class="flex justify-center"> <svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 24 24" fill="none">
-                        <path d="M8.81802 12.3107L10.9393 14.432L15.182 10.1893M21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12Z" stroke="#00ca92" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg></div>
-                        <h1 class="text-5xl font-bold">You  Succeffully Registered</h1>
-                        
-                        <p class="py-6">You will be approved until {{now()->addDays(10)->format('Y-m-d')}} ,Check your  health center's username and password will be sent via <a href="mailto:{{$registeredEmail}}" class="link link-success">{{$registeredEmail}}</a> </p>
-                        <button type="button" class="btn btn-accent" wire:click='logout'>Get Started</button>
-                        
-                      </div>
+                                    <p class="py-6">You will be approved until
+                                        {{ now()->addDays(10)->format('Y-m-d') }} ,Check your health center's username
+                                        and password will be sent via <a href="mailto:{{ $registeredEmail }}"
+                                            class="link link-success">{{ $registeredEmail }}</a> </p>
+                                    <button type="button" class="btn btn-accent" wire:click='logout'>Get
+                                        Started</button>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
                 @endif
 
 

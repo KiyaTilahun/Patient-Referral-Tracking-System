@@ -33,7 +33,7 @@ public function reset_table()
 
     public function render()
     {
-        $pendings=Hospital::where('status','0') ->orderBy('name', 'asc')->paginate(5);
+        $pendings=Hospital::where('registered','0') ->orderBy('name', 'asc')->paginate(5);
         return view('livewire.hospital.pending.pending-table',['pendings'=>$pendings]);
     }
 }

@@ -82,4 +82,10 @@ new #[Layout('layouts.guest')] class extends Component
             </x-primary-button>
         </div>
     </form>
+    <div class="fixed right-2 bottom-2">
+        @include('utils.theme')
+
+             <!-- this hidden checkbox controls the state -->
+         
+     </div>
 </div>

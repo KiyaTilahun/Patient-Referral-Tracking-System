@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HospitalController;
+use App\Livewire\Admin\Adduser;
 use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
@@ -51,6 +52,12 @@ Route::view('profile', 'profile')
     Route::get('/rolepermission', RpIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('rolepermission');
+
+   
+    Route::get('/adduser', Adduser::class)
+    ->middleware(['auth', 'verified'])
+    ->name('adduser');
+    
     // Route::get(/rolepermission,)
 // Route::get('/contact',function(){
 //     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));

@@ -30,10 +30,10 @@ class PendingDetail extends Component
     {
 
 
-        $this->detail->status = 1;
+        $this->detail->registered = 1;
         $this->detail->save();
-        $mailer=new EmailController();
-        $mailer->sendmail($this->detail);
+        // $mailer=new EmailController();
+        // $mailer->sendmail($this->detail);
        
         $this->dispatch('hospital_approved', name: $this->detail->name);
       

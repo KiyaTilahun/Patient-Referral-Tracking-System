@@ -42,7 +42,7 @@ class PendingIndex extends Component
     public function render()
     {
 
-        $pendingcount=Hospital::where('status','0') ->orderBy('name', 'asc')->get();
+        $pendingcount=Hospital::where('registered','0') ->orderBy('name', 'asc')->get();
      
         return view('livewire.hospital.pending.pending-index',['pendingcount'=>$pendingcount]);
     }
