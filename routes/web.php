@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HospitalController;
 use App\Livewire\Admin\Adduser;
+use App\Livewire\Admin\Department\AddIndex;
+use App\Livewire\Admin\Department\DepIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
@@ -57,6 +59,16 @@ Route::view('profile', 'profile')
     Route::get('/adduser', Adduser::class)
     ->middleware(['auth', 'verified'])
     ->name('adduser');
+
+
+    Route::get('/department', DepIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('department');
+    Route::get('/department/add', AddIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('department.add');
+    
+    
     
     // Route::get(/rolepermission,)
 // Route::get('/contact',function(){

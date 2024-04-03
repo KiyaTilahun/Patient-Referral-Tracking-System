@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained();
             $table->foreignId('hospital_id')->constrained();
 $table->boolean('active')->default(1);
+$table->integer('slot')->default(0);
+
             $table->timestamps();
         });
     }

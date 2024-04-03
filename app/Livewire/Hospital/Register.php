@@ -126,6 +126,7 @@ public $registeredEmail;
     {
         // ...
         // $this->validate();
+
         $extension=$this->validated['file']->getClientOriginalExtension();
         $namereplace=str_replace(' ', '_', $this->validated['name']);
         $name=$namereplace.'_'.now()->format('Ymd').'.'.$extension;
@@ -152,7 +153,7 @@ $this->registeredEmail=$this->validated['email'];
            , 
         ]);
 
-
+    
 
 
 

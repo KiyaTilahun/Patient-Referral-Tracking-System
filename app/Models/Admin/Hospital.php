@@ -43,7 +43,7 @@ class Hospital extends Model
     {
         return $this->belongsToMany(Department::class)->using(
             DepartmentHospital::class
-        )->withPivot('active')->withTimestamps();
+        )->withPivot(['active','slot'])->withTimestamps();
     }
     public function referrals(){
         return $this->hasMany(Referral::class);
