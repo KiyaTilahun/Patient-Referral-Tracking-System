@@ -67,7 +67,7 @@ public function newdep(){
 }
     public function render()
     {
-        
+       
 
         return view('livewire.admin.department.dep-index');
     }

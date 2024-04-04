@@ -12,8 +12,10 @@
         <div class="text-right">
             <button class="btn btn-outline btn-success" wire:click='newdep'>Add new Department</button>
         </div>
+        <div class="sm:max-h-[50vh] overflow-y-auto">
         @foreach ($hospital->departments as $department)
-            <x-mary-list-item :item="$department">
+         
+            <x-mary-list-item :item="$department" >
                 <x-slot:actions>
 
                     <x-mary-button icon="s-pencil-square" class="text-green-500"
@@ -21,12 +23,13 @@
 
                 </x-slot:actions>
             </x-mary-list-item>
+          
         @endforeach
        
-
+    </div>
 
     </div>
-    <div class="col-span-12 rounded-lg  shadow-md sm:col-span-5">
+    <div class="col-span-12 rounded-lg  shadow-md sm:col-span-5 ">
 
 
         {{-- center saved start --}}
@@ -39,13 +42,13 @@
         <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-2xl text-center"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">department referral
                 detail</span> </h1>
+                <div class="sm:max-h-[50vh] overflow-y-auto">
         <livewire:admin.department.edit-index />
+                </div>
 
 
     </div>
 
 
-    <div class="footer col-span-12 rounded-lg border border-gray-800 bg-gray-700 p-6">
-        <!-- Footer content -->
-    </div>
+  
 </div>

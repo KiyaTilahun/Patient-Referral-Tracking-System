@@ -21,7 +21,15 @@
         
   <div class="header col-span-12 rounded-lg bord py-8">
     <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Days</span> Available   </h1>
+  
    
+</div>
+<div class="grid grid-cols-3 gap-5">
+  @foreach ($days as $day)
+        
+  <button class="btn btn-neutral col-span" >{{$day}}</button>
+         
+      @endforeach
 </div>
     @else
       
@@ -42,5 +50,17 @@
       <input type="text" placeholder="Availble slots" class="input input-bordered w-full max-w-xs"   value="0" disabled/>
      
     </label>
+    <div class="header col-span-12 rounded-lg bord py-8">
+      <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Days</span> Available   </h1>
+    
+     
+  </div>
+  <div class="grid grid-cols-3 gap-5">
+    @foreach ($days as $day)
+          
+    <button class="btn btn-neutral col-span" disabled>{{$day}}</button>
+           
+        @endforeach
+  </div>
     @endif
 </div>

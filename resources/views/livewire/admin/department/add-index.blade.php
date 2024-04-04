@@ -17,12 +17,7 @@
                 </div>
 
                 @php
-                $newdep = [];
-                foreach ($deps as $department) {
-                    if (!$hospital->departments->contains($department->id)) {
-                        $newdep[] = $department;
-                    }
-                }
+                
                 @endphp
              
 
@@ -40,14 +35,41 @@
         </div>
    
         <div class="col-span-1"></div>
-        <div  class="md:col-span-4">
+        <div  class="md:col-span-4 max-h-80 overflow-y-scroll">
             <p class="font-medium text-lg"> Available Departments</p>
+            <div class="overflow-x-auto">
+                <table class="table table-zebra">
+                  <!-- head -->
+                  <thead>
+                    <tr>
+                      <th>Departments</th>
+                      <th></th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
             @foreach ($deps as $department)
-                @if ($hospital->departments->contains($department->id))
-                    <x-checkmark>{{ $department->name }}</x-checkmark>
-                @endif
+             
+                    <!-- row 1 -->
+                    @if ($hospital->departments->contains($department->id))
+                    <tr>
+                      <td>
+                        <x-checkmark>{{ $department->name }}</x-checkmark>
+                       </td>
+                      <td><x-mary-button icon="o-trash" class="text-red-500" wire:click.live="detachdep({{ $department->id }})" spinner /></td>
+                    </tr>
+                    @endif
+                    <!-- row 2 -->
+                   
+                  
+               
               
             @endforeach
+        </tbody>
+        
+    </table>
+     
+  </div>
           
 
          
@@ -58,20 +80,37 @@
     </div>
 
 
-    @script
+
     <script>
-        $(document).ready(function() {
-            $('#testdropdown').select2();
-            $('#testdropdown').on('change', function() {
-                let data = $(this).val();
-                console.log(data);
-                // $wire.set('companies', data, false);
-                // $wire.companies = data;
-                @this.companies = data;
+
+
+
+        window.addEventListener('swal_remdep',function(e){
+            Swal.fire({
+          icon: "warning",
+          title : 'Are you sure to remove Department? ',
+          showCancelButton: true,
+        text:"Will be saved if you choose OK!",
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#00ca92",
+          confirmButtonText: "Yes, Delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            @this.dispatch('goremove');
+            Swal.fire({
+              title: "Deleted!",
+              text: "Centered  has been activated.",
+              icon: "warning"
             });
+          }
+         
+         
         });
-    </script>
-@endscript
+                });
+        
+        
+        
+        </script>
 </div>
 
 

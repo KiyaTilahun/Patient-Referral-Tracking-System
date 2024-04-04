@@ -12,7 +12,7 @@ class EditIndex extends Component
 {
 public $editable;
 public $hospital;
-public $days=[];
+
 public $slot;
 
     #[On('dep_selected')]
@@ -41,8 +41,8 @@ public function show($dep){
             if ($value == 'Sunday') {
              continue;
             }
-            $this->days[] = $value;
+          $days[] = $value;
         }
-        return view('livewire.admin.department.edit-index',['days'=>$this->days]);
+        return view('livewire.admin.department.edit-index',['days'=>$days]);
     }
 }

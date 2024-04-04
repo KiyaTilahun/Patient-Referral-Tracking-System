@@ -8,7 +8,7 @@
             Hospitals </h1>
 
     </div>
-    <div class="col-span-12 rounded-lg sm:col-span-7">
+    <div class="col-span-12 rounded-lg sm:col-span-7 ">
         <livewire:hospital.pending.pending-table />
     </div>
     <div class="col-span-12 rounded-lg  shadow-md sm:col-span-5">
@@ -24,10 +24,9 @@
         <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-2xl text-center"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">health center
                 detail</span> </h1>
+                <div class="sm:max-h-[50vh] overflow-y-scroll">
         <livewire:hospital.pending.pending-detail />
-
+                </div>
     </div>
-    <div class="footer col-span-12 rounded-lg border border-gray-800 bg-gray-700 p-6">
-        <!-- Footer content -->
-    </div>
+   
 </div>
