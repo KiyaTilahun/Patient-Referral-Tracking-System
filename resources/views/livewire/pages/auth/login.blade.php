@@ -33,8 +33,8 @@ new #[Layout('layouts.guest')] class extends Component
         
     <div class="toast toast-top toast-end">
         
-        <div class="alert alert-success">
-          <a href="{{route('registerhealth')}}">Register Health Centre</a>
+        <div class="alert alert-success bg-[#00ca92]">
+          <a href="{{route('registerhealth')}}" wire:navigate>Register Health Centre </a>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
+            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full "
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
@@ -77,7 +77,7 @@ new #[Layout('layouts.guest')] class extends Component
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3 btn-accent ">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>

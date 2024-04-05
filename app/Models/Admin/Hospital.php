@@ -52,5 +52,6 @@ class Hospital extends Model
         return $this->hasOne(Liaison::class);
     }
 
+    
 
 }

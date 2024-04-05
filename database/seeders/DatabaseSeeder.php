@@ -38,8 +38,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             SuperSeeder::class,
             HospitalDepartmentSeeder::class,
+            DaySeeder::class
 
-        
+
+
         ]);
     }
 }

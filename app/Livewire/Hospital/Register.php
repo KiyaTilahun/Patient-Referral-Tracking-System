@@ -11,12 +11,13 @@ use Illuminate\Support\Str;
 use App\Models\Admin\Type;
 use App\Models\Admin\Zone;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 
 use function Livewire\Volt\layout;
-
+#[Layout('layouts.guest')] 
 class Register extends Component
 {
 
