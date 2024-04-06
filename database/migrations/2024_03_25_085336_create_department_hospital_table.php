@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('department_hospital', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('department_id')->constrained();
-            $table->foreignId('hospital_id')->constrained();
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('hospital_id')->constrained('hospitals')->cascadeOnDelete()->cascadeOnUpdate();
 $table->boolean('active')->default(1);
 $table->integer('slot')->default(0);
 

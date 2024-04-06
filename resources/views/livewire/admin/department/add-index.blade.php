@@ -21,7 +21,7 @@
                 @endphp
              
 
-             <x-mary-choices  wire:model.live="departmentlist" :options="$newdep"  />
+             <x-mary-choices  wire:model.live="departmentlist" :options="$newdep" key="$department->id" />
                
             </label>
             {{-- @error('departmentlist')
@@ -56,7 +56,7 @@
                       <td>
                         <x-checkmark>{{ $department->name }}</x-checkmark>
                        </td>
-                      <td><x-mary-button icon="o-trash" class="text-red-500" wire:click.live="detachdep({{ $department->id }})" spinner /></td>
+                      <td><x-mary-button icon="o-trash" class="text-red-500" wire:click.live="detachdep({{ $department->id }})" wire:key="{{$department->id}}" spinner /></td>
                     </tr>
                     @endif
                     <!-- row 2 -->

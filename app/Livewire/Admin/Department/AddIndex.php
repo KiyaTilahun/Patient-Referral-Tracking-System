@@ -35,7 +35,8 @@ class AddIndex extends Component
         );
         $this->hospital->departments()->attach($this->departmentlist);
         $this->success(count($this->departmentlist) . ' Department added');
-        $this->reset();
+        $this->resetValidation();
+       $this->reset();
     }
 
 

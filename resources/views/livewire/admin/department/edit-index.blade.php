@@ -1,4 +1,7 @@
 <div>
+    <x-mary-toast />  
+    <x-mary-toast />  
+
     @if (!is_null($editable))
 
         <form wire:submit="adddays">

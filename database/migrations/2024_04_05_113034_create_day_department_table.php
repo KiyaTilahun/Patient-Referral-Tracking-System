@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('day_department', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('day_id')->constrained();
-            $table->foreignId('department_hospital_id')->constrained('department_hospital');
+            $table->foreignId('day_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('department_hospital_id')->constrained('department_hospital')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('hospital_id')->constrained('hospitals');
             // Additional columns if needed
             $table->timestamps();

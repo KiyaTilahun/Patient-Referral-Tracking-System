@@ -10,9 +10,11 @@ use App\Models\DayDepartment;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class EditIndex extends Component
 {
+    use Toast;
     public $editable;
     public $hospital;
     public $depdays = [];
@@ -73,6 +75,10 @@ class EditIndex extends Component
         // dd(DayDepartment::all());
         $departmentDays->days()->detach();
         $departmentDays->days()->attach($this->depdays, ['hospital_id' => $this->hospital->id]);
+        $dayNames = Day::whereIn('id', $this->depdays)->pluck('name');
+        $dayNamesString = $dayNames->implode(', ');
+        $this->warning('On '.$dayNamesString. ' Department will be working ',''. $this->slot. ' slots perday Assigned to  Department', icon: 'o-calendar',);
+       
 
         $this->reset('depdays');
         $this->reset('slot');

@@ -8,6 +8,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
+use App\Livewire\Patient\PatientIndex;
 use App\Livewire\RolePermission\RpIndex;
 use App\Mail\RegisterEmail;
 use App\Models\Admin\Hospital;
@@ -34,7 +35,7 @@ Route::get('/registerhealth',[HospitalController::class,'index'])->name('registe
 
 
 Route::get('dashboard', Dashboard::class)
-    ->middleware(['auth', 'verified','role:superadmin'])
+    ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::view('profile', 'profile')
@@ -67,6 +68,10 @@ Route::view('profile', 'profile')
     Route::get('/department/add', AddIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('department.add');
+    Route::get('/patient/add', PatientIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('patient.add');
+    
     
     
     
