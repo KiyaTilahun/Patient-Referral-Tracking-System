@@ -52,7 +52,7 @@
 
 
         </div>
-
+        @if ($currentStep == 1)
 
         <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
             <div class="md:col-span-5">
@@ -105,11 +105,7 @@
                         wire:model="history" placeholder="" hint="Max 1000 chars other wise attach it" rows="1"
                         inline maxlength="1000" />
                 </label>
-                @error('history')
-                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
-                        <span class="font-medium">{{ $message }}</span>
-                    </div>
-                @enderror
+              
             </div>
             <div class="md:col-span-5">
                 <label class="form-control w-full">
@@ -121,11 +117,7 @@
                         wire:model="finding" placeholder="" hint="Max 1000 chars other wise attach it" rows="1"
                         inline maxlength="1000" />
                 </label>
-                @error('finding')
-                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
-                        <span class="font-medium">{{ $message }}</span>
-                    </div>
-                @enderror
+               
             </div>
             <div class="md:col-span-5">
                 <label class="form-control w-full">
@@ -137,11 +129,7 @@
                         wire:model="treatment" placeholder="" hint="Max 1000 chars other wise attach it" rows="1"
                         inline maxlength="1000" />
                 </label>
-                @error('treatment')
-                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
-                        <span class="font-medium">{{ $message }}</span>
-                    </div>
-                @enderror
+             
             </div>
 
             <div class="md:col-span-5">
@@ -154,11 +142,7 @@
                         placeholder="" hint="Max 100 chars other wise attach it" rows="1" inline
                         maxlength="100" />
                 </label>
-                @error('reason')
-                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
-                        <span class="font-medium">{{ $message }}</span>
-                    </div>
-                @enderror
+              
             </div>
 
 
@@ -168,7 +152,7 @@
                         <span class="label-text">Referring Doctor</span>
                     </div>
 
-                    <select class="select select-accent w-full ">
+                    <select class="select select-accent w-full " wire:model='doctor'>
                         <option disabled selected>Referring Doctor</option>
                         @foreach ($doctors as $doctor)
                         <option value={{$doctor->id}}>{{$doctor->name}}</option>
@@ -178,13 +162,14 @@
 
                     </select>
                 </label>
-                @error('reason')
+                @error('doctor')
                     <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
                         <span class="font-medium">{{ $message }}</span>
                     </div>
                 @enderror
             </div>
         </div>
+        @endif
         <div class="flex justify-end col-span-10">
             <button type="button" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Next
                 <div wire:loading>

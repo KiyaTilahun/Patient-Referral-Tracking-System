@@ -16,6 +16,8 @@ class ReferralIndex extends Component
     public $history;
     public $finding;
     public $treatment;
+    public $reason;
+    public $doctor_id;
     public $validated;
     public $doctors;
     public $secondvalidation;
@@ -67,6 +69,10 @@ class ReferralIndex extends Component
                 'history' => 'required|string',
                 'finding' => 'required|string',
                 'treatment' => 'required|string',
+                'reason' => 'required|string',
+                'reason' => 'required|string',
+
+
                
 
             ];
