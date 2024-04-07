@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->tinyInteger('gender')->unsigned();
             $table->date('dob');
-            $table->string('card_number');
+            $table->string('card_number')->unique();
             // $table->string('treatment');
             // $table->text('medical_history')->nullable();
             $table->string('email')->nullable();

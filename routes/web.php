@@ -9,6 +9,7 @@ use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
 use App\Livewire\Patient\PatientIndex;
+use App\Livewire\Patient\ReferralIndex;
 use App\Livewire\RolePermission\RpIndex;
 use App\Mail\RegisterEmail;
 use App\Models\Admin\Hospital;
@@ -26,11 +27,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
+Route::get('/', function () {
 
     return redirect('/login');
 });
-Route::get('/registerhealth',[HospitalController::class,'index'])->name('registerhealth');
+Route::get('/registerhealth', [HospitalController::class, 'index'])->name('registerhealth');
 // Route::get('/registerhealth',Register::class)->name('registerhealth');
 
 
@@ -43,41 +44,44 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 
-    // live wire routes
+// live wire routes
 
-    Route::get('/pending', PendingIndex::class)
+Route::get('/pending', PendingIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('pending');
-    Route::get('/centers/all', CenterIndex::class)
+Route::get('/centers/all', CenterIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('centers.all');
 
-    Route::get('/rolepermission', RpIndex::class)
+Route::get('/rolepermission', RpIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('rolepermission');
 
-   
-    Route::get('/adduser', Adduser::class)
+
+Route::get('/adduser', Adduser::class)
     ->middleware(['auth', 'verified'])
     ->name('adduser');
 
 
-    Route::get('/department', DepIndex::class)
+Route::get('/department', DepIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('department');
-    Route::get('/department/add', AddIndex::class)
+Route::get('/department/add', AddIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('department.add');
-    Route::get('/patient/add', PatientIndex::class)
+Route::get('/patient/add', PatientIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('patient.add');
-    
-    
-    
-    
-    // Route::get(/rolepermission,)
+Route::get('/referral/add', ReferralIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('referral.add');
+
+
+
+
+// Route::get(/rolepermission,)
 // Route::get('/contact',function(){
 //     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
