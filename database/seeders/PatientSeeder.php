@@ -49,13 +49,12 @@ class PatientSeeder extends Seeder
                 'gender' => rand(0, 1), // Assuming 0 for male and 1 for female
                 'dob' => now()->subYears(rand(18, 70)), // Random date of birth between 18 and 70 years ago
                 'card_number' => 'CARD' . $faker->phoneNumber(), // Unique card number for each patient
-                'treatment' => array_rand($departments),
-                'medical_history' => 'Medical history for patient ' . ($i + 1),
+                // 'treatment' => array_rand($departments),
+                // 'medical_history' => 'Medical history for patient ' . ($i + 1),
                 'email' =>$faker->unique()->email() ,
                 'phone' => $faker->unique()->phoneNumber(), // Assuming a dummy phone number
-                'address' => 'Address for patient ' . ($i + 1),
                 'hospital_id' => rand(1, 5), // Assuming you have 5 hospitals
-                'doctor_id' => rand(1, 10), // Assuming you have 10 doctors
+                // 'doctor_id' => rand(1, 10), // Assuming you have 10 doctors
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

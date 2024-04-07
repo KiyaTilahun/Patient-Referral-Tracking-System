@@ -17,14 +17,15 @@ return new class extends Migration
             $table->tinyInteger('gender')->unsigned();
             $table->date('dob');
             $table->string('card_number');
-            $table->string('treatment');
-            $table->text('medical_history')->nullable();
+            // $table->string('treatment');
+            // $table->text('medical_history')->nullable();
             $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('address');
+            $table->string('phone');
             $table->timestamps();
             $table->foreignId('hospital_id')->constrained();
-            $table->foreignId('doctor_id')->constrained();
+            // $table->foreignId('doctor_id')->constrained();
+            $table->unique(['card_number', 'hospital_id']);
+
         });
     }
 
