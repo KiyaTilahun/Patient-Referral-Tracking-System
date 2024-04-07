@@ -11,6 +11,7 @@ class PatientIndex extends Component
 {
     public $departments;
     public $hospital;
+    public bool $savedmodal=false;
     public $config1;
     public $genders;
     public $name;
@@ -21,6 +22,7 @@ class PatientIndex extends Component
     public $treatment;
     public $dob;
     public $validated;
+    public $copiedref;
 
     // public $name;
     public bool $openref=false;
@@ -51,7 +53,8 @@ class PatientIndex extends Component
         $currentYear = date('Y');
     
         $randomNumber = rand(1000, 9999);
-        $cardNumber = 'REF' .$randomNumber.'H'.$hospitalId.'D'.$this->name  . $currentMonth . $currentYear  ;
+        $cardNumber = 'REF' . $randomNumber . 'H' . $hospitalId . 'D' . str_replace(' ', '', $this->name) . $currentMonth . $currentYear;
+
     
         // Optionally, calculate and append a check digit using Luhn's algorithm
        
@@ -76,7 +79,24 @@ class PatientIndex extends Component
             
            
         ]);
-        dd($this->dob);
+        $this->copiedref= $this->generateCardNumber($this->hospital->id);
+        $this->savedmodal=true;
+
+
+        $this->resetValidation();
+
+        // Clear form fields
+        $this->reset([
+            'name',
+            'gender',
+            'email',
+            'phone',
+            'dob',
+        ]);
+
+        
+        
+       
     }
     // validation rules 
 
@@ -86,11 +106,11 @@ class PatientIndex extends Component
        
         
             return[
-               'name'=>'required|unique:hospitals',
+               'name'=>'required|unique:patients',
                 'gender'=>'required',
                 'email'=>'unique:patients',
                 'phone'=>'required|min:9|numeric',
-                'dob'=>'date_format:Y/m/d',
+                'dob'=>'date_format:Y/m/d|before_or_equal:yesterday',
 
             ];
          

@@ -17,7 +17,8 @@ use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 
 use function Livewire\Volt\layout;
-#[Layout('layouts.guest')] 
+
+#[Layout('layouts.guest')]
 class Register extends Component
 {
 
@@ -34,18 +35,18 @@ class Register extends Component
     public $email;
     public $status = 0;
     public $type;
-public $departmentlist=[];
+    public $departmentlist = [];
     public $file;
 
-   public $phone_number;
-   public $liaison_officer;
-   public $liaisonemail;
+    public $phone_number;
+    public $liaison_officer;
+    public $liaisonemail;
 
-public $validated;
-public $liasionvalidation;
+    public $validated;
+    public $liasionvalidation;
 
 
-public $registeredEmail;
+    public $registeredEmail;
 
 
 
@@ -60,67 +61,64 @@ public $registeredEmail;
     {
         return view('utils.spinner');
     }
-    public function mount(){
+    public function mount()
+    {
         $this->currentStep = 1;
         $this->registeredEmail;
     }
 
-    public function increaseStep(){
+    public function increaseStep()
+    {
         $this->resetErrorBag();
-        // dd("hello");
-        if($this->currentStep==1){
-            $this->validated=$this->validate();
-        }
-        else{
-            $this->liasionvalidation=$this->validate();
 
+        if ($this->currentStep == 1) {
+            $this->validated = $this->validate();
+        } else {
+            $this->liasionvalidation = $this->validate();
         }
         $this->resetValidation();
         // $this->reset();
-    $this->currentStep++;
-   
+        $this->currentStep++;
 
-         if($this->currentStep > $this->totalSteps){
-             $this->currentStep = $this->totalSteps;
-         }
+        if ($this->currentStep > $this->totalSteps) {
+            $this->currentStep = $this->totalSteps;
+        }
     }
-    public function decreaseStep(){
+    public function decreaseStep()
+    {
         $this->resetErrorBag();
         $this->currentStep--;
-        if($this->currentStep < 1){
+        if ($this->currentStep < 1) {
             $this->currentStep = 1;
         }
     }
 
-    public function rules() 
+    public function rules()
     {
 
-       
-          if($this->currentStep==1){
-            return[
-               'name'=>'required|unique:hospitals',
-                'selectedregion'=>'required|string',
-                'email'=>'required|unique:hospitals',
-                'phone'=>'required|min:9|numeric',
-                'zone'=>'required',
-                'selectedregion'=>'required',
-                'woreda'=>'required|numeric',
-                'type'=>'required',
-                'file'=>'required|mimes:pdf|max:2048',
 
-          
-          ];}
-          else{
-            return[
-                'phone_number'=>'required|unique:liaisons|min:9|numeric',
-                'liaison_officer'=>'required|string',
+        if ($this->currentStep == 1) {
+            return [
+                'name' => 'required|unique:hospitals',
+                'selectedregion' => 'required|string',
+                'email' => 'required|unique:hospitals',
+                'phone' => 'required|min:9|numeric',
+                'zone' => 'required',
+                'selectedregion' => 'required',
+                'woreda' => 'required|numeric',
+                'type' => 'required',
+                'file' => 'required|mimes:pdf|max:2048',
 
-          
-          ];}
-        
-       
-        
 
+            ];
+        } else {
+            return [
+                'phone_number' => 'required|unique:liaisons|min:9|numeric',
+                'liaison_officer' => 'required|string',
+
+
+            ];
+        }
     }
 
     public function register()
@@ -128,45 +126,41 @@ public $registeredEmail;
         // ...
         // $this->validate();
 
-        $extension=$this->validated['file']->getClientOriginalExtension();
-        $namereplace=str_replace(' ', '_', $this->validated['name']);
-        $name=$namereplace.'_'.now()->format('Ymd').'.'.$extension;
+        $extension = $this->validated['file']->getClientOriginalExtension();
+        $namereplace = str_replace(' ', '_', $this->validated['name']);
+        $name = $namereplace . '_' . now()->format('Ymd') . '.' . $extension;
 
-        $this->validated['file']->storeAs('admin/register',$name,'public');
-       
+        $this->validated['file']->storeAs('admin/register', $name, 'public');
+
         // dd($name);
-        $this->validated['file']=$name;
-        
+        $this->validated['file'] = $name;
 
-$this->registeredEmail=$this->validated['email'];
+
+        $this->registeredEmail = $this->validated['email'];
 
         $hospital = Hospital::create([
-       
-          
+
+
             'name' =>   Str::of(Str::replace(' ', '_', $this->validated['name']))->upper(),
             'region_id' => $this->validated['selectedregion'],
             'filename' => $this->validated['file'],
             'email' => $this->validated['email'],
-            'phone' => '+251'.$this->validated['phone'],
+            'phone' => '+251' . $this->validated['phone'],
             'zone' => $this->validated['zone'],
             'woreda' => $this->validated['woreda'],
-            'type_id' => $this->validated['type']
-           , 
+            'type_id' => $this->validated['type'],
         ]);
 
-    
 
 
 
-$this->currentStep=4;
+
+        $this->currentStep = 4;
         session()->flash('status', 'Registration was  successfully check your email for approval.');
-       
-      
-
-
     }
-    public function logout(){
-   $this->redirect('/login');
+    public function logout()
+    {
+        $this->redirect('/login');
     }
     public function updatedSelectedRegion($region_id)
     {

@@ -1,48 +1,47 @@
 <div x-data x-init="$refs.answer.focus()">
-<div class="flex justify-between ">
-    <div wire:click=''>
-        <x-goback></x-goback>
+    <div class="flex justify-between ">
+        <x-mary-button label="Go Back" link="/patient/add" icon="o-arrow-left" />
+        <div class="px-20">
+            <x-mary-modal id="modal17">
+                <p>
+
+                <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this
+                    instuction while registering requirements</h2>
+                <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+
+
+                    <x-checkmark>This form has 2 steps </x-checkmark>
+                    <x-checkmark>The referral only works for registered patients only </x-checkmark>
+                    <x-checkmark>As the card number is filled data will automatically will be filled </x-checkmark>
+
+
+
+
+
+
+                </ul>
+
+                </p>
+
+                <x-slot:actions>
+                    {{-- Notice `onclick` is HTML --}}
+
+                    <x-mary-button label="Close" class="btn-accent" onclick="modal17.close()" />
+                </x-slot:actions>
+            </x-mary-modal>
+
+
+            <div class="text-right">
+
+                <span>
+
+                    <x-mary-button icon="o-information-circle" label="Help" class="text-green-500"
+                        onclick="modal17.showModal()" spinner />
+                </span>
+            </div>
+        </div>
     </div>
-    <div class="px-20">
-    <x-mary-modal id="modal17" >
-        <p>
 
-            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Follow this
-                instuction while registering requirements</h2>
-            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-
-
-                <x-checkmark>This form has 2 steps </x-checkmark>
-                <x-checkmark>The referral only works for registered patients only </x-checkmark>
-                <x-checkmark>As the card number is filled data will automatically will be filled </x-checkmark>
-
-
-
-
-
-
-            </ul>
-
-            </p>
-     
-        <x-slot:actions>
-            {{-- Notice `onclick` is HTML --}}
-            
-            <x-mary-button label="Close" class="btn-accent" onclick="modal17.close()"  />
-        </x-slot:actions>
-    </x-mary-modal>
-
- 
-     <div class="text-right">
-       
-        <span>
-            
-            <x-mary-button icon="o-information-circle" label="Help" class="text-green-500" onclick="modal17.showModal()" spinner />
-        </span>
-       </div>
-</div>
-</div>
-   
 
     <div class="grid grid-cols-12 w-full">
         <div class="header col-span-12 rounded-lg bord py-6 text-left">
@@ -54,6 +53,7 @@
 
         </div>
 
+
         <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
             <div class="md:col-span-5">
                 <label class="form-control w-full">
@@ -61,9 +61,20 @@
                         <span class="label-text">Referral Id</span>
                     </div>
                     <input type="text" placeholder="referral id" class="input input-bordered input-accent "
-                        wire:model='referral_id' x-ref="answer" />
+                        wire:model.live='referralid' x-ref="answer" />
+                    <div class="mt-2 w-full overflow-hidden rounded-md bg-white">
+                        @if (count($results) > 0)
+                            @foreach ($results as $result)
+                                <div wire:click="fillSearchInput('{{ $result }}')"  class="cursor-pointer py-2 px-3 hover:bg-slate-100">
+                                    <p class="text-sm font-medium text-gray-600">{{ $result }}</p>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+
+
                 </label>
-                @error('referral_id')
+                @error('referralid')
                     <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
                         <span class="font-medium">{{ $message }}</span>
                     </div>
@@ -159,8 +170,11 @@
 
                     <select class="select select-accent w-full ">
                         <option disabled selected>Referring Doctor</option>
-                        <option>One Piece</option>
-                        <option>Naruto</option>
+                        @foreach ($doctors as $doctor)
+                        <option value={{$doctor->id}}>{{$doctor->name}}</option>
+                        
+                        @endforeach
+                       
 
                     </select>
                 </label>
@@ -177,7 +191,7 @@
                     @include('utils.spinner')
                 </div>
             </button>
-          
+
         </div>
     </div>
 

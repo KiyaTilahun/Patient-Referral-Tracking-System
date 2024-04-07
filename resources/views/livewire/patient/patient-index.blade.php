@@ -1,6 +1,46 @@
-<div x-data x-init="$refs.answer.focus()">
+<div  x-data="{
+	link: '{{$copiedref}}',
+	copy () {
+	  $clipboard(this.link)
+	}
+  }" x-init="$refs.answer.focus()">
 
         
+  <x-mary-modal wire:model="savedmodal" class="backdrop-blur">
+    <x-mary-alert title="Patient Has been saved" icon="o-check" class="alert-success"/>
+    
+    <div class="w-full py-8 px-14">
+        <div class="relative text-center flex justify-center">
+            <div class="label">
+                <span class="label-text">Referral ID</span>
+
+            </div>
+            <input id="npm-install-copy-button" type="text" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{$copiedref}}" disabled readonly>
+            <button data-copy-to-clipboard-target="npm-install-copy-button"  class="absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 inline-flex items-center justify-center" x-on:click="copy">
+                <span id="default-icon">
+                    <svg class="w-3.5 h-3.5"  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                        <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                    </svg>
+                </span>
+             
+               
+            </button>
+            <div id="tooltip-copy-npm-install-copy-button" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <span id="default-tooltip-message">Copy to clipboard</span>
+                <span id="success-tooltip-message" class="hidden">Copied!</span>
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex justify-end gap-4">
+        <x-mary-button label="OK" @click="$wire.savedmodal = false" class="btn btn-" />
+    <x-mary-button label="To Referral" class="btn btn-warning" link="/referral/add"/>
+    </div>
+
+</x-mary-modal>
+ 
+
     
     <x-mary-modal id="modal17" >
         <p>
@@ -20,6 +60,11 @@
             </ul>
 
             </p>
+
+
+            
+            
+
      
         <x-slot:actions>
             {{-- Notice `onclick` is HTML --}}
