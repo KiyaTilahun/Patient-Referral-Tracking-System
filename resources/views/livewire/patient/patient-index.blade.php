@@ -185,7 +185,7 @@
                             <x-mary-datepicker  wire:model="dob" class="input input-bordered input-accent" icon="o-calendar"  :config="$config1" />
 
                         </label>
-                        @error('email')
+                        @error('dob')
                             <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
                                 role="alert">
                                 <span class="font-medium">{{ $message }}</span>

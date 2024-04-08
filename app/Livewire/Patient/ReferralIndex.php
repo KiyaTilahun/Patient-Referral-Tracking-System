@@ -2,10 +2,13 @@
 
 namespace App\Livewire\Patient;
 
+use App\Models\Admin\Appointmentslot;
 use App\Models\Admin\Department;
 use App\Models\Admin\Hospital;
 use App\Models\Users\Doctor;
 use App\Models\Users\Patient;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -29,11 +32,12 @@ class ReferralIndex extends Component
     public $currentStep = 1;
     #[Url]
     public $search = '';
-    public bool $diagonal = false;
+    public bool $notdiagonal = false;
     public $referral_type;
     public $initial;
     public $availbledep;
     public $typeinitial;
+    public $config1;
 
     public function mount()
     {
@@ -43,6 +47,28 @@ class ReferralIndex extends Component
         $typeinitial = Hospital::where('id', $id)->first();
         $this->typeinitial = $typeinitial->type_id;
         // dd($this->typeinitial);
+
+
+        // day maker
+        $slots = Appointmentslot::where('slotused', '=', DB::raw('slotalotted'))
+            ->where('availability', '=', 'available')
+            ->get();
+
+        $daysArray = [];
+        foreach ($slots as $slot) {
+            $date = $slot->date;
+            if (!in_array($date, $daysArray)) {
+                $daysArray[] = $date;
+            }
+        }
+        for ($i = 0; $i < 5; $i++) {
+            
+            $nextSunday = Carbon::now()->addWeeks($i)->next(Carbon::SUNDAY)->format('Y/m/d');
+            
+            $daysArray[] = $nextSunday;
+        }
+     
+        $this->config1 = $this->getConfig1($daysArray);
     }
 
     public function increaseStep()
@@ -100,11 +126,11 @@ class ReferralIndex extends Component
     }
     public function updatedReferralType()
     {
-        $this->reset('diagonal');
+        $this->reset('notdiagonal');
         if ($this->referral_type != '3') {
 
 
-            $this->diagonal = true;
+            $this->notdiagonal = true;
             if ($this->referral_type == '2') {
 
                 $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
@@ -142,6 +168,24 @@ class ReferralIndex extends Component
         $this->card_number = $value;
         $this->dispatch('card_choosed', card_number: $value);
     }
+
+
+    public function getConfig1($daysArray)
+    {
+        return [
+            'dateFormat' => 'Y/m/d',
+            'enableTime' => false,
+            'disable' => $daysArray,
+            'minDate'=> "today",
+            'maxDate' => Carbon::now()->addDays(30)->format('Y/m/d'),
+            'theme' => 'material_dark'
+        ];
+    }
+
+
+
+
+
     public function render()
     {
         $results = [];
