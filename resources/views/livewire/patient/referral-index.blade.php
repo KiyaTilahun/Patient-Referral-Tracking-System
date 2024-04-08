@@ -42,7 +42,7 @@
         </div>
     </div>
 
-
+    <form wire:submit.prevent="register">
     <div class="grid grid-cols-12 w-full">
         <div class="header col-span-12 rounded-lg bord py-6 text-left">
 
@@ -52,6 +52,7 @@
 
 
         </div>
+        
         @if ($currentStep == 1)
 
         <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
@@ -61,7 +62,7 @@
                         <span class="label-text">Referral Id</span>
                     </div>
                     <input type="text" placeholder="referral id" class="input input-bordered input-accent "
-                        wire:model.live='referralid' x-ref="answer" />
+                        wire:model.live='card_number' x-ref="answer" />
                     <div class="mt-2 w-full overflow-hidden rounded-md bg-white">
                         @if (count($results) > 0)
                             @foreach ($results as $result)
@@ -74,7 +75,7 @@
 
 
                 </label>
-                @error('referralid')
+                @error('card_number')
                     <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
                         <span class="font-medium">{{ $message }}</span>
                     </div>
@@ -169,7 +170,6 @@
                 @enderror
             </div>
         </div>
-        @endif
         <div class="flex justify-end col-span-10">
             <button type="button" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Next
                 <div wire:loading>
@@ -178,8 +178,136 @@
             </button>
 
         </div>
-    </div>
+        @else  
+        <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
+           
+            <div class="md:col-span-5">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Referral Type</span>
+                    </div>
 
+                    <select class="select select-accent w-full " wire:model.live='referral_type'>
+                        <option  disabled selected value="">Referral Type</option>
+                       
+                        @if (!($typeinitial==1))
+                            
+                       
+                        <option value='1'>Vertical</option>
+                        @endif
+                        <option value='2'>Horizontal</option>
+                        <option value='3'>Diagonal</option>
+                       
+
+                    </select>
+                </label>
+                @error('referral_type')
+                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+            </div> 
+            @if ($diagonal)
+            <div class="md:col-span-5">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Treatment needed</span>
+                    </div>
+
+                    <select class="select select-accent w-full " wire:model='doctor'>
+                        <option disabled selected>Referring Doctor</option>
+                        @foreach ($doctors as $doctor)
+                        <option value={{$doctor->id}}>{{$doctor->name}}</option>
+                        
+                        @endforeach
+                       
+
+                    </select>
+                </label>
+                @error('doctor')
+                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+            </div> 
+            <div class="md:col-span-5">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Available Departments</span>
+                    </div>
+
+                    <select class="select select-accent w-full " wire:model='selecteddep'>
+                        <option disabled selected>departments</option>
+                        @foreach ($availbledep as $avail)
+                        <option value={{$avail->id}}>{{$avail->name}}</option>
+                        
+                        @endforeach
+                       
+
+                    </select>
+                </label>
+                @error('selecteddep')
+                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+            </div>  
+            
+            @elseif (isset($initial))
+                
+            
+            <div class="md:col-span-5">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Initial Hospital</span>
+                    </div>
+
+                    <input type="text" placeholder="{{$initial->name}}" class="input input-bordered input-accent disabled:input-accent" wire:model='$initial' disabled/>
+                </label>
+                @error('doctor')
+                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+            </div> 
+            @endif
+            <div class="md:col-span-5">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Referral Type</span>
+                    </div>
+
+                    <select class="select select-accent w-full " wire:model='doctor'>
+                        <option disabled selected>Referring Doctor</option>
+                        @foreach ($doctors as $doctor)
+                        <option value={{$doctor->id}}>{{$doctor->name}}</option>
+                        
+                        @endforeach
+                       
+
+                    </select>
+                </label>
+                @error('doctor')
+                    <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
+            </div>     
+
+        </div>
+
+        <div class="flex justify-end col-span-10">
+            <button type="submit" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Submit
+                <div wire:loading>
+                    @include('utils.spinner')
+                </div>
+            </button>
+
+        </div>
+        @endif
+      
+    </div>
+</form>
 
 
 

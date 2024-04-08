@@ -5,6 +5,7 @@ namespace App\Models\Admin;
 use App\Models\Referral\Referral;
 use App\Models\User;
 use App\Models\Users\Liaison;
+use App\Models\Users\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,6 +35,11 @@ class Hospital extends Model
     public function region()
     {
         return $this->belongsTo(Region::class);
+    }
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
     }
     public function type()
     {
