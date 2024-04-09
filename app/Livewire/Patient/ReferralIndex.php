@@ -165,14 +165,69 @@ class ReferralIndex extends Component
     }
     public function updatedSelecteddep()
     {
-        $this->reset('availablecenter');
-        $avail = $this->availbledep->find(1);
-        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
-        $this->availablecenter = $avail->hospitals->filter(function ($hospitalItem) use ($hospital) {
-            return $hospitalItem->type_id > $hospital->type_id && $hospitalItem->type_id <= 3;
-        });
-    }
 
+        $this->reset('availablecenter');
+        $avail = $this->selecteddep;
+        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
+        if ($this->referral_type == '1') {
+
+            if ($hospital->type_id == '2') {
+                $hospitalsWithDepartment = Hospital::where('type_id', 3)
+                    ->whereHas('departments', function ($query) use ($avail) {
+                        $query->where('department_id', $avail);
+                    })
+                    ->get();
+                $this->availablecenter = $hospitalsWithDepartment;
+            }
+            // if ($hospital->type_id == '1') {
+                else{
+                $hospitalsWithDepartment = Hospital::where('type_id', 2)
+                    ->whereHas('departments', function ($query) use ($avail, $hospital) {
+                        $query->where('department_id', $avail->department_id)
+                            ->where('region_id', $hospital->region_id);
+                    })
+                    ->get();
+
+                $this->availablecenter = $hospitalsWithDepartment;
+            }
+        }
+
+        if ($this->referral_type == '2') {
+
+            if ($hospital->type_id == '2') {
+                $hospitalsWithDepartment = Hospital::where('type_id', 2)
+                    ->whereHas('departments', function ($query) use ($avail,$hospital) {
+
+                        $query->where('department_id', $avail)
+                        ->where('region_id', $hospital->region_id);
+                    })
+                    ->get();
+                $this->availablecenter = $hospitalsWithDepartment;
+            }
+            elseif ($hospital->type_id == '1') {
+                
+                $hospitalsWithDepartment = Hospital::where('type_id', 3)
+                    ->whereHas('departments', function ($query) use ($avail, $hospital) {
+                        $query->where('department_id', $avail->department_id);
+            
+                    })
+                    ->get();
+
+                $this->availablecenter = $hospitalsWithDepartment;
+            }
+            else{
+                $hospitalsWithDepartment = Hospital::where('type_id', 1)
+                ->whereHas('departments', function ($query) use ($avail, $hospital) {
+                    $query->where('department_id', $avail->department_id)
+                    ->where('region_id', $hospital->region_id);
+        
+                })
+                ->get();
+
+            $this->availablecenter = $hospitalsWithDepartment;
+            }
+        }
+    }
 
     #[On('card_choosed')]
     public function updatename($card_number)
