@@ -53,7 +53,7 @@
 
             </div>
 
-            @if ($currentStep == 1)
+            @if ($currentStep == 2)
 
                 <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
                     <div class="md:col-span-5">
@@ -270,10 +270,42 @@
                             @enderror
                         </div>
                     @endif
+                    {{-- common elements --}}
+                    <div class="md:col-span-5 w-full">
+                        <label class="form-control w-full ">
+                            <div class="label">
+                                <span class="label-text">Attach All the necessary Patient files as one pdf
+                                    file
+                                    <span class="badge badge-accent badge-outline">Max 10mb</span>
+                                </span>
+
+
+                            </div>
+                            <input type="file" class="file-input file-input-bordered w-full "
+                                accept=".pdf" wire:model="file" />
+
+                        </label>
+                        @error('file')
+                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
                     
 
                 </div>
 
+    
+               
+                <div class="flex justify-end col-span-10">
+                    <button type="button" class="btn btn-md btn-outline btn-accent" wire:click="generatepdf">Generate pdf
+                        <div wire:loading>
+                            @include('utils.spinner')
+                        </div>
+                    </button>
+
+                </div>
                 <div class="flex justify-end col-span-10">
                     <button type="submit" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Submit
                         <div wire:loading>

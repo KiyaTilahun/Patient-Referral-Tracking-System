@@ -56,7 +56,7 @@
                       <td>
                         <x-checkmark>{{ $department->name }}</x-checkmark>
                        </td>
-                      <td><x-mary-button icon="o-trash" class="text-red-500" wire:click.live="detachdep({{ $department->id }})" wire:key="{{$department->id}}" spinner /></td>
+                      <td><x-mary-button icon="o-trash" class="text-red-500" wire:click.live="detachdep({{ $department->id }})" wire:key="{{$department->id}}" spinner  wire:confirm='are you sure?'/></td>
                     </tr>
                     @endif
                     <!-- row 2 -->

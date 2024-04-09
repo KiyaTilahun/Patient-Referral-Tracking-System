@@ -9,9 +9,11 @@ use App\Models\Users\Doctor;
 use App\Models\Users\Patient;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReferralIndex extends Component
 {
@@ -168,8 +170,21 @@ class ReferralIndex extends Component
         $this->card_number = $value;
         $this->dispatch('card_choosed', card_number: $value);
     }
+    // generator
+    public function generatepdf(){
+        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
 
+        $availbledep =  Department::all()->toArray();
+    
+        $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
+        $day=now()->format('d/m/Y');
+        $pdf =  PDF::loadView('utils.generatepdf', compact('availbledep','qr','day'));
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+            }, 'name.pdf');
+    }
 
+// calendar configuration
     public function getConfig1($daysArray)
     {
         return [
@@ -195,6 +210,9 @@ class ReferralIndex extends Component
 
             $results = Patient::where('card_number', 'like', '%' . $this->card_number . '%')->pluck('card_number');
         }
+
+     
+        
 
         return view('livewire.patient.referral-index', compact('results'));
     }
