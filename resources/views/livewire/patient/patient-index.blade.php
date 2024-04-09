@@ -69,7 +69,7 @@
         <x-slot:actions>
             {{-- Notice `onclick` is HTML --}}
             
-            <x-mary-button label="Close" class="btn-accent" onclick="modal17.close()"  />
+            <x-mary-button label="Close" class="btn-success" onclick="modal17.close()"  />
         </x-slot:actions>
     </x-mary-modal>
 
@@ -97,7 +97,7 @@
                                 <span class="label-text">Patient Name</span>
 
                             </div>
-                            <input type="text" placeholder="name" class="input input-bordered input-accent  w-full "
+                            <input type="text" placeholder="name" class="input input-bordered input-success  w-full "
                                 wire:model='name' x-ref="answer" />
 
                         </label>
@@ -140,7 +140,7 @@
                                 <span class="label-text">Phone Number</span>
 
                             </div>
-                            <label class="input  input-accent flex items-center ">
+                            <label class="input  input-success flex items-center ">
                                 +251
                                 <input type="text" pattern="[0-9]{9}" maxlength=9 minlength="9"
                                     class="grow outline-none border-none active:border-none focus:border-none" placeholder="Phone Number"
@@ -163,7 +163,7 @@
 
                             </div>
                             <input type="email" placeholder="email"
-                                class="input input-bordered input-accent w-full max-w-xs" wire:model='email' />
+                                class="input input-bordered input-success w-full max-w-xs" wire:model='email' />
 
                         </label>
                         @error('email')
@@ -182,7 +182,7 @@
 
                             </div>
                        
-                            <x-mary-datepicker  wire:model="dob" class="input input-bordered input-accent" icon="o-calendar"  :config="$config1" />
+                            <x-mary-datepicker  wire:model="dob" class="input input-bordered input-success" icon="o-calendar"  :config="$config1" />
 
                         </label>
                         @error('dob')
@@ -200,7 +200,7 @@
 
                             </div>
                           
-                                <x-mary-select  class="input input-bordered input-accent focus:border-accent border-accent " icon-right="c-tag" :options="$departments" wire:model="treatment" />
+                                <x-mary-select  class="input input-bordered input-success focus:border-success border-success " icon-right="c-tag" :options="$departments" wire:model="treatment" />
 
                         </label>
                         @error('cardnumber')
@@ -218,7 +218,7 @@
                                 <span class="label-text">Medical Note</span>
 
                             </div>
-                            <textarea class="textarea textarea-accent" placeholder="medical history" ></textarea>
+                            <textarea class="textarea textarea-success" placeholder="medical history" ></textarea>
 
                                 
 
@@ -235,7 +235,7 @@
 
                 </div>
                 <div class="flex justify-end pt-8 pr-20">
-                    <button type="submit" class="btn btn-outline btn-accent">Submit <div wire:loading>  @include('utils.spinner')</div></button>
+                    <button type="submit" class="btn btn-outline btn-success">Submit <div wire:loading>  @include('utils.spinner')</div></button>
                 </div>
             </div>
       

@@ -26,7 +26,7 @@
                 <x-slot:actions>
                     {{-- Notice `onclick` is HTML --}}
 
-                    <x-mary-button label="Close" class="btn-accent" onclick="modal17.close()" />
+                    <x-mary-button label="Close" class="btn-success" onclick="modal17.close()" />
                 </x-slot:actions>
             </x-mary-modal>
 
@@ -61,7 +61,7 @@
                             <div class="label">
                                 <span class="label-text">Referral Id</span>
                             </div>
-                            <input type="text" placeholder="referral id" class="input input-bordered input-accent "
+                            <input type="text" placeholder="referral id" class="input input-bordered input-success "
                                 wire:model.live='card_number' x-ref="answer" />
                             <div class="mt-2 w-full overflow-hidden rounded-md bg-white">
                                 @if (count($results) > 0)
@@ -88,7 +88,7 @@
                             <div class="label">
                                 <span class="label-text">Patient Name</span>
                             </div>
-                            <input type="text" placeholder="Name" class="input input-bordered input-accent "
+                            <input type="text" placeholder="Name" class="input input-bordered input-success "
                                 wire:model='name' />
                         </label>
                         @error('name')
@@ -106,7 +106,7 @@
                             </div>
 
                             <x-mary-textarea label="patient past treatment history"
-                                class=" input-bordered border-accent " wire:model="history" placeholder=""
+                                class=" input-bordered border-success " wire:model="history" placeholder=""
                                 hint="Max 1000 chars other wise attach it" rows="1" inline maxlength="1000" />
                         </label>
 
@@ -117,7 +117,7 @@
                                 <span class="label-text">Findings</span>
                             </div>
 
-                            <x-mary-textarea label="treatmen finding" class=" input-bordered border-accent "
+                            <x-mary-textarea label="treatmen finding" class=" input-bordered border-success "
                                 wire:model="finding" placeholder="" hint="Max 1000 chars other wise attach it"
                                 rows="1" inline maxlength="1000" />
                         </label>
@@ -129,7 +129,7 @@
                                 <span class="label-text">Treatment Given</span>
                             </div>
 
-                            <x-mary-textarea label="treatment given" class=" input-bordered border-accent "
+                            <x-mary-textarea label="treatment given" class=" input-bordered border-success "
                                 wire:model="treatment" placeholder="" hint="Max 1000 chars other wise attach it"
                                 rows="1" inline maxlength="1000" />
                         </label>
@@ -142,7 +142,7 @@
                                 <span class="label-text">Referral Reason</span>
                             </div>
 
-                            <x-mary-textarea label="Referral Reason" class=" input-bordered border-accent "
+                            <x-mary-textarea label="Referral Reason" class=" input-bordered border-success "
                                 wire:model="reason" placeholder="" hint="Max 100 chars other wise attach it"
                                 rows="1" inline maxlength="100" />
                         </label>
@@ -156,7 +156,7 @@
                                 <span class="label-text">Referring Doctor</span>
                             </div>
 
-                            <select class="select select-accent w-full " wire:model='doctor'>
+                            <select class="select select-success w-full " wire:model='doctor'>
                                 <option disabled selected>Referring Doctor</option>
                                 @foreach ($doctors as $doctor)
                                     <option value={{ $doctor->id }}>{{ $doctor->name }}</option>
@@ -180,7 +180,7 @@
 
                         </div>
                    
-                        <x-mary-datepicker  wire:model="dob" class="input input-bordered input-accent" icon="o-calendar"  :config="$config1" />
+                        <x-mary-datepicker  wire:model="dob" class="input input-bordered input-success" icon="o-calendar"  :config="$config1" />
 
                     </label>
                     @error('dob')
@@ -191,7 +191,7 @@
                     @enderror
                 </div>
                 <div class="flex justify-end col-span-10">
-                    <button type="button" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Next
+                    <button type="button" class="btn btn-md btn-outline btn-success" wire:click="increaseStep">Next
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>
@@ -208,8 +208,8 @@
                                 <span class="label-text">Referral Type</span>
                             </div>
 
-                            <select class="select select-accent w-full " wire:model.live='referral_type'>
-                                <option disabled selected value="">Referral Type</option>
+                            <select class="select select-success w-full " wire:model.live='referral_type'>
+                                <option  selected value="">Referral Type</option>
 
                                 @if (!($typeinitial == 1))
                                     <option value='1'>Vertical</option>
@@ -235,7 +235,7 @@
                                     <span class="label-text">Available Departments</span>
                                 </div>
 
-                                <select class="select select-accent w-full " wire:model='selecteddep'>
+                                <select class="select select-success w-full " wire:model.live='selecteddep'>
                                     <option disabled selected>departments</option>
                                     @foreach ($availbledep as $avail)
                                         <option value={{ $avail->id }}>{{ $avail->name }}</option>
@@ -259,7 +259,7 @@
                                 </div>
 
                                 <input type="text" placeholder="{{ $initial->name }}"
-                                    class="input input-bordered input-accent disabled:input-accent"
+                                    class="input input-bordered input-success disabled:input-success"
                                     wire:model='$initial' disabled />
                             </label>
                             @error('doctor')
@@ -271,12 +271,48 @@
                         </div>
                     @endif
                     {{-- common elements --}}
+                    @if($notdiagonal && isset($selecteddep))
+                    <div class="md:col-span-5">
+                        <label class="form-control w-full ">
+                            <div class="label">
+                                <span class="label-text">Choose Hospital</span>
+
+                            </div>
+                            <select class="select select-success" wire:model.live='zone'>
+                                @if (count($availablecenter) == 0)
+                                    <option value="">No zone</option>
+                                @else
+                                    @foreach ($availablecenter as $avail)
+                                        <option value="{{ $avail->id }}">{{ $avail->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </label>
+
+                    </div>
+                    @else
+                    <div class="md:col-span-5">
+                        <label class="form-control w-full ">
+                            <div class="label">
+                                <span class="label-text">Choose Region</span>
+
+                            </div>
+                            <select class="select select-success" wire:model.live='zone'>
+                                
+                                    <option value="">No need of choosing</option>
+                               
+                            </select>
+                        </label>
+
+                    </div>
+                    @endif
                     <div class="md:col-span-5 w-full">
                         <label class="form-control w-full ">
                             <div class="label">
                                 <span class="label-text">Attach All the necessary Patient files as one pdf
                                     file
-                                    <span class="badge badge-accent badge-outline">Max 10mb</span>
+                                    <span class="badge badge-success badge-outline">Max 10mb</span>
                                 </span>
 
 
@@ -298,16 +334,16 @@
 
     
                
-                <div class="flex justify-end col-span-10">
-                    <button type="button" class="btn btn-md btn-outline btn-accent" wire:click="generatepdf">Generate pdf
+                {{-- <div class="flex justify-end col-span-10">
+                    <button type="button" class="btn btn-md btn-outline btn-success" wire:click="generatepdf">Generate pdf
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>
                     </button>
 
-                </div>
+                </div> --}}
                 <div class="flex justify-end col-span-10">
-                    <button type="submit" class="btn btn-md btn-outline btn-accent" wire:click="increaseStep">Submit
+                    <button type="submit" class="btn btn-md btn-outline btn-success" wire:click="increaseStep">Submit
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>

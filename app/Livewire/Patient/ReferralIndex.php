@@ -38,6 +38,7 @@ class ReferralIndex extends Component
     public $referral_type;
     public $initial;
     public $availbledep;
+    public $availablecenter;
     public $typeinitial;
     public $config1;
 
@@ -64,12 +65,12 @@ class ReferralIndex extends Component
             }
         }
         for ($i = 0; $i < 5; $i++) {
-            
+
             $nextSunday = Carbon::now()->addWeeks($i)->next(Carbon::SUNDAY)->format('Y/m/d');
-            
+
             $daysArray[] = $nextSunday;
         }
-     
+
         $this->config1 = $this->getConfig1($daysArray);
     }
 
@@ -131,29 +132,47 @@ class ReferralIndex extends Component
         $this->reset('notdiagonal');
         if ($this->referral_type != '3') {
 
+            $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
 
             $this->notdiagonal = true;
             if ($this->referral_type == '2') {
 
-                $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
                 $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
                     $query->where('region_id', $hospital->region_id)
                         ->where('type_id', $hospital->type_id);
                 })->get();
-            } else {
+            }
 
-                $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
-                $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
-                    $query->where('region_id', $hospital->region_id)
-                        ->where('type_id', '>', $hospital->type_id)
-                        ->where('type_id', '<=', 3);
-                })->get();
+            if ($this->referral_type == '1') {
+                if ($hospital->type_id == 1) {
+                    $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
+                        $query->where('region_id', $hospital->region_id)
+                            ->where('type_id', '>', $hospital->type_id)
+                            ->where('type_id', '<=', 3);
+                    })->with('hospitals')->get();
+                } else {
+                    $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
+                        $query
+                            ->where('type_id', '>', $hospital->type_id)
+                            ->where('type_id', '<=', 3);
+                    })->get();
+                }
             }
         } else {
             $initial = Patient::where('card_number', $this->card_number)->first();
             $this->initial = $initial->hospital;
         }
     }
+    public function updatedSelecteddep()
+    {
+        $this->reset('availablecenter');
+        $avail = $this->availbledep->find(1);
+        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
+        $this->availablecenter = $avail->hospitals->filter(function ($hospitalItem) use ($hospital) {
+            return $hospitalItem->type_id > $hospital->type_id && $hospitalItem->type_id <= 3;
+        });
+    }
+
 
     #[On('card_choosed')]
     public function updatename($card_number)
@@ -170,28 +189,33 @@ class ReferralIndex extends Component
         $this->card_number = $value;
         $this->dispatch('card_choosed', card_number: $value);
     }
+
+
+
+
     // generator
-    public function generatepdf(){
+    public function generatepdf()
+    {
         $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
 
         $availbledep =  Department::all()->toArray();
-    
+
         $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
-        $day=now()->format('d/m/Y');
-        $pdf =  PDF::loadView('utils.generatepdf', compact('availbledep','qr','day'));
+        $day = now()->format('d/m/Y');
+        $pdf =  PDF::loadView('utils.generatepdf', compact('availbledep', 'qr', 'day'));
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
-            }, 'name.pdf');
+        }, 'name.pdf');
     }
 
-// calendar configuration
+    // calendar configuration
     public function getConfig1($daysArray)
     {
         return [
             'dateFormat' => 'Y/m/d',
             'enableTime' => false,
             'disable' => $daysArray,
-            'minDate'=> "today",
+            'minDate' => "today",
             'maxDate' => Carbon::now()->addDays(30)->format('Y/m/d'),
             'theme' => 'material_dark'
         ];
@@ -210,10 +234,6 @@ class ReferralIndex extends Component
 
             $results = Patient::where('card_number', 'like', '%' . $this->card_number . '%')->pluck('card_number');
         }
-
-     
-        
-
         return view('livewire.patient.referral-index', compact('results'));
     }
 }
