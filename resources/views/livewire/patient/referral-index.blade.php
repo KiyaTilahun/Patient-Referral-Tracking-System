@@ -56,7 +56,7 @@
             @if ($currentStep == 2)
 
                 <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Referral Id</span>
@@ -83,7 +83,7 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Patient Name</span>
@@ -99,7 +99,7 @@
                         @enderror
                     </div>
 
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">History</span>
@@ -111,7 +111,7 @@
                         </label>
 
                     </div>
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Findings</span>
@@ -123,7 +123,7 @@
                         </label>
 
                     </div>
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Treatment Given</span>
@@ -136,7 +136,7 @@
 
                     </div>
 
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Referral Reason</span>
@@ -150,7 +150,7 @@
                     </div>
 
 
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Referring Doctor</span>
@@ -173,23 +173,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="md:col-span-6 pt-4">
-                    <label class="form-control w-full max-w-xs">
-                        <div class="label">
-                            <span class="label-text">Date of Birth</span>
 
-                        </div>
-                   
-                        <x-mary-datepicker  wire:model="dob" class="input input-bordered input-success" icon="o-calendar"  :config="$config1" />
-
-                    </label>
-                    @error('dob')
-                        <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
-                            role="alert">
-                            <span class="font-medium">{{ $message }}</span>
-                        </div>
-                    @enderror
-                </div>
                 <div class="flex justify-end col-span-10">
                     <button type="button" class="btn btn-md btn-outline btn-success" wire:click="increaseStep">Next
                         <div wire:loading>
@@ -198,18 +182,17 @@
                     </button>
 
                 </div>
-
             @else
                 <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
 
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-5 col-span-12">
                         <label class="form-control w-full">
                             <div class="label">
                                 <span class="label-text">Referral Type</span>
                             </div>
 
                             <select class="select select-success w-full " wire:model.live='referral_type'>
-                                <option  selected value="">Referral Type</option>
+                                <option selected value="">Referral Type</option>
 
                                 @if (!($typeinitial == 1))
                                     <option value='1'>Vertical</option>
@@ -228,8 +211,8 @@
                         @enderror
                     </div>
                     @if ($notdiagonal)
-                        
-                        <div class="md:col-span-5">
+
+                        <div class="md:col-span-5 col-span-12">
                             <label class="form-control w-full">
                                 <div class="label">
                                     <span class="label-text">Available Departments</span>
@@ -252,7 +235,7 @@
                             @enderror
                         </div>
                     @elseif (isset($initial))
-                        <div class="md:col-span-5">
+                        <div class="md:col-span-5 col-span-12">
                             <label class="form-control w-full">
                                 <div class="label">
                                     <span class="label-text">Initial Hospital</span>
@@ -271,43 +254,87 @@
                         </div>
                     @endif
                     {{-- common elements --}}
-                    @if($notdiagonal && isset($selecteddep))
-                    <div class="md:col-span-5">
-                        <label class="form-control w-full ">
-                            <div class="label">
-                                <span class="label-text">Choose Hospital</span>
+                    @if ($notdiagonal && isset($selecteddep))
+                        <div class="md:col-span-5 col-span-12">
+                            <label class="form-control w-full ">
+                                <div class="label">
+                                    <span class="label-text">Choose Hospital</span>
 
-                            </div>
-                            <select class="select select-success" wire:model.live='zone'>
-                                @if (count($availablecenter) == 0)
-                                    <option value="">No zone</option>
-                                @else
-                                    @foreach ($availablecenter as $avail)
-                                        <option value="{{ $avail->id }}">{{ $avail->name }}
-                                        </option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </label>
+                                </div>
+                                <select class="select select-success" wire:model.live='selectedcenter'>
+                                    @if (count($availablecenter) == 0)
+                                        <option value="">No Centers</option>
+                                    @else
+                                        <option value="">Centers</option>
+                                        @foreach ($availablecenter as $avail)
+                                            <option value="{{ $avail->id }}">{{ $avail->name }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </label>
 
-                    </div>
+                        </div>
                     @else
-                    <div class="md:col-span-5">
-                        <label class="form-control w-full ">
-                            <div class="label">
-                                <span class="label-text">Choose Region</span>
+                        <div class="md:col-span-5 col-span-12">
+                            <label class="form-control w-full ">
+                                <div class="label">
+                                    <span class="label-text">Available Centers</span>
 
-                            </div>
-                            <select class="select select-success" wire:model.live='zone'>
-                                
-                                    <option value="">No need of choosing</option>
-                               
-                            </select>
-                        </label>
+                                </div>
+                                <select class="select select-success" wire:model.live='zone' disabled>
 
-                    </div>
+                                    <option value=""></option>
+
+                                </select>
+                            </label>
+
+                        </div>
                     @endif
-                    <div class="md:col-span-5 w-full">
+
+
+
+                    {{-- choosing appointment day --}}
+                    {{-- default view --}}
+                    @if (!isset($selectedcenter))
+                        <div class="md:col-span-5 col-span-12 ">
+                            <label class="form-control w-full ">
+                                <div class="label">
+                                    <span class="label-text">Choose appointment day</span>
+
+                                </div>
+
+                                <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
+                                    icon="o-calendar" disabled />
+
+                            </label>
+
+                        </div>
+                        {{-- when department is choosen --}}
+                    @else
+                        <div class="md:col-span-5 col-span-12 ">
+                            <label class="form-control w-full ">
+                                <div class="label">
+                                    <span class="label-text">Choose appointment day</span>
+
+                                </div>
+                                @if (!isset($sonfig1))
+                                    <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
+                                        icon="o-calendar" :config="$config1"/>
+                                @else
+                                <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
+                                icon="o-calendar" disabled />
+                                @endif
+                            </label>
+                            @error('appday')
+                                <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                    role="alert">
+                                    <span class="font-medium">{{ $message }}</span>
+                                </div>
+                            @enderror
+                        </div>
+                    @endif
+                    <div class="md:col-span-5 col-span-12 w-full">
                         <label class="form-control w-full ">
                             <div class="label">
                                 <span class="label-text">Attach All the necessary Patient files as one pdf
@@ -317,8 +344,8 @@
 
 
                             </div>
-                            <input type="file" class="file-input file-input-bordered w-full "
-                                accept=".pdf" wire:model="file" />
+                            <input type="file" class="file-input file-input-bordered w-full " accept=".pdf"
+                                wire:model="file" />
 
                         </label>
                         @error('file')
@@ -328,12 +355,12 @@
                             </div>
                         @enderror
                     </div>
-                    
+
 
                 </div>
 
-    
-               
+
+
                 {{-- <div class="flex justify-end col-span-10">
                     <button type="button" class="btn btn-md btn-outline btn-success" wire:click="generatepdf">Generate pdf
                         <div wire:loading>
@@ -342,8 +369,9 @@
                     </button>
 
                 </div> --}}
-                <div class="flex justify-end col-span-10">
-                    <button type="submit" class="btn btn-md btn-outline btn-success" wire:click="increaseStep">Submit
+                <div class="flex justify-end col-span-10 pt-6">
+                    <button type="submit" class="btn btn-md btn-outline btn-success"
+                        wire:click="increaseStep">Submit
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>

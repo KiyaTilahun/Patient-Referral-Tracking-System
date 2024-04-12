@@ -90,6 +90,25 @@
         </div>
       
         @endif
+
+
+          <div class="md:col-span-5 ">
+                        <label class="form-control w-full ">
+                            <div class="label">
+                                <span class="label-text">Choose appointment day</span>
+    
+                            </div>
+                       
+                            <x-mary-datepicker  wire:model="appday" class="input input-bordered input-success" icon="o-calendar" :config="$config1"   />
+    
+                        </label>
+                        @error('appday')
+                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
       
         
         </div></div>

@@ -7,7 +7,7 @@
            
         </div>
 
-        <div  class="md:col-span-7 w-full">
+        <div  class="md:col-span-7 col-span-12 w-full">
             
         <form wire:submit="adddep"> 
             <label wire:ignore class="form-control w-full ">
@@ -35,7 +35,7 @@
         </div>
    
         <div class="col-span-1"></div>
-        <div  class="md:col-span-4 max-h-80 overflow-y-scroll">
+        <div  class="md:col-span-4 max-h-80 overflow-y-scroll col-span-12 pt-6 md:pt-0">
             <p class="font-medium text-lg"> Available Departments</p>
             <div class="overflow-x-auto">
                 <table class="table table-zebra">

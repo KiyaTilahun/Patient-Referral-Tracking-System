@@ -21,6 +21,11 @@
                 </div>
                 <input type="number" placeholder="{{ $slot }}" class="input input-bordered w-full max-w-xs"
                     wire:model='slot' min="0" value="{{$slot}} " />
+                    @error('slot')
+                    <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600" role="alert">
+                        <span class="font-medium">{{ $message }}</span>
+                    </div>
+                @enderror
 
             </label>
 

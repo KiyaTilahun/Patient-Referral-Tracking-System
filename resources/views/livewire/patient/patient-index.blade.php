@@ -91,7 +91,7 @@
        
             <div class="lg:col-span-2 lg:pt-14">
                 <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12">
-                    <div class="md:col-span-6">
+                    <div class="md:col-span-6 col-span-12">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Patient Name</span>
@@ -108,7 +108,7 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="md:col-span-6">
+                    <div class="md:col-span-6 col-span-12">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Gender</span>
@@ -134,7 +134,7 @@
                   
 
 
-                    <div class="md:col-span-6">
+                    <div class="md:col-span-6 col-span-12">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Phone Number</span>
@@ -156,7 +156,7 @@
                         @enderror
                     </div>
 
-                    <div class="md:col-span-6">
+                    <div class="md:col-span-6 col-span-12">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Center Email</span>
@@ -175,7 +175,7 @@
                     </div>
 
 
-                    <div class="md:col-span-6 pt-4">
+                    <div class="md:col-span-6 col-span-12 pt-4">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Date of Birth</span>

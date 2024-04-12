@@ -61,10 +61,11 @@ class EditIndex extends Component
 
         $this->validate(
             [
-                'slot' => ['required'],
-                'depdays'=>['required']
+                'slot' => 'required|numeric|between:2,999',
+                'depdays'=>'required'
             ]
         );
+
 
       $this->department->update(['slot'=>$this->slot]);
         
