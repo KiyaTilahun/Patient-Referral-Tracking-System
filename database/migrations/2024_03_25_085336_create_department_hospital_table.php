@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('hospital_id')->constrained('hospitals')->cascadeOnDelete()->cascadeOnUpdate();
-$table->boolean('active')->default(1);
-$table->integer('slot')->default(10);
+            $table->boolean('active')->default(1);
+            $table->integer('slot')->default(10);
 
             $table->timestamps();
         });

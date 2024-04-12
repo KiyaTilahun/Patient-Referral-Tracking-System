@@ -5,6 +5,7 @@ namespace App\Livewire\Patient;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
 use App\Models\Users\Patient;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class PatientIndex extends Component
@@ -31,7 +32,9 @@ class PatientIndex extends Component
     public function mount(){
 
         $this->openref;
+        $minDate = Carbon::now()->yesterday()->format('Y/m/d');
         $this->config1 = [  'dateFormat' => 'Y/m/d',
+        'maxDate' =>$minDate ,
                        'enableTime' => false,];
         $this->genders = [
             ['value' => 1, 'label' => 'Male'],
