@@ -157,7 +157,7 @@
                             </div>
 
                             <select class="select select-success w-full " wire:model='doctor'>
-                                <option disabled selected>Referring Doctor</option>
+                                <option  disabled>Referring Doctor</option>
                                 @foreach ($doctors as $doctor)
                                     <option value={{ $doctor->id }}>{{ $doctor->name }}</option>
                                 @endforeach
@@ -194,7 +194,7 @@
                             <select class="select select-success w-full " wire:model.live='referral_type'>
                                 <option selected value="">Referral Type</option>
 
-                                @if (!($typeinitial == 1))
+                                @if (!($typeinitial == 3))
                                     <option value='1'>Vertical</option>
                                 @endif
                                 <option value='2'>Horizontal</option>
@@ -219,7 +219,7 @@
                                 </div>
 
                                 <select class="select select-success w-full " wire:model.live='selecteddep'>
-                                    <option disabled selected>departments</option>
+                                    <option value="">departments</option>
                                     @foreach ($availbledep as $avail)
                                         <option value={{ $avail->id }}>{{ $avail->name }}</option>
                                     @endforeach

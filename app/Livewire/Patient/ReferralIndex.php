@@ -4,6 +4,7 @@ namespace App\Livewire\Patient;
 
 use App\Models\Admin\Appointmentslot;
 use App\Models\Admin\Department;
+use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
 use App\Models\DayDepartment;
 use App\Models\Users\Doctor;
@@ -43,13 +44,14 @@ class ReferralIndex extends Component
     public $availablecenter;
     public $typeinitial;
     public $config1;
+    public $hosid;
 
     public function mount()
     {
-        $id = auth()->user()->hospital_id;
+        $this->hosid = auth()->user()->hospital_id;
         $this->currentStep = 1;
-        $this->doctors = Doctor::where('hospital_id', $id)->get();
-        $typeinitial = Hospital::where('id', $id)->first();
+        $this->doctors = Doctor::where('hospital_id', $this->hosid)->get();
+        $typeinitial = Hospital::where('id', $this->hosid)->first();
         $this->typeinitial = $typeinitial->type_id;
         // dd($this->typeinitial);
 
@@ -124,6 +126,7 @@ class ReferralIndex extends Component
 
                 $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
                     $query->where('region_id', $hospital->region_id)
+                        ->where('hospitals.id', '!=', $hospital->id)
                         ->where('type_id', $hospital->type_id);
                 })->get();
             }
@@ -132,6 +135,7 @@ class ReferralIndex extends Component
                 if ($hospital->type_id == 1) {
                     $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
                         $query->where('region_id', $hospital->region_id)
+                            ->where('hospitals.id', '!=', $hospital->id)
                             ->where('type_id', '>', $hospital->type_id)
                             ->where('type_id', '<=', 3);
                     })->with('hospitals')->get();
@@ -139,6 +143,7 @@ class ReferralIndex extends Component
                     $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
                         $query
                             ->where('type_id', '>', $hospital->type_id)
+                            ->where('hospitals.id', '!=', $hospital->id)
                             ->where('type_id', '<=', 3);
                     })->get();
                 }
@@ -153,12 +158,13 @@ class ReferralIndex extends Component
     {
 
         $this->reset('availablecenter');
+        // dd($this->selecteddep);
         $avail = $this->selecteddep;
         $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
         if ($this->referral_type == '1') {
 
             if ($hospital->type_id == '2') {
-                $hospitalsWithDepartment = Hospital::where('type_id', 3)
+                $hospitalsWithDepartment = Hospital::where('type_id', 3)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail) {
                         $query->where('department_id', $avail);
                     })
@@ -167,9 +173,9 @@ class ReferralIndex extends Component
             }
             // if ($hospital->type_id == '1') {
             else {
-                $hospitalsWithDepartment = Hospital::where('type_id', 2)
+                $hospitalsWithDepartment = Hospital::where('type_id', 2) ->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
-                        $query->where('department_id', $avail->department_id)
+                        $query->where('department_id', $avail)
                             ->where('region_id', $hospital->region_id);
                     })
                     ->get();
@@ -181,7 +187,7 @@ class ReferralIndex extends Component
         if ($this->referral_type == '2') {
 
             if ($hospital->type_id == '2') {
-                $hospitalsWithDepartment = Hospital::where('type_id', 2)
+                $hospitalsWithDepartment = Hospital::where('type_id', 2) ->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
 
                         $query->where('department_id', $avail)
@@ -189,19 +195,19 @@ class ReferralIndex extends Component
                     })
                     ->get();
                 $this->availablecenter = $hospitalsWithDepartment;
-            } elseif ($hospital->type_id == '1') {
+            } elseif ($hospital->type_id == '3') {
 
-                $hospitalsWithDepartment = Hospital::where('type_id', 3)
+                $hospitalsWithDepartment = Hospital::where('type_id', 3) ->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
-                        $query->where('department_id', $avail->department_id);
+                        $query->where('department_id', $avail);
                     })
                     ->get();
 
                 $this->availablecenter = $hospitalsWithDepartment;
             } else {
-                $hospitalsWithDepartment = Hospital::where('type_id', 1)
+                $hospitalsWithDepartment = Hospital::where('type_id', 1) ->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
-                        $query->where('department_id', $avail->department_id)
+                        $query->where('department_id', $avail)
                             ->where('region_id', $hospital->region_id);
                     })
                     ->get();
@@ -218,33 +224,47 @@ class ReferralIndex extends Component
 
         // day maker
 
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::now()->addDays(1);
         $endDate = $currentDate->copy()->addDays(60);
-        $availableDays = DayDepartment::where('department_hospital_id', 3)
-            ->where('hospital_id', 1)
+
+        $getdep = DepartmentHospital::where('hospital_id', $this->selectedcenter)->where('department_id', $this->selecteddep)->first();
+
+        $availableDays = DayDepartment::where('department_hospital_id', $getdep->id)
+            ->where('hospital_id', $this->selectedcenter)
             ->pluck('day_id')
             ->toArray();
+
         $upcomingDates = [];
+
         while ($currentDate <= $endDate) {
             if (in_array($currentDate->dayOfWeekIso, $availableDays)) {
                 $upcomingDates[] = $currentDate->format('Y/m/d');
             }
             $currentDate->addDay();
         }
-        // dd($upcomingDates);
+
 
         $slots = AppointmentSlot::where('slotused', DB::raw('slotalotted'))
             ->where('availability', 'available')
             ->where('department_id', $this->selecteddep)
-            ->where('hospital_id', $this->selecteddep)
+            ->where('hospital_id', $this->selectedcenter)
             ->pluck('date')
             ->unique()
             ->toArray();
         // dd($slots);
-        $upcomingDates = array_diff($upcomingDates, $slots);
-        // dd($upcomingDates);
+        if (count($slots) > 0) {
+            $upcomingDates = array_diff($upcomingDates, $slots);
+        }
+
+        // sort($upcomingDates);
+        // $upcomingDates = array_diff($upcomingDates, $slots);
+
+
+
 
         $this->config1 = $this->getConfig1($upcomingDates);
+        // dd($upcomingDates);
+
     }
 
     #[On('card_choosed')]
@@ -288,8 +308,8 @@ class ReferralIndex extends Component
             'dateFormat' => 'Y/m/d',
             'enableTime' => false,
             'enable' => $daysArray,
-            'minDate' => "today",
-            'maxDate' => Carbon::now()->addDays(30)->format('Y/m/d'),
+            'minDate' => "tomorrow",
+            'maxDate' => Carbon::now()->addDays(70)->format('Y/m/d'),
             'theme' => 'material_dark'
         ];
     }

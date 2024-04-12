@@ -83,6 +83,7 @@ class EditIndex extends Component
 
         $this->reset('depdays');
         $this->reset('slot');
+        $this->reset('editable');
         $this->render();
     }
 

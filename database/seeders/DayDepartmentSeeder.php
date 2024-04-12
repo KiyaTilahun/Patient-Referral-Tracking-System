@@ -13,5 +13,7 @@ class DayDepartmentSeeder extends Seeder
     public function run(): void
     {
         //
+
+        
     }
 }
