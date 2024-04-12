@@ -1,6 +1,9 @@
 <div x-data x-init="$refs.answer.focus()">
     <div class="flex justify-between ">
-        <x-mary-button label="Go Back" link="/patient/add" icon="o-arrow-left" />
+        {{-- <x-mary-button label="Go Back" link="/patient/add" icon="o-arrow-left" />
+         --}}
+         <x-mary-button label="Go Back" wire:click="goBack" icon="o-arrow-left" />
+
         <div class="px-20">
             <x-mary-modal id="modal17">
                 <p>
@@ -46,9 +49,38 @@
         <div class="grid grid-cols-12 w-full">
             <div class="header col-span-12 rounded-lg bord py-6 text-left">
 
-                <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-xl"><span
+                {{-- <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-xl"><span
                         class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Add</span>
-                    Referral </h1>
+                    Referral </h1> --}}
+                    <nav class="flex mb-4" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
+                          <li class="inline-flex items-center">
+                            <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                              <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                              </svg>
+                              Home
+                            </a>
+                          </li>
+                          <li>
+                            <div class="flex items-center">
+                              <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                              </svg>
+                              <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Projects</a>
+                            </div>
+                          </li>
+                          <li aria-current="page">
+                            <div class="flex items-center">
+                              <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                              </svg>
+                              <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Flowbite</span>
+                            </div>
+                          </li>
+                        </ol>
+                      </nav>
+                      <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Add Refferal</h2>
 
 
             </div>
@@ -156,8 +188,8 @@
                                 <span class="label-text">Referring Doctor</span>
                             </div>
 
-                            <select class="select select-success w-full " wire:model='doctor'>
-                                <option  disabled>Referring Doctor</option>
+                            <select class="select select-success w-full  " wire:model='doctor'>
+                                <option disabled>Referring Doctor</option>
                                 @foreach ($doctors as $doctor)
                                     <option value={{ $doctor->id }}>{{ $doctor->name }}</option>
                                 @endforeach
@@ -320,10 +352,10 @@
                                 </div>
                                 @if (!isset($sonfig1))
                                     <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
-                                        icon="o-calendar" :config="$config1"/>
+                                        icon="o-calendar" :config="$config1" />
                                 @else
-                                <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
-                                icon="o-calendar" disabled />
+                                    <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
+                                        icon="o-calendar" disabled />
                                 @endif
                             </label>
                             @error('appday')

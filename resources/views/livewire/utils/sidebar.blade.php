@@ -215,6 +215,7 @@
                         <span class="ms-3"> {{ __('Inbound Referrals') }}</span>
                     </div>
                 </x-nav-link>
+                
                 <x-nav-link :href="route('department.add')" :active="request()->routeIs('department.add')" wire:navigate>
                     <div class="inline-flex">
                         <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

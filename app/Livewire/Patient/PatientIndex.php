@@ -43,6 +43,10 @@ class PatientIndex extends Component
         $this->hospital=Hospital::where('id',auth()->user()->hospital_id)->with('departments')->first();
         $this->departments=$this->hospital->departments;
     }
+    public function updated($name)
+{
+    $this->resetValidation();
+}
 
 
     public function openreferral(){

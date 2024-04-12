@@ -12,4 +12,4 @@
     
   </label>
   @endpersist --}}
-  <x-mary-theme-toggle class="btn" @theme-changed="console.log($event.detail)" />
+  <x-mary-theme-toggle class=" ml-6 btn rounded-full " @theme-changed="console.log($event.detail)"  />

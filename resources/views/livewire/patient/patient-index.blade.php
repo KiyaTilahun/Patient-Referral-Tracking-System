@@ -22,6 +22,7 @@
                         <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
                     </svg>
                 </span>
+                
              
                
             </button>
@@ -97,8 +98,8 @@
                                 <span class="label-text">Patient Name</span>
 
                             </div>
-                            <input type="text" placeholder="name" class="input input-bordered input-success  w-full "
-                                wire:model='name' x-ref="answer" />
+                            <input type="text" placeholder="name" class="input input-bordered input-success  w-full @error('name') border-error @enderror "
+                                wire:model.live='name' x-ref="answer" />
 
                         </label>
                         @error('name')
@@ -140,10 +141,10 @@
                                 <span class="label-text">Phone Number</span>
 
                             </div>
-                            <label class="input  input-success flex items-center ">
+                            <label class="input  input-success flex items-center @error('phone') input-error @enderror ">
                                 +251
                                 <input type="text" pattern="[0-9]{9}" maxlength=9 minlength="9"
-                                    class="grow outline-none border-none active:border-none focus:border-none" placeholder="Phone Number"
+                                    class="grow outline-none border-none active:border-none focus:border-none  " placeholder="Phone Number"
                                     wire:model='phone' />
                             </label>
 
@@ -185,12 +186,12 @@
                             <x-mary-datepicker  wire:model="dob" class="input input-bordered input-success" icon="o-calendar"  :config="$config1" />
 
                         </label>
-                        @error('dob')
+                        {{-- @error('dob')
                             <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
                                 role="alert">
                                 <span class="font-medium">{{ $message }}</span>
                             </div>
-                        @enderror
+                        @enderror --}}
                     </div>
 
                     {{-- <div class="md:col-span-4">

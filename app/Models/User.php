@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Admin\Hospital;
 use App\Models\Admin\Region;
 use App\Models\Admin\Zone;
 use App\Models\Users\Doctor;
@@ -58,6 +59,10 @@ class User extends Authenticatable
     }
     public function zone(){
         return $this->hasOneThrough(Zone::class,Region::class);
+
+    }
+    public function hospital(){
+return $this->belongsTo(Hospital::class);
 
     }
 }

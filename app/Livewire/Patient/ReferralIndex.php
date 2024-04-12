@@ -46,8 +46,13 @@ class ReferralIndex extends Component
     public $config1;
     public $hosid;
 
+    // routing
+    public $route;
+
     public function mount()
     {
+
+        $this->route = url()->previous();
         $this->hosid = auth()->user()->hospital_id;
         $this->currentStep = 1;
         $this->doctors = Doctor::where('hospital_id', $this->hosid)->get();
@@ -57,6 +62,10 @@ class ReferralIndex extends Component
 
 
 
+    }
+    public function goBack()
+    {
+        return redirect($this->route);
     }
 
     public function increaseStep()
