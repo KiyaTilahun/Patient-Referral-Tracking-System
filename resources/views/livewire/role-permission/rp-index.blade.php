@@ -26,7 +26,7 @@
         <x-mary-list-item :item="$permission" >
         <x-slot:actions>
           
-            <x-mary-button icon="s-pencil-square" class="text-green-500" wire:click="showperm({{ $permission->id }})" spinner />
+            <x-mary-button icon="c-pencil-square" class="text-green-500" wire:click="showperm({{ $permission->id }})" spinner />
 
         </x-slot:actions>
         </x-mary-list-item>

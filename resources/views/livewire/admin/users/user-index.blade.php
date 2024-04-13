@@ -47,10 +47,11 @@
 
 {{-- center saved End --}}
 
-        <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-2xl text-center"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">health center detail</span>  </h1>
+     
      
         <div class="sm:max-h-[50vh] overflow-y-auto">
-        <livewire:hospital.center.center-detail/>
+        <livewire:admin.users.user-detail />
+
         </div>
 
     </div>

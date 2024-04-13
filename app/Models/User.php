@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -54,6 +55,9 @@ class User extends Authenticatable
     public function doctors(){
         return $this->hasMany(Doctor::class);
     }
+    // public function roles(){
+    //     return $this->hasMany(Role::class);
+    // }
     public function liaisons(){
         return $this->hasMany(Liaison::class);
     }

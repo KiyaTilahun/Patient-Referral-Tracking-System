@@ -15,6 +15,12 @@ use WithPagination;
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
     public $search;
     
+
+    public function show($id){
+    
+        $this->dispatch('user_selected', id: $id);
+    
+    }
     public function render()
     {
 
@@ -29,11 +35,11 @@ use WithPagination;
                     })
                     ->when($this->search, function ($query) {
                         $query->where('name', 'LIKE', '%' . $this->search . '%');
-                    })
+                    })->withAggregate('hospital','name')->withAggregate('roles','name')
                     ->orderBy(...array_values($this->sortBy))
                     ->paginate(5);
 
-                    $users=User::withAggregate('hospital','name')->get();
+                    // $users=User::withAggregate('hospital','name')->get();
 
         //  $users=count($users);
 
@@ -42,7 +48,7 @@ use WithPagination;
         $users = User::where('hospital_id', $user->hospital_id)
                     ->when($this->search, function ($query) {
                         $query->where('name', 'LIKE', '%' . $this->search . '%');
-                    })
+                    })->withAggregate('hospital','name')->withAggregate('roles','name')
                     ->orderBy(...array_values($this->sortBy))
                     ->paginate(5);
     }
@@ -50,9 +56,9 @@ use WithPagination;
 
     $headers = [
             
-        ['key' => 'name', 'label' => 'Center Name'],
-        ['key' => 'hospital_name', 'label' => 'Region Name'],
-        ['key' => 'status', 'label' => 'Status'],      # <-- nested attributes
+        ['key' => 'name', 'label' => 'User Name'],
+        ['key' => 'hospital_name', 'label' => 'Center Name'],
+        ['key' => 'roles_name', 'label' => 'Status'],      # <-- nested attributes
   
     ];
         return view('livewire.admin.users.user-table',['users'=>$users,'headers'=>$headers,

@@ -83,7 +83,7 @@
     <x-mary-badge :value="($center->status==1)?'Active':'Inactive'" class="{{$center->status ? 'btn-outline btn-success btn-disabled':'btn-outline btn-warning btn-disabled'}}" />
     @endscope
     @scope('actions', $center)
-    <x-mary-button icon="s-pencil-square" class="text-green-500 btn-sm" wire:click="show({{ $center->id }})" spinner  />
+    <x-mary-button icon="c-pencil-square" class="text-green-500 btn-sm" wire:click="show({{ $center->id }})" spinner  />
 @endscope
     </x-mary-table>
    </div>
