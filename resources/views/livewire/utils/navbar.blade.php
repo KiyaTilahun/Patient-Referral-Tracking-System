@@ -17,11 +17,18 @@
         </div>
         
         <div class="flex items-center">
-          <div class="flex items-center ms-3">
-            {{auth()->user()->hospital->name}}
+          <div class="flex items-center ms-3  ">
+            <div class="avatar online placeholder mr-4">
+              <div class="bg-neutral text-neutral-content rounded-full w-10">
+                <span class="text-xl ">{{ substr(auth()->user()->name, 0, 1) }}</span>
+              </div>
+            </div> 
+            {{-- {{auth()->user()->hospital->name}} --}}
+            {{auth()->user()->name}}
+
           
           </div>
-          @include('utils.theme')
+          
           
           
           </div>

@@ -18,7 +18,7 @@
               <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
               </svg>
-              Health Centers
+              User Management
             </div>
           </li>
           <li aria-current="page">
@@ -26,14 +26,16 @@
               <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
               </svg>
-              <span class="ms-1 text-sm font-medium  dark:text-white text-blue-600"> Center Management</span>
+              <span class="ms-1 text-sm font-medium  dark:text-white text-blue-600"> All users</span>
             </div>
           </li></x-breadcrumb>
-          <x-page-heading :title="'Center Management'" />
+          <x-page-heading :title="'All Users'" />
        
     </div>
     <div class="col-span-12 rounded-lg sm:col-span-7 max-h-[70vh] overflow-y-auto">
-        <livewire:hospital.center.center-table/>
+        {{-- <livewire:admin.users.user-table/> --}}
+        <livewire:admin.users.user-table />
+
     </div>
     <div class="col-span-12 rounded-lg  shadow-md sm:col-span-5">
         
@@ -56,3 +58,4 @@
       <!-- Footer content -->
     </div> --}}
   </div>
+
