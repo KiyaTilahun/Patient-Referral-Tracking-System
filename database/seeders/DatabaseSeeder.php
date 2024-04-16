@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin\Department;
 use App\Models\Admin\ReferralType;
+use App\Models\DayDepartment;
 use App\Models\Referral\Referral;
 use App\Models\Users\Doctor;
 use App\Models\Users\Liaison;
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
             SuperSeeder::class,
             HospitalDepartmentSeeder::class,
             DaySeeder::class,
+            DayDepartmentSeeder::class,
             AppointmentslotSeeder::class,
 
             

@@ -16,6 +16,7 @@
         "owenvoke/blade-fontawesome": "^2.6",
         "robsontenorio/mary": "^1.26",
         "simplesoftwareio/simple-qrcode": "~4",
+        "spatie/browsershot": "^4.0",
         "spatie/laravel-pdf": "^1.5",
         "spatie/laravel-permission": "^6.4"
     },

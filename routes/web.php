@@ -15,6 +15,7 @@ use App\Livewire\Patient\ReferralIndex;
 use App\Livewire\RolePermission\RpIndex;
 use App\Mail\RegisterEmail;
 use App\Models\Admin\Hospital;
+use App\Models\ReferrReport;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -84,7 +85,7 @@ Route::get('/patient/add', PatientIndex::class)
 Route::get('/referral/add', ReferralIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('referral.add');
-
+Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 
 
 

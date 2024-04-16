@@ -33,6 +33,7 @@ class HospitalSeeder extends Seeder
             'name' => $faker->unique()->company . ' Hospital',
             'phone' => $faker->phoneNumber(),
             'email' => $faker->unique->email(),
+            'registered'=>1,
             'type_id' => $hospitalType->random(),
             'region_id' => $regions->random(),
             'country' => 'ETHIOPIA',
@@ -41,5 +42,19 @@ class HospitalSeeder extends Seeder
             'remember_token' => Hash::make('password') // Temporary placeholder for the remember_token
         ]);
     }
+    for ($i = 0; $i < 5; $i++) {
+        Hospital::create([
+            'name' => $faker->unique()->company . ' Hospital',
+            'phone' => $faker->phoneNumber(),
+            'email' => $faker->unique->email(),
+            'type_id' => 1,
+            'region_id' => $regions->random(),
+            'country' => 'ETHIOPIA',
+            'woreda' => '1',
+            'zone' => 'other',
+            'remember_token' => Hash::make('password') // Temporary placeholder for the remember_token
+        ]);
+    }
+
     }
 }

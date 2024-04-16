@@ -301,6 +301,12 @@
                                     @endif
                                 </select>
                             </label>
+                            @error('selectedcenter')
+                            <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
 
                         </div>
                     @else
@@ -316,6 +322,12 @@
 
                                 </select>
                             </label>
+                            @error('selectedcenter')
+                            <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
 
                         </div>
                     @endif
@@ -376,7 +388,7 @@
                                 wire:model="fileattach" />
 
                         </label>
-                        @error('file')
+                        @error('fileattach')
                             <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
                                 role="alert">
                                 <span class="font-medium">{{ $message }}</span>
@@ -389,8 +401,19 @@
 
 
 
-                {{-- <div class="flex justify-end col-span-10">
-                    <button type="button" class="btn btn-md btn-outline btn-success" wire:click="generatepdf">Generate pdf
+                <div class="flex justify-end col-span-10">
+                   
+
+                    <a href="{{ route('generate', ['id' => $card_number]) }}" target="_blank"> <button type="button" class="btn btn-md btn-outline btn-success">Generate pdf
+                        <div wire:loading>
+                            @include('utils.spinner')
+                        </div>
+                    </button> </a>
+
+                </div>
+                {{-- <div class="flex justify-end col-span-10 pt-6">
+                    <button type="submit" class="btn btn-md btn-outline btn-success"
+                        wire:click="generatepdf">generate
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>

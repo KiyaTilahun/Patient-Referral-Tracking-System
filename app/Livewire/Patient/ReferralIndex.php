@@ -15,10 +15,12 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReferralIndex extends Component
 {
+    use WithFileUploads;
     public $gender;
     public $card_number;
     public $name;
@@ -56,7 +58,7 @@ class ReferralIndex extends Component
 
         $this->route = url()->previous();
         $this->hosid = auth()->user()->hospital_id;
-        $this->currentStep = 1;
+        $this->currentStep ;
         $this->doctors = Doctor::where('hospital_id', $this->hosid)->get();
         $typeinitial = Hospital::where('id', $this->hosid)->first();
         $this->typeinitial = $typeinitial->type_id;
@@ -69,16 +71,17 @@ class ReferralIndex extends Component
     {
         return redirect($this->route);
     }
-
+    public function updated($name)
+    {
+        $this->resetValidation();
+    }
     public function increaseStep()
     {
         $this->resetErrorBag();
 
         if ($this->currentStep == 1) {
             $this->validated = $this->validate();
-        } else {
-            $this->secondvalidation = $this->validate();
-        }
+        } 
         $this->resetValidation();
         // $this->reset();
         $this->currentStep++;
@@ -117,8 +120,9 @@ class ReferralIndex extends Component
         } else {
             if ($this->referral_type != 3) {
                 return [
+                    'referral_type'=>'required',
                     'fileattach' => 'mimes:pdf|max:2048',
-                    'selectedcenter' => 'required|exists:patients',
+                    'selectedcenter' => 'required',
                     'selecteddep' => 'required',
                     'appday' => 'date_format:Y/m/d',
 
@@ -126,6 +130,7 @@ class ReferralIndex extends Component
                 ];
             } else {
                 return [
+                    'referral_type'=>'required',
                     'fileattach' => 'mimes:pdf|max:2048',
                     'selectedcenter' => 'required',
                     'appday' => 'date_format:Y/m/d',
@@ -319,19 +324,10 @@ class ReferralIndex extends Component
 
 
     // generator
-    public function generatepdf()
-    {
-        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
-
-        $availbledep =  Department::all()->toArray();
-
-        $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
-        $day = now()->format('d/m/Y');
-        $pdf =  PDF::loadView('utils.generatepdf', compact('availbledep', 'qr', 'day'));
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->stream();
-        }, 'name.pdf');
-    }
+    // public function generatepdf()
+    // {
+       
+    // }
 
     // calendar configuration
     public function getConfig1($daysArray)
@@ -350,6 +346,19 @@ class ReferralIndex extends Component
 
 
 
+    public function register(){
+    
+            $this->secondvalidation = $this->validate();
+        dd($this->fileattach);
+    }
+
+    public function generatepdf()
+    {
+    
+
+    
+        return redirect()->route('generate', ['id' => $this->card_number]);
+    }
     public function render()
     {
         $results = [];
@@ -359,6 +368,7 @@ class ReferralIndex extends Component
 
             $results = Patient::where('card_number', 'like', '%' . $this->card_number . '%')->pluck('card_number');
         }
+
         return view('livewire.patient.referral-index', compact('results'));
     }
 }
