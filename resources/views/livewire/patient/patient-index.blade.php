@@ -121,14 +121,31 @@
                     <div class="md:col-span-6 col-span-12">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
-                                <span class="label-text">Patient Name</span>
+                                <span class="label-text">First Name</span>
 
                             </div>
-                            <input type="text" placeholder="name" class="input input-bordered input-success  w-full @error('name') border-error @enderror "
-                                wire:model.live='name' x-ref="answer" />
+                            <input type="text" placeholder="firstname" class="input input-bordered input-success  w-full @error('firstname') border-error @enderror "
+                                wire:model.live='firstname' x-ref="answer" />
 
                         </label>
-                        @error('name')
+                        @error('firstname')
+                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="md:col-span-6 col-span-12">
+                        <label class="form-control w-full max-w-xs">
+                            <div class="label">
+                                <span class="label-text">Last Name</span>
+
+                            </div>
+                            <input type="text" placeholder="last name" class="input input-bordered input-success  w-full @error('lastname') border-error @enderror "
+                                wire:model.live='lastname' x-ref="answer" />
+
+                        </label>
+                        @error('lastname')
                             <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
                                 role="alert">
                                 <span class="font-medium">{{ $message }}</span>
@@ -202,7 +219,7 @@
                     </div>
 
 
-                    <div class="md:col-span-6 col-span-12 pt-4">
+                    <div class="md:col-span-6 col-span-12 ">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
                                 <span class="label-text">Date of Birth</span>

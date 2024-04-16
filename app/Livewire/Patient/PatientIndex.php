@@ -15,7 +15,8 @@ class PatientIndex extends Component
     public bool $savedmodal=false;
     public $config1;
     public $genders;
-    public $name;
+    public $firstname;
+    public $lastname;
     public $email;
     public $phone;
     public $gender;
@@ -60,7 +61,7 @@ class PatientIndex extends Component
         $currentYear = date('Y');
     
         $randomNumber = rand(1000, 9999);
-        $cardNumber = 'REF' . $randomNumber . 'H' . $hospitalId . 'D' . str_replace(' ', '', $this->name) . $currentMonth . $currentYear;
+        $cardNumber = 'REF' . $randomNumber . 'H' . $hospitalId . 'D' . str_replace(' ', '', $this->firstname) . $currentMonth . $currentYear;
 
     
         // Optionally, calculate and append a check digit using Luhn's algorithm
@@ -75,7 +76,7 @@ class PatientIndex extends Component
         $patient = Patient::create([
        
           
-            'name' =>  $this->validated['name'] ,
+            'name' =>  $this->validated['firstname'].' '.$this->validated['lastname'] ,
             'gender' => $this->validated['gender'],
             'email' => $this->validated['email'],
             'phone' => '+251'.$this->validated['phone'],
@@ -94,7 +95,8 @@ class PatientIndex extends Component
 
         // Clear form fields
         $this->reset([
-            'name',
+            'firstname',
+            'lastname',
             'gender',
             'email',
             'phone',
@@ -113,7 +115,9 @@ class PatientIndex extends Component
        
         
             return[
-               'name'=>'required|unique:patients',
+               'firstname'=>'required',
+               'lastname'=>'required',
+
                 'gender'=>'required',
                 'email'=>'unique:patients',
                 'phone'=>'required|min:9|numeric',

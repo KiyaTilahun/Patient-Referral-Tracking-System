@@ -81,7 +81,7 @@
 
             </div>
 
-            @if ($currentStep == 2)
+            @if ($currentStep == 1)
 
                 <div class="grid gap-6 gap-y-2 text-sm grid-cols-12 md:grid-cols-12 col-span-12  lg:pt-4">
                     <div class="md:col-span-5 col-span-12">
@@ -185,7 +185,7 @@
                             </div>
 
                             <select class="select select-success w-full  " wire:model='doctor'>
-                                <option disabled>Referring Doctor</option>
+                                <option >Referring Doctor</option>
                                 @foreach ($doctors as $doctor)
                                     <option value={{ $doctor->id }}>{{ $doctor->name }}</option>
                                 @endforeach
@@ -373,7 +373,7 @@
 
                             </div>
                             <input type="file" class="file-input file-input-bordered w-full " accept=".pdf"
-                                wire:model="file" />
+                                wire:model="fileattach" />
 
                         </label>
                         @error('file')

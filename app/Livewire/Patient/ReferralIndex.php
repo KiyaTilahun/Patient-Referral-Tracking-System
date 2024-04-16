@@ -32,6 +32,8 @@ class ReferralIndex extends Component
     public $doctor_id;
     public $validated;
     public $doctors;
+    public $fileattach;
+    public $appday;
     public $secondvalidation;
     public $totalSteps = 2;
     public $currentStep = 1;
@@ -113,14 +115,26 @@ class ReferralIndex extends Component
 
             ];
         } else {
-            return [
-                'phone_number' => 'required|unique:liaisons|min:9|numeric',
-                'liaison_officer' => 'required|string',
+            if ($this->referral_type != 3) {
+                return [
+                    'fileattach' => 'mimes:pdf|max:2048',
+                    'selectedcenter' => 'required|exists:patients',
+                    'selecteddep' => 'required',
+                    'appday' => 'date_format:Y/m/d',
 
 
-            ];
+                ];
+            } else {
+                return [
+                    'fileattach' => 'mimes:pdf|max:2048',
+                    'selectedcenter' => 'required',
+                    'appday' => 'date_format:Y/m/d',
+                ];
+            }
         }
     }
+
+    // when a user selects referral type
     public function updatedReferralType()
     {
         $this->reset('notdiagonal');
@@ -182,7 +196,7 @@ class ReferralIndex extends Component
             }
             // if ($hospital->type_id == '1') {
             else {
-                $hospitalsWithDepartment = Hospital::where('type_id', 2) ->where('hospitals.id', '!=', $hospital->id)
+                $hospitalsWithDepartment = Hospital::where('type_id', 2)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
                         $query->where('department_id', $avail)
                             ->where('region_id', $hospital->region_id);
@@ -196,7 +210,7 @@ class ReferralIndex extends Component
         if ($this->referral_type == '2') {
 
             if ($hospital->type_id == '2') {
-                $hospitalsWithDepartment = Hospital::where('type_id', 2) ->where('hospitals.id', '!=', $hospital->id)
+                $hospitalsWithDepartment = Hospital::where('type_id', 2)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
 
                         $query->where('department_id', $avail)
@@ -206,7 +220,7 @@ class ReferralIndex extends Component
                 $this->availablecenter = $hospitalsWithDepartment;
             } elseif ($hospital->type_id == '3') {
 
-                $hospitalsWithDepartment = Hospital::where('type_id', 3) ->where('hospitals.id', '!=', $hospital->id)
+                $hospitalsWithDepartment = Hospital::where('type_id', 3)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
                         $query->where('department_id', $avail);
                     })
@@ -214,7 +228,7 @@ class ReferralIndex extends Component
 
                 $this->availablecenter = $hospitalsWithDepartment;
             } else {
-                $hospitalsWithDepartment = Hospital::where('type_id', 1) ->where('hospitals.id', '!=', $hospital->id)
+                $hospitalsWithDepartment = Hospital::where('type_id', 1)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail, $hospital) {
                         $query->where('department_id', $avail)
                             ->where('region_id', $hospital->region_id);
@@ -276,12 +290,21 @@ class ReferralIndex extends Component
 
     }
 
+    
+    public function updatedcardNumber(){
+        // dd("hello");
+        $this->name = Patient::where('card_number', $this->card_number)->value('name');
+       
+        // dd($this->name);  
+    }
+
     #[On('card_choosed')]
     public function updatename($card_number)
     {
 
+        $this->card_number = Patient::where('card_number', $card_number)->value('card_number');
+        $this->name = Patient::where('card_number', $this->card_number)->value('name');
 
-        $this->name = Patient::where('card_number', $card_number)->value('name');
     }
 
 

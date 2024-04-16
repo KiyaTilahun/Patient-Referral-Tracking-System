@@ -6,17 +6,15 @@ use App\Models\Referral\Referral;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Referrtype extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
     ];
-    public function hospitals()
-    {
-        return  $this->hasMany(Hospital::class);
-    }
-   
 
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class);
+    }
 }

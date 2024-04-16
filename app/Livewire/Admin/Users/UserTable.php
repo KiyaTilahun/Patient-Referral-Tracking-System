@@ -38,7 +38,7 @@ use WithPagination;
                     })->withAggregate('hospital','name')->withAggregate('roles','name')
                     ->orderBy(...array_values($this->sortBy))
                     ->paginate(5);
-
+// dd($users);
                     // $users=User::withAggregate('hospital','name')->get();
 
         //  $users=count($users);

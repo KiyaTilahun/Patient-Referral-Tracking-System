@@ -3,6 +3,7 @@
 namespace App\Models\Users;
 
 use App\Models\Admin\Hospital;
+use App\Models\Referral\Referral;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,4 +28,8 @@ class Patient extends Model
     {
         return $this->belongsTo(Hospital::class);
     }
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class, 'card_number', 'card_number');
+    }   
 }
