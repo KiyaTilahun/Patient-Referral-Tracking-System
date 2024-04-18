@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('department_id')->constrained();
             $table->foreignId('hospital_id')->constrained();
-            $table->integer('slotalotted')->default(20);
+            $table->integer('slotalotted')->default(0);
             $table->integer('slotused')->default(0);
             $table->unique(['department_id', 'hospital_id']);
         });

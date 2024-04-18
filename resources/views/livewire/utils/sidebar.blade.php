@@ -58,7 +58,7 @@
                         </svg>
 
                         <span class="ms-3"> {{ __('Pending  Centers') }} <div class="badge text-[#00ca92]">
-                                {{ count($pending) }}</div></span>
+                                {{ count($pending) }} </div></span>
                     </div>
                 </x-nav-link>
                 <x-nav-link :href="route('centers.all')" :active="request()->routeIs('centers.all')" wire:navigate>

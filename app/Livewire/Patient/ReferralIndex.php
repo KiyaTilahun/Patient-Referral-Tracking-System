@@ -7,6 +7,7 @@ use App\Models\Admin\Department;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
 use App\Models\DayDepartment;
+use App\Models\Referral\Referral;
 use App\Models\Users\Doctor;
 use App\Models\Users\Patient;
 use Carbon\Carbon;
@@ -16,11 +17,14 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Mary\Traits\Toast;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReferralIndex extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads,Toast;
+
+
     public $gender;
     public $card_number;
     public $name;
@@ -49,6 +53,7 @@ class ReferralIndex extends Component
     public $typeinitial;
     public $config1;
     public $hosid;
+    public $initialhospital;
 
     // routing
     public $route;
@@ -58,9 +63,10 @@ class ReferralIndex extends Component
 
         $this->route = url()->previous();
         $this->hosid = auth()->user()->hospital_id;
-        $this->currentStep ;
+        $this->currentStep;
         $this->doctors = Doctor::where('hospital_id', $this->hosid)->get();
         $typeinitial = Hospital::where('id', $this->hosid)->first();
+
         $this->typeinitial = $typeinitial->type_id;
         // dd($this->typeinitial);
 
@@ -81,7 +87,7 @@ class ReferralIndex extends Component
 
         if ($this->currentStep == 1) {
             $this->validated = $this->validate();
-        } 
+        }
         $this->resetValidation();
         // $this->reset();
         $this->currentStep++;
@@ -111,7 +117,7 @@ class ReferralIndex extends Component
                 'finding' => 'required|string',
                 'treatment' => 'required|string',
                 'reason' => 'required|string',
-                'doctor' => 'required|string',
+                'doctor' => 'required',
 
 
 
@@ -120,8 +126,8 @@ class ReferralIndex extends Component
         } else {
             if ($this->referral_type != 3) {
                 return [
-                    'referral_type'=>'required',
-                    'fileattach' => 'mimes:pdf|max:2048',
+                    'referral_type' => 'required',
+                    'fileattach' => 'max:10,240',
                     'selectedcenter' => 'required',
                     'selecteddep' => 'required',
                     'appday' => 'date_format:Y/m/d',
@@ -130,10 +136,15 @@ class ReferralIndex extends Component
                 ];
             } else {
                 return [
-                    'referral_type'=>'required',
-                    'fileattach' => 'mimes:pdf|max:2048',
+                    'referral_type' => 'required',
+                    'fileattach' => 'max:10,240',
                     'selectedcenter' => 'required',
                     'appday' => 'date_format:Y/m/d',
+                    'selecteddep' => '',
+
+
+                    // 'initial'=>'required'
+
                 ];
             }
         }
@@ -176,10 +187,20 @@ class ReferralIndex extends Component
                     })->get();
                 }
             }
+
+            // if($this->availbledep==null){
+            //     $this->warning('No departments for referrals found');
+                
+            // }
         } else {
             $initial = Patient::where('card_number', $this->card_number)->first();
             $this->initial = $initial->hospital;
+            // $this->selectedcenter=$initial->hospital->id;
+
         }
+
+
+
     }
     // when department is choosen
     public function updatedSelecteddep()
@@ -251,6 +272,7 @@ class ReferralIndex extends Component
     {
 
         // day maker
+        $this->reset('appday');
 
         $currentDate = Carbon::now()->addDays(1);
         $endDate = $currentDate->copy()->addDays(60);
@@ -295,11 +317,13 @@ class ReferralIndex extends Component
 
     }
 
-    
-    public function updatedcardNumber(){
+
+    public function updatedcardNumber()
+    {
         // dd("hello");
-        $this->name = Patient::where('card_number', $this->card_number)->value('name');
-       
+        $name = Patient::where('card_number', $this->card_number)->first();
+        $this->name = $name;
+
         // dd($this->name);  
     }
 
@@ -309,7 +333,6 @@ class ReferralIndex extends Component
 
         $this->card_number = Patient::where('card_number', $card_number)->value('card_number');
         $this->name = Patient::where('card_number', $this->card_number)->value('name');
-
     }
 
 
@@ -326,7 +349,7 @@ class ReferralIndex extends Component
     // generator
     // public function generatepdf()
     // {
-       
+
     // }
 
     // calendar configuration
@@ -346,17 +369,92 @@ class ReferralIndex extends Component
 
 
 
-    public function register(){
-    
-            $this->secondvalidation = $this->validate();
-        dd($this->fileattach);
+    public function register()
+    {
+
+        // dd($this->selectedcenter);
+        if ($this->referral_type == 3) {
+            $this->selectedcenter = $this->initial->id;
+            $this->appday=now()->format('Y/m/d');
+
+        }
+        $this->secondvalidation = $this->validate();
+
+
+        if ($this->referral_type != 3) {
+            $hospital = Hospital::findOrFail($this->secondvalidation['selectedcenter']);
+           
+            // dd($slotalotted);
+            // dd($slotalotted);
+            $slot = AppointmentSlot::where('department_id', $this->secondvalidation['selecteddep'])
+                ->where('hospital_id', $this->secondvalidation['selectedcenter'])
+                ->where('date', $this->secondvalidation['appday'])
+                ->first();
+
+
+            // dd($slot);
+            if (!$slot) {
+                $slotalotted = $hospital->departments()->where('department_id', $this->secondvalidation['selecteddep'])->firstOrFail()->pivot->slot;
+
+                $slot = AppointmentSlot::create([
+                    'department_id' => $this->secondvalidation['selecteddep'],
+                    'hospital_id' => $this->secondvalidation['selectedcenter'],
+                    'date' => $this->secondvalidation['appday'],
+                    'slotalotted' => 1,
+                    'slotused' => 1,
+
+                ]);
+                // dd($slot);
+            } else {
+                if($slot['availability']=='booked'){
+
+                    $this->warning($this->secondvalidation['appday']. '  is fully booked try another Date');
+                    return;
+
+                }
+                $slot->increment('slotused');
+
+                if ($slot->slotused >= $slot->slotalotted) {
+                    $slot->update(['availability' => 'booked']);
+                }
+            }
+        }
+
+        if ($this->fileattach != null) {
+            $hospitalname = Hospital::where('id', $this->secondvalidation['selectedcenter'])->first()->name;
+            $hospitalname = str_replace(' ', '_', $hospitalname);
+            $extension = $this->secondvalidation['fileattach']->getClientOriginalExtension();
+            $name = $this->card_number . '_' . now()->format('Ymd') . '.' . $extension;
+
+            $this->secondvalidation['fileattach']->storeAs('Centers/' . $hospitalname, $name, 'public');
+            $this->secondvalidation['fileattach'] = $name;
+        }
+
+        // dd($this->fileattach);
+
+        $referral = Referral::create([
+            'card_number' => $this->validated['card_number'],
+            'referral_date' => $this->secondvalidation['appday'],
+            'referring_hospital_id' => $this->hosid,
+            'receiving_hospital_id' => $this->secondvalidation['selectedcenter'],
+            'referrtype_id' => $this->secondvalidation['referral_type'],
+            'department_id' => $this->secondvalidation['selecteddep'],
+            'doctor_id' => $this->validated['doctor'],
+            'history' => $this->validated['history'],
+            'findings' => $this->validated['finding'],
+            'treatment' => $this->validated['treatment'],
+            'reason' => $this->validated['reason'],
+            'file_path' => $this->secondvalidation['fileattach'],
+        ]);
+        dd("successful");
+
     }
 
     public function generatepdf()
     {
-    
 
-    
+
+
         return redirect()->route('generate', ['id' => $this->card_number]);
     }
     public function render()

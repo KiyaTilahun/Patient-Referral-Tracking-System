@@ -39,4 +39,18 @@ class Appointmentslot extends Model
          
          return null;
      }
+
+
+    //  public function save(array $options = [])
+    //  {
+    
+    //      if ($this->slotused >= $this->slotalotted) {
+    //          $this->availability = 'unavailable';
+    //      } else {
+    //          $this->availability = 'available';
+    //      }
+ 
+    //      // Call the parent save method
+    //      return parent::save($options);
+    //  }
 }

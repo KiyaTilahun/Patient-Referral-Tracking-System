@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             HospitalDepartmentSeeder::class,
             DaySeeder::class,
             DayDepartmentSeeder::class,
-            AppointmentslotSeeder::class,
+            // AppointmentslotSeeder::class,
 
             
 

@@ -19,7 +19,7 @@ class Referral extends Model
         'referral_date',
         'referring_hospital_id',
         'receiving_hospital_id',
-        'referraltype_id', 
+        'referrtype_id', 
         'doctor_id',
         'department_id',
         'history',
