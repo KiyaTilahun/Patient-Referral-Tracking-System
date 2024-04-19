@@ -210,6 +210,12 @@ class ReferralIndex extends Component
             //     $this->warning('No departments for referrals found');
 
             // }
+
+
+            if(count($this->availbledep)<=0){
+         $this->warning( 'No Department is found');
+
+            }
         } else {
             $initial = Patient::where('card_number', $this->card_number)->first();
             $this->initial = $initial->hospital;
