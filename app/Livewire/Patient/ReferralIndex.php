@@ -6,6 +6,8 @@ use App\Models\Admin\Appointmentslot;
 use App\Models\Admin\Department;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
+use App\Models\Admin\Referrtype;
+use App\Models\Admin\Type;
 use App\Models\DayDepartment;
 use App\Models\Referral\Referral;
 use App\Models\Users\Doctor;
@@ -22,7 +24,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReferralIndex extends Component
 {
-    use WithFileUploads,Toast;
+    use WithFileUploads, Toast;
 
 
     public $gender;
@@ -48,12 +50,19 @@ class ReferralIndex extends Component
     public bool $notdiagonal = false;
     public $referral_type;
     public $initial;
+    public $hospitalname;
+    public $referralname = "";
+    public $referredcenter = "";
     public $availbledep;
     public $availablecenter;
     public $typeinitial;
     public $config1;
     public $hosid;
     public $initialhospital;
+    // modal
+    public bool $myModal3 = false;
+    public bool $help=false;
+    public bool $saved=false;
 
     // routing
     public $route;
@@ -66,12 +75,18 @@ class ReferralIndex extends Component
         $this->currentStep;
         $this->doctors = Doctor::where('hospital_id', $this->hosid)->get();
         $typeinitial = Hospital::where('id', $this->hosid)->first();
-
+        $this->hospitalname = $typeinitial->name;
         $this->typeinitial = $typeinitial->type_id;
         // dd($this->typeinitial);
 
 
 
+    }
+
+
+    public function helpmodal(){
+
+        $this->help=!$this->help;
     }
     public function goBack()
     {
@@ -127,7 +142,7 @@ class ReferralIndex extends Component
             if ($this->referral_type != 3) {
                 return [
                     'referral_type' => 'required',
-                    'fileattach' => 'max:10,240',
+                    'fileattach' => 'max:10240',
                     'selectedcenter' => 'required',
                     'selecteddep' => 'required',
                     'appday' => 'date_format:Y/m/d',
@@ -137,7 +152,7 @@ class ReferralIndex extends Component
             } else {
                 return [
                     'referral_type' => 'required',
-                    'fileattach' => 'max:10,240',
+                    'fileattach' => 'max:10240',
                     'selectedcenter' => 'required',
                     'appday' => 'date_format:Y/m/d',
                     'selecteddep' => '',
@@ -153,9 +168,12 @@ class ReferralIndex extends Component
     // when a user selects referral type
     public function updatedReferralType()
     {
+        $this->reset('referralname');
         $this->reset('notdiagonal');
+        $this->reset('appday');
         $this->reset('selecteddep');
 
+        $this->referralname = Referrtype::where('id', $this->referral_type)->value('name');
         if ($this->referral_type != '3') {
 
             $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
@@ -190,7 +208,7 @@ class ReferralIndex extends Component
 
             // if($this->availbledep==null){
             //     $this->warning('No departments for referrals found');
-                
+
             // }
         } else {
             $initial = Patient::where('card_number', $this->card_number)->first();
@@ -198,9 +216,6 @@ class ReferralIndex extends Component
             // $this->selectedcenter=$initial->hospital->id;
 
         }
-
-
-
     }
     // when department is choosen
     public function updatedSelecteddep()
@@ -273,6 +288,11 @@ class ReferralIndex extends Component
 
         // day maker
         $this->reset('appday');
+        $this->reset('referredcenter');
+        $this->referredcenter = Hospital::where('id', $this->selectedcenter)->value('name');
+
+
+
 
         $currentDate = Carbon::now()->addDays(1);
         $endDate = $currentDate->copy()->addDays(60);
@@ -372,18 +392,12 @@ class ReferralIndex extends Component
     public function register()
     {
 
-        // dd($this->selectedcenter);
-        if ($this->referral_type == 3) {
-            $this->selectedcenter = $this->initial->id;
-            $this->appday=now()->format('Y/m/d');
-
-        }
-        $this->secondvalidation = $this->validate();
+      
 
 
         if ($this->referral_type != 3) {
             $hospital = Hospital::findOrFail($this->secondvalidation['selectedcenter']);
-           
+
             // dd($slotalotted);
             // dd($slotalotted);
             $slot = AppointmentSlot::where('department_id', $this->secondvalidation['selecteddep'])
@@ -392,6 +406,7 @@ class ReferralIndex extends Component
                 ->first();
 
 
+            // dd($slot);
             // dd($slot);
             if (!$slot) {
                 $slotalotted = $hospital->departments()->where('department_id', $this->secondvalidation['selecteddep'])->firstOrFail()->pivot->slot;
@@ -406,11 +421,10 @@ class ReferralIndex extends Component
                 ]);
                 // dd($slot);
             } else {
-                if($slot['availability']=='booked'){
+                if ($slot['availability'] == 'booked') {
 
-                    $this->warning($this->secondvalidation['appday']. '  is fully booked try another Date');
+                    $this->warning($this->secondvalidation['appday'] . '  is fully booked try another Date');
                     return;
-
                 }
                 $slot->increment('slotused');
 
@@ -446,10 +460,22 @@ class ReferralIndex extends Component
             'reason' => $this->validated['reason'],
             'file_path' => $this->secondvalidation['fileattach'],
         ]);
-        dd("successful");
-
+        // dd("successful");
+        $this->myModal3=false;
+        $this->saved=true;
     }
 
+
+    public function checkentry(){
+        if ($this->referral_type == 3) {
+            $this->selectedcenter = $this->initial->id;
+            $this->appday = now()->format('Y/m/d');
+        }
+        $this->secondvalidation = $this->validate();
+        $this->myModal3=true;
+
+
+    }
     public function generatepdf()
     {
 

@@ -1,5 +1,5 @@
 <div x-data x-init="$refs.answer.focus()">
-    <x-mary-toast />  
+    <x-mary-toast />
     <div class="flex justify-between ">
         {{-- <x-mary-button label="Go Back" link="/patient/add" icon="o-arrow-left" />
          --}}
@@ -240,7 +240,7 @@
                                 @endif
                                 <option value='2'>Horizontal</option>
                                 @if (!($typeinitial == 1))
-                                <option value='3'>Diagonal</option>
+                                    <option value='3'>Diagonal</option>
                                 @endif
 
 
@@ -424,7 +424,7 @@
 
 
 
-                <div class="flex justify-end col-span-10">
+                {{-- <div class="flex justify-end col-span-10">
 
 
                     <a href="{{ route('generate', ['id' => $card_number]) }}" target="_blank"> <button
@@ -434,7 +434,7 @@
                             </div>
                         </button> </a>
 
-                </div>
+                </div> --}}
                 {{-- <div class="flex justify-end col-span-10 pt-6">
                     <button type="submit" class="btn btn-md btn-outline btn-success"
                         wire:click="generatepdf">generate
@@ -444,9 +444,106 @@
                     </button>
 
                 </div> --}}
+
+
+                <x-mary-modal wire:model="myModal3" class="backdrop-blur ">
+                    <div class="h-[80vh]">
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                Referral Detail
+                            </h3>
+                            <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                @click="$wire.myModal3 = false">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+            
+            
+                        <div class=" p-4 w-full max-w-md max-h-full">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <!-- Modal header -->
+                             
+                                <!-- Modal body -->
+                                <div class="p-4 md:p-5">
+                                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">{{$hospitalname}}</p>
+                                    <ul class="my-4 space-y-3">
+            
+                                        <li>
+                                            <span 
+                                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+            
+                                                <span class="flex-1 ms-3 whitespace-nowrap">Referred By:</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{$hospitalname}}</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span 
+                                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+            
+                                                <span class="flex-1 ms-3 whitespace-nowrap">Referred To:</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{$referredcenter}}</span>
+                                            </span>
+                                        </li>
+                                        
+                                        <li>
+                                            <span 
+                                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+            
+                                                <span class="flex-1 ms-3 whitespace-nowrap">Appointment Day:</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{$appday}}</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span 
+                                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+            
+                                                <span class="flex-1 ms-3 whitespace-nowrap">Referral Type:</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{$referralname}}</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span 
+                                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+            
+                                                <span class="flex-1 ms-3 whitespace-nowrap">Files :</span>
+                                                @if(isset($fileattach))
+                                                <x-mary-button label="File is attached" class="btn-md"  icon="o-link" tooltip="file" />
+                                                    
+                                                @else
+                                                <x-mary-button label="No file"  icon="o-link" tooltip="" />
+                                                @endif
+                                                
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                    <x-slot:actions>
+                        <x-mary-button label="Cancel" @click="$wire.myModal3 = false" />
+
+                        <x-mary-button label="Confirm" class="btn-primary" wire:click='register' />
+                    </x-slot:actions>
+            
+            
+                  
+                </x-mary-modal>
                 <div class="flex justify-end col-span-10 pt-6">
-                    <button type="submit" class="btn btn-md btn-outline btn-success"
-                        wire:click="increaseStep">Submit
+                    <button type="button" class="btn btn-md btn-outline btn-success"
+                    wire:click='checkentry' >Submit
                         <div wire:loading>
                             @include('utils.spinner')
                         </div>
@@ -457,7 +554,28 @@
 
         </div>
     </form>
+    <x-mary-modal wire:model="saved"  class="">
+        <div class="w-full flex justify-center"> Referral  Finished</div>
+        <x-slot:actions >
+       
+            <div class="flex justify-between gap-4 w-full p-9">
+                    
+            <x-mary-button label="New Referral"    />
+            @if($saved)
+            <a href="{{ route('generate', ['id' => $card_number]) }}" target="_blank">
+            <x-mary-button label="Generate Report"   icon="s-printer"  class="btn-warning"  />
+            </a>
+            @endif
 
+           
+            </div>
+
+        </x-slot:actions>
+    </x-mary-modal>
+     
+  
+
+    
 
 
 </div>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('hospital_id')->constrained();
             $table->integer('slotalotted')->default(0);
             $table->integer('slotused')->default(0);
-            $table->unique(['department_id', 'hospital_id']);
+            $table->unique(['department_id', 'hospital_id','date']);
         });
     }
 
