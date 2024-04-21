@@ -2,6 +2,7 @@
 
 namespace App\Models\Referral;
 
+use App\Models\Admin\Department;
 use App\Models\Admin\Hospital;
 use App\Models\Admin\ReferralType;
 use App\Models\Admin\Referrtype;
@@ -33,6 +34,9 @@ class Referral extends Model
     public function hospital(){
         return $this->belongsTo(Hospital::class);
     }
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 
     public function patient()
     {
@@ -41,5 +45,15 @@ class Referral extends Model
     public function referrtype()
     {
         return $this->belongsTo(Referrtype::class);
+    }
+
+    public function referringHospital()
+    {
+        return $this->belongsTo(Hospital::class, 'referring_hospital_id');
+    }
+
+    public function receivingHospital()
+    {
+        return $this->belongsTo(Hospital::class, 'receiving_hospital_id');
     }
 }

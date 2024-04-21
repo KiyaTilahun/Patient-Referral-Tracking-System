@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+{{-- <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -45,5 +45,28 @@
       </tfoot> 
   </table>
   {{ $pendings->links() }}  
-</div>
+</div> --}}
 
+
+<div>
+  
+  <x-mary-header title="Centers" subtitle="Search centers">
+    <x-slot:middle class="!justify-end">
+        <x-mary-input icon="o-magnifying-glass" class="border-green-500 focus:border-green-500" wire:model.live='search' placeholder="Search..." />
+    </x-slot:middle>
+  
+        
+
+       
+</x-mary-header>
+
+  <x-mary-table :headers="$headers" :rows="$pendings" :sort-by="$sortBy" with-pagination >
+
+  @scope('cell_status', $pending)
+  <x-mary-badge :value="($pending->status==1)?'Active':'Inactive'" class="{{$pending->status ? 'btn-outline btn-success btn-disabled':'btn-outline btn-warning btn-disabled'}}" />
+  @endscope
+  @scope('actions', $pending)
+  <x-mary-button icon="c-pencil-square" class="text-green-500 btn-sm" wire:click="show({{ $pending->id }})" spinner  />
+@endscope
+  </x-mary-table>
+ </div>

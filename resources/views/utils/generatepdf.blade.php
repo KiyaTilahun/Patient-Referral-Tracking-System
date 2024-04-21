@@ -104,31 +104,40 @@
             <tbody>
                 <tr>
                     <th scope="row">Referral Id</th>
-                    <td></td>
+                    <td>{{$patient->card_number}}</td>
 
                 </tr>
                 <tr>
                     <th scope="row">Full Name</th>
-                    <td></td>
+                    <td>{{$patient->name}}</td>
 
                 </tr>
                 <tr>
                     <th scope="row">Referred By</th>
-                    <td></td>
+                    <td>{{$latestAppointment->referringHospital->name}}</td>
 
                 </tr>
                 <tr>
                     <th scope="row">Referred To</th>
-                    <td></td>
+                    <td>{{$latestAppointment->receivingHospital->name}}</td>
 
                 </tr>
                 <tr>
-                    <th scope="row">Reason for Referral:</th>
-                    <td></td>
+                    <th scope="row">Department:</th>
+                    @if ($latestAppointment->referrtype_id != 3)
+                    <td>{{$latestAppointment->department->name}}</td>
+                    @else
+                        <td>-</td>
+                    @endif
+            
                 </tr>
                 <tr>
                     <th scope="row">Appointment Day:</th>
-                    <td></td>
+                    <td>{{$latestAppointment->referral_date}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Type:</th>
+                    <td>{{$latestAppointment->referrtype->name}}</td>
                 </tr>
 
 

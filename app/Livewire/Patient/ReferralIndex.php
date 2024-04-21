@@ -63,12 +63,13 @@ class ReferralIndex extends Component
     public bool $myModal3 = false;
     public bool $help=false;
     public bool $saved=false;
-
+    public $config;
     // routing
     public $route;
 
     public function mount()
     {
+        $this->config = ['mode' => 'range'];
 
         $this->route = url()->previous();
         $this->hosid = auth()->user()->hospital_id;
@@ -83,6 +84,10 @@ class ReferralIndex extends Component
 
     }
 
+    public function newreferral(){
+
+        return redirect()->route('referral.add');
+    }
 
     public function helpmodal(){
 
@@ -169,16 +174,21 @@ class ReferralIndex extends Component
     public function updatedReferralType()
     {
         $this->reset('referralname');
-        $this->reset('notdiagonal');
+        // $this->reset('notdiagonal');
         $this->reset('appday');
         $this->reset('selecteddep');
+        $this->reset('selectedcenter');
+        $this->reset('initial');
+
+
+
+
 
         $this->referralname = Referrtype::where('id', $this->referral_type)->value('name');
         if ($this->referral_type != '3') {
-
             $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
 
-            $this->notdiagonal = true;
+            // $this->notdiagonal = true;
             if ($this->referral_type == '2') {
 
                 $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
@@ -211,6 +221,7 @@ class ReferralIndex extends Component
 
             // }
 
+            $this->notdiagonal=true;
 
             if(count($this->availbledep)<=0){
          $this->warning( 'No Department is found');
@@ -219,6 +230,8 @@ class ReferralIndex extends Component
         } else {
             $initial = Patient::where('card_number', $this->card_number)->first();
             $this->initial = $initial->hospital;
+            $this->notdiagonal=false;
+
             // $this->selectedcenter=$initial->hospital->id;
 
         }
@@ -228,11 +241,13 @@ class ReferralIndex extends Component
     {
 
         $this->reset('availablecenter');
+        $this->reset('selectedcenter');
+
         // dd($this->selecteddep);
         $avail = $this->selecteddep;
         $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
         if ($this->referral_type == '1') {
-
+         $this->notdiagonal=true;
             if ($hospital->type_id == '2') {
                 $hospitalsWithDepartment = Hospital::where('type_id', 3)->where('hospitals.id', '!=', $hospital->id)
                     ->whereHas('departments', function ($query) use ($avail) {

@@ -233,7 +233,7 @@
                             </div>
 
                             <select class="select select-success w-full " wire:model.live='referral_type'>
-                                <option selected value="">Referral Type</option>
+                                <option disabled>Referral Type</option>
 
                                 @if (!($typeinitial == 3))
                                     <option value='1'>Vertical</option>
@@ -299,7 +299,7 @@
                     {{-- common elements --}}
 
                     @if (!isset($initial))
-                        @if ($notdiagonal && isset($selecteddep))
+                        @if (isset($selecteddep))
                             <div class="md:col-span-5 col-span-12">
                                 <label class="form-control w-full ">
                                     <div class="label">
@@ -359,35 +359,32 @@
 
                     {{-- choosing appointment day --}}
                     {{-- default view --}}
-                    @if (!isset($selectedcenter))
-                        <div class="md:col-span-5 col-span-12 ">
+                    {{-- @if (!isset($selectedcenter)) --}}
+                        {{-- <div class="md:col-span-5 col-span-12 ">
                             <label class="form-control w-full ">
                                 <div class="label">
                                     <span class="label-text">Choose appointment day</span>
 
                                 </div>
 
-                                <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
-                                    icon="o-calendar" disabled />
+                               
 
                             </label>
 
                         </div>
-                        {{-- when department is choosen --}}
-                    @else
+                        when department is choosen --}}
+
+                        @if ($notdiagonal && isset($selectedcenter))
+
                         <div class="md:col-span-5 col-span-12 ">
                             <label class="form-control w-full ">
                                 <div class="label">
                                     <span class="label-text">Choose appointment day</span>
 
                                 </div>
-                                @if (!isset($sonfig1))
                                     <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
                                         icon="o-calendar" :config="$config1" />
-                                @else
-                                    <x-mary-datepicker wire:model="appday" class="input input-bordered input-success"
-                                        icon="o-calendar" disabled />
-                                @endif
+                                
                             </label>
                             @error('appday')
                                 <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
@@ -396,7 +393,27 @@
                                 </div>
                             @enderror
                         </div>
-                    @endif
+
+                        @else
+                        <div class="md:col-span-5 col-span-12 ">
+                            <label class="form-control w-full ">
+                                <div class="label">
+                                    <span class="label-text">Choose appointment day</span>
+
+                                </div>
+                                    <x-mary-datepicker  class="input input-bordered input-success"
+                                        icon="o-calendar" :config="$config" />
+                                
+                            </label>
+                            @error('appday')
+                                <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                    role="alert">
+                                    <span class="font-medium">{{ $message }}</span>
+                                </div>
+                            @enderror
+                        </div>
+
+                       @endif
                     <div class="md:col-span-5 col-span-12 w-full">
                         <label class="form-control w-full ">
                             <div class="label">
@@ -560,7 +577,7 @@
        
             <div class="flex justify-between gap-4 w-full p-9">
                     
-            <x-mary-button label="New Referral"    />
+            <x-mary-button label="New Referral" wire:click="newreferral" />
             @if($saved)
             <a href="{{ route('generate', ['id' => $card_number]) }}" target="_blank">
             <x-mary-button label="Generate Report"   icon="s-printer"  class="btn-warning"  />

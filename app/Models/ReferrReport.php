@@ -26,15 +26,15 @@ class ReferrReport extends Model
         $latestAppointment = Referral::where('card_number', $id)
         ->latest('created_at') // Order by created_at column in descending order
         ->first(); 
-        $hospital = Patient::where('card_number', $id)->first();
+        $patient = Patient::where('card_number', $id)->first();
 
 
         // $availbledep =  Department::all()->toArray();
 
-        $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($hospital->card_number));
+        $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($latestAppointment->card_number));
         $day = now()->format('d/m/Y');
        
-        $pdf =  Pdf::loadView('utils.generatepdf', compact('hospital', 'qr', 'day'));
+        $pdf =  Pdf::loadView('utils.generatepdf', compact('patient', 'qr', 'day','latestAppointment'));
         
         // return response()->streamDownload(function () use ($pdf) {
         //     echo $pdf->stream("",["Attachment"=>false]);
