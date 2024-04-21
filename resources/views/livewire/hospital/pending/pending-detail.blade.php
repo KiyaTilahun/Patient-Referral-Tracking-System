@@ -1,7 +1,7 @@
 <div class="grid grid-cols-12  ">
 
 
-    <button wire:click='try'>hello</button>
+    
     @if (!is_null($detail))
     <div class="p-4 col-span-12 md:col-span-12"> <x-checkmark><span class="text-green-500 dark:text-green-400">Name:</span>  {{$detail->name}}
         </x-checkmark></div>
@@ -20,7 +20,7 @@
 <div class="p-4 col-span-12 md:col-span-12"> <x-checkmark><span class="text-green-500 dark:text-green-400">Credentials: </span> <a type="button"  wire:click='download({{$detail->id}})'> <svg class="w-8 h-8 text-green-500  dark:text-green-500 hover:cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
     <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
     <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd" />
-  </svg>
+  </svg>E
 </a>
   
         </x-checkmark></div>
@@ -28,7 +28,7 @@
         <div class="p-4 col-span-6 md:col-span-6 text-center"> 
            
               <button type='button'  class="btn btn-outline btn-success" wire:click='try_save' > 
-                Activate Center  <div class="text-green-500" wire:loading>
+                Register Center  <div class="text-green-500" wire:loading>
                   @include('utils.spinner')
               </div></button>
               

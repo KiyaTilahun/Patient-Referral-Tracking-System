@@ -1,116 +1,64 @@
 <div class="flex-col w-full">
-    <div class="w-full">     <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">DashBoard</span>    </h1></div>
-   <div class="w-full inline-flex"> <x-mary-stat title="Messages" value="44" icon="o-envelope" tooltip="Hello" />
- 
-    <x-mary-stat
-        title="Sales"
-        description="This month"
-        value="22.124"
-        icon="o-arrow-trending-up"
-        tooltip-bottom="There" />
-     
-    <x-mary-stat
-        title="Lost"
-        description="This month"
-        value="34"
-        icon="o-arrow-trending-down"
-        tooltip-left="Ops!" />
-     
-    <x-mary-stat
-        title="Sales"
-        description="This month"
-        value="22.124"
-        icon="o-arrow-trending-down"
-        class="text-orange-500"
-        color="text-pink-500"
-        tooltip-right="Gosh!" /></div>
-
-        <div class="w-full">     <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-2xl lg:text-2xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Generate Report</span>    </h1></div>
-        <div class="w-full inline-flex gap-10"> 
-        <div>
-            <label class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">Table</span>
-
+    <div class="header col-span-12 rounded-lg bord py-4">
+        {{-- <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Center</span> Management   </h1> --}}
+        <x-breadcrumb>
+            <li class="inline-flex items-center">
+                <a href="{{ route('dashboard') }}"
+                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center ms-1 text-sm font-medium text-gray-700  md:ms-2 dark:text-gray-400">
+                    <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 9 4-4-4-4" />
+                    </svg>
+                    Dashboard
                 </div>
-                <select class="select select-bordered" wire:model.live='selectedtable'>
-                    <option selected>Choose table</option>
-                    @foreach ($tablenames as $table)
-                        <option value="{{ $table }}">{{ $table}}</option>
-                    @endforeach
-                </select>
-            </label>
-        </div>
-
-        <div>
-            <label class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">Choose Column </span>
-
-                </div>
-                <select
-                class="select select-bordered {{ !(is_null($columns)) ? 'select-accent' : 'select-bordered' }} "
-                wire:model.live="selectedcolumn">
-                @if (!is_null($columns))
-                    @if (count($columns) == 0)
-                        <option value="">No Column</option>
-                    @else
-                        @foreach ($columns as $column)
-                            <option value="{{ $column }}">{{ $column }}
-                            </option>
-                        @endforeach
-                    @endif
-                @endif
-            </select>
-            </label>
-        </div>
-        @if (!empty($columnvalues))
+            </li>
             
-        <div>
-            <label class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">Choose  </span>
+        </x-breadcrumb>
+        <x-page-heading :title="'DashBoard'" />
 
-                </div>
-                <select
-                class="select select-bordered {{ !(is_null($columnvalues)) ? 'select-accent' : 'select-bordered' }} "
-                wire:model="selectedcolumn">
-              
-                    @if (count($columnvalues) == 0)
-                        <option value="">No Column</option>
-                    @else
-                        @foreach ($columnvalues as $column)
-                            <option value="{{ $column }}">{{ $column }}
-                            </option>
-                        @endforeach
-                    @endif
-       
-            </select>
-            </label>
+    </div>
+
+    <div class="w-full inline-flex"> 
+        <x-mary-stat title="Regions" description="Total Regions" value="{{$regioncount}}" icon="o-arrow-trending-down"
+        tooltip-left="region!" class="text-orange-500" />
+        <x-mary-stat title="Centers" description="Total center" value="{{$centercount}}" icon="m-home-modern" class="text-orange-500"
+            tooltip-bottom="centers" />
+
+      
+
+        <x-mary-stat title="Patients" description="Total Patients" value="{{$patientcount}}" icon="o-user-circle"
+            class="text-orange-500" color="text-pink-500" tooltip-right="patients!" />
+            
+        <x-mary-stat title="Referrals" description="Total Referrals" value="{{$referralcount}}" icon="o-clipboard-document-check"
+        class="text-orange-500" color="text-blue-500" tooltip-right="Referrals!" />
+            
+            
+    </div>
+
+   
+    <div class="grid grid-cols-3 md:mt-6">
+        <div class="col-span-2 flex flex-col items-start ">
+            <div class="my-6">Number of Medical Centers by Region</div><x-mary-chart wire:model="myChart" class="w-full" />
+           
         </div>
-      
-        @endif
+        <div class="col-span-1 flex flex-col items-start">
+            <div class="my-6">Number of Medical Centers by Type</div><x-mary-chart wire:model="myChart2" class="w-full" />
+           
+        </div>
 
-
-          <div class="md:col-span-5 ">
-                        <label class="form-control w-full ">
-                            <div class="label">
-                                <span class="label-text">Choose appointment day</span>
+    </div>
     
-                            </div>
-                       
-                            <x-mary-datepicker  wire:model="appday" class="input input-bordered input-success" icon="o-calendar" :config="$config1"   />
-    
-                        </label>
-                        @error('appday')
-                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
-                                role="alert">
-                                <span class="font-medium">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
-      
-        
-        </div></div>
+</div>
 
 </div>

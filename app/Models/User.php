@@ -61,8 +61,9 @@ class User extends Authenticatable
     public function liaisons(){
         return $this->hasMany(Liaison::class);
     }
-    public function zone(){
-        return $this->hasOneThrough(Zone::class,Region::class);
+  
+    public function region(){
+        return $this->hasOneThrough(Region::class,Hospital::class);
 
     }
     public function hospital(){

@@ -62,8 +62,8 @@
 
   <x-mary-table :headers="$headers" :rows="$pendings" :sort-by="$sortBy" with-pagination >
 
-  @scope('cell_status', $pending)
-  <x-mary-badge :value="($pending->status==1)?'Active':'Inactive'" class="{{$pending->status ? 'btn-outline btn-success btn-disabled':'btn-outline btn-warning btn-disabled'}}" />
+  @scope('cell_registered', $pending)
+  <x-mary-badge :value="($pending->registered==1)?'registered':'unregistered'" class="{{$pending->status ? 'btn-outline btn-error btn-disabled':'btn-outline btn-warning btn-disabled'}}" />
   @endscope
   @scope('actions', $pending)
   <x-mary-button icon="c-pencil-square" class="text-green-500 btn-sm" wire:click="show({{ $pending->id }})" spinner  />

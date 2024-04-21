@@ -47,7 +47,7 @@ public function reset_table()
             
             ['key' => 'name', 'label' => 'Center Name'],
             ['key' => 'region_name', 'label' => 'Region Name'],
-            ['key' => 'status', 'label' => 'Status'],      # <-- nested attributes
+            ['key' => 'registered', 'label' => 'Registered'],      # <-- nested attributes
       
         ];
         return view('livewire.hospital.pending.pending-table',['pendings'=>$pendings,'headers'=>$headers,

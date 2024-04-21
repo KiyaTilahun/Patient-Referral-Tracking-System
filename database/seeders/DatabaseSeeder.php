@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             PatientSeeder::class,
             ReferrtypeSeeder::class,
             ReferralSeeder::class,
-            RoleSeeder::class,
+            RolePermissionSeeder::class,
             SuperSeeder::class,
             HospitalDepartmentSeeder::class,
             DaySeeder::class,

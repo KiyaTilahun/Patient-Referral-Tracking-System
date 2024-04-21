@@ -233,7 +233,7 @@
                             </div>
 
                             <select class="select select-success w-full " wire:model.live='referral_type'>
-                                <option disabled>Referral Type</option>
+                                <option>Referral Type</option>
 
                                 @if (!($typeinitial == 3))
                                     <option value='1'>Vertical</option>
