@@ -329,7 +329,7 @@
 
 
         {{-- log out --}}
-        <li>
+        <li class="cursor-pointer">
             <livewire:logout>
         </li>
 

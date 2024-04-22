@@ -33,9 +33,14 @@
                         </div>
                     </div>
                     {{-- {{auth()->user()->hospital->name}} --}}
-                    <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
-                      {{ auth()->user()->name }}
-                    </span>
+                    <div class="flex flex-col gap-1">
+                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+                            {{ auth()->user()->name }}
+                          </span>
+                          <span class="inline-flex self-end justify-center px-2 border-success  dark:border-warning border-[1px] ms-3 text-xs font-medium text-success bg-gray-200 rounded dark:bg-gray-700 dark:text-warning">
+                            {{ auth()->user()->getRoleNames()->first()}}
+                          </span>
+                    </div>
                    
 
 

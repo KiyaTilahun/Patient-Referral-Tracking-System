@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Users;
 
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,6 +21,13 @@ use WithPagination;
     
         $this->dispatch('user_selected', id: $id);
     
+    }
+    #[On('user_edited')]
+    public function reload()
+    {
+       
+        
+        $this->render();
     }
     public function render()
     {
@@ -52,7 +60,6 @@ use WithPagination;
                     ->orderBy(...array_values($this->sortBy))
                     ->paginate(5);
     }
-
 
     $headers = [
             
