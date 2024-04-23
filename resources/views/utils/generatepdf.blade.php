@@ -25,6 +25,10 @@
          
             height: 100%;
         }
+        u {    
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+}
 
         .page {
          
@@ -65,6 +69,7 @@
             /* Your footer styles here */
         }
         .instructions {
+            text-align: justify;
     font-style: italic;
     /* Add additional styling as needed */
 }
@@ -72,6 +77,9 @@
 .copyright {
     font-weight: lighter;
     /* Add additional styling as needed */
+}
+.liaison{
+    text-align: right;
 }
     </style>
 </head>
@@ -83,7 +91,7 @@
         <div class="header-container">
 
 
-            <span id="currentDate font-weight-bold font-italic">Date: {{ $day }}</span>
+            <span id="currentDate font-weight-bold font-italic"> Date: {{ $day }}</span>
 
         </div>
         {{-- <img src="..." class="img-fluid" alt="Responsive image"> --}}
@@ -94,56 +102,81 @@
                 <figcaption class="figure-caption text-right">You can scan the QR code on your mobile app</figcaption>
             </figure>
         </div>
-        <table class="table mx-auto table-striped" style="padding-top:100px">
+        <table class="table mx-auto table-striped" style="padding-top:50px">
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col" colspan="3"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <th scope="row">Referral Id</th>
                     <td>{{$patient->card_number}}</td>
-
-                </tr>
-                <tr>
                     <th scope="row">Full Name</th>
                     <td>{{$patient->name}}</td>
+                </tr>
+                <tr>
+                    
+                    <th scope="row">Gender</th>
+                    <td>{{$patient->gender->name}}</td>
+                    <th scope="row">Blood Type</th>
+                    <td>{{$patient->bloodtype->name}}</td>
 
                 </tr>
                 <tr>
                     <th scope="row">Referred By</th>
-                    <td>{{$latestAppointment->referringHospital->name}}</td>
-
-                </tr>
-                <tr>
+                    <td >{{$latestAppointment->referringHospital->name}}</td>
                     <th scope="row">Referred To</th>
-                    <td>{{$latestAppointment->receivingHospital->name}}</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">Department:</th>
-                    @if ($latestAppointment->referrtype_id != 3)
-                    <td>{{$latestAppointment->department->name}}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-            
+                    <td >{{$latestAppointment->receivingHospital->name}}</td>
                 </tr>
                 <tr>
                     <th scope="row">Appointment Day:</th>
-                    <td>{{$latestAppointment->referral_date}}</td>
+                    <td >{{$latestAppointment->referral_date}}</td>
+                    <th scope="row">Department:</th>
+                    @if ($latestAppointment->referrtype_id != 3)
+                    <td >{{$latestAppointment->department->name}}</td>
+                    @else
+                        <td>-</td>
+                    @endif
+                </tr>
+                
+                <tr>
+                    <th scope="row">History:</th>
+                    <td colspan="3"><u class="small">{{$latestAppointment->history}}</u></td>
+                </tr>
+               
+                <tr>
+                    <th scope="row">Findings:</th>
+                    <td colspan="3"><u class="small">{{$latestAppointment->findings}}</u></td>
+                </tr>
+                <tr>
+                    <th scope="row">Treatment:</th>
+                    <td colspan="3"><u class="small">{{$latestAppointment->treatment}}</u></td>
                 </tr>
                 <tr>
                     <th scope="row">Type:</th>
-                    <td>{{$latestAppointment->referrtype->name}}</td>
+                    <td colspan="3">{{$latestAppointment->referrtype->name}}</td>
                 </tr>
+                
+                   
+                
 
 
             </tbody>
         </table>
-        <div class="footer bg-transparent border-success"><div class="instructions">
+        <div class="footer bg-transparent border-success position-fixed">
+       
+            <div class="instructions">
+                <div class="liaison">
+                
+                    <div class="copyright" >
+                        <span class="font-weight-bold">Liaison Officer:</span>{{$latestAppointment->referringHospital->liaison->liaison_officer}}</div>
+                    <div class="copyright" >
+                        <span class="font-weight-bold">Phone Number:</span>{{$latestAppointment->referringHospital->liaison->phone_number}}</div>
+    
+                    
+                </div>
             <em>Please use the mobile app of the Patient Referral Tracking App and scan the QR code to view your available appointments.</em>  </div>
             <div class="copyright">
                 &copy; 2024 <span class="font-weight-bold">PRTS</span>

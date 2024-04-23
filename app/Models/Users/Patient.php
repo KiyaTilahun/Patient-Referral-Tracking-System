@@ -2,6 +2,8 @@
 
 namespace App\Models\Users;
 
+use App\Models\Admin\Bloodtype;
+use App\Models\Admin\Gender;
 use App\Models\Admin\Hospital;
 use App\Models\Referral\Referral;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,8 @@ class Patient extends Model
     
     protected $fillable = [
         'name',
-        'gender',
+        'gender_id',
+        'bloodtype_id',
         'dob',
         'card_number',
         'treatment',
@@ -32,4 +35,10 @@ class Patient extends Model
     {
         return $this->hasMany(Referral::class, 'card_number', 'card_number');
     }   
+    public function gender(){
+        return $this->belongsTo(Gender::class);
+    }
+    public function bloodtype(){
+        return $this->belongsTo(Bloodtype::class);
+    }
 }

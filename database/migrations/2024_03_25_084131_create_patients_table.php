@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->tinyInteger('gender')->unsigned();
             $table->date('dob');
             $table->string('card_number')->unique();
             // $table->string('treatment');
@@ -23,6 +22,10 @@ return new class extends Migration
             $table->string('phone');
             $table->timestamps();
             $table->foreignId('hospital_id')->constrained();
+            $table->foreignId('gender_id')->constrained();
+            $table->foreignId('bloodtype_id')->constrained();
+
+
             // $table->foreignId('doctor_id')->constrained();
             $table->unique(['card_number', 'hospital_id']);
 

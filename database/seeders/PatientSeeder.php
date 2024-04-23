@@ -46,7 +46,9 @@ class PatientSeeder extends Seeder
         for ($i = 0; $i < $numberOfPatients; $i++) {
             Patient::create([
                 'name' => $faker->unique()->name(),
-                'gender' => rand(0, 1), // Assuming 0 for male and 1 for female
+                'gender_id' => rand(1, 2),
+                'bloodtype_id' => rand(1, 8), // Assuming 0 for male and 1 for female
+                 // Assuming 0 for male and 1 for female
                 'dob' => now()->subYears(rand(18, 70)), // Random date of birth between 18 and 70 years ago
                 'card_number' => 'CARD' . $faker->phoneNumber(), // Unique card number for each patient
                 // 'treatment' => array_rand($departments),

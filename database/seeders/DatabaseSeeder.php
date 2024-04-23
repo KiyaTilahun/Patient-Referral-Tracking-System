@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin\Bloodtype;
 use App\Models\Admin\Department;
 use App\Models\Admin\ReferralType;
 use App\Models\DayDepartment;
@@ -35,6 +36,8 @@ class DatabaseSeeder extends Seeder
             LiaisonSeeder::class,
             DepartmentSeeder::class,
             DoctorSeeder::class,
+            BloodtypeSeeder::class,
+            GenderSeeder::class,
             PatientSeeder::class,
             ReferrtypeSeeder::class,
             ReferralSeeder::class,

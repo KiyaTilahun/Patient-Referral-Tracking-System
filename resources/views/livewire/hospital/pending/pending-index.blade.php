@@ -37,10 +37,10 @@
           <x-page-heading :title="'Pending Centers'" />
        
     </div>
-    <div class="col-span-12 rounded-lg sm:col-span-7 ">
+    <div class="col-span-12 rounded-lg md:col-span-7">
         <livewire:hospital.pending.pending-table />
     </div>
-    <div class="col-span-12 rounded-lg  shadow-md sm:col-span-5">
+    <div class="col-span-12 rounded-lg  shadow-md md:col-span-5">
 
 
         {{-- center saved start --}}

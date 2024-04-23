@@ -65,7 +65,7 @@
 
 
 
-   <div>
+   <div wire:poll>
   
     <x-mary-header title="Centers" subtitle="Search centers">
       <x-slot:middle class="!justify-end">

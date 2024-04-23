@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patient;
 
+use App\Models\Admin\Bloodtype;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
 use App\Models\Users\Patient;
@@ -23,6 +24,8 @@ class PatientIndex extends Component
     public $cardnumber;
     public $treatment;
     public $dob;
+    public $bloodtype;
+    public $allblood;
     public $validated;
     public $copiedref;
 
@@ -33,13 +36,14 @@ class PatientIndex extends Component
     public function mount(){
 
         $this->openref;
+        $this->allblood=Bloodtype::all();
         $minDate = Carbon::now()->yesterday()->format('Y/m/d');
         $this->config1 = [  'dateFormat' => 'Y/m/d',
         'maxDate' =>$minDate ,
                        'enableTime' => false,];
         $this->genders = [
             ['value' => 1, 'label' => 'Male'],
-            ['value' => 0, 'label' => 'Female'],
+            ['value' => 2, 'label' => 'Female'],
         ];
         $this->hospital=Hospital::where('id',auth()->user()->hospital_id)->with('departments')->first();
         $this->departments=$this->hospital->departments;
@@ -73,12 +77,14 @@ class PatientIndex extends Component
 
     public function register(){
         $this->validated=$this->validate();
+        // dd($this->validated['gender']);
         $patient = Patient::create([
        
           
             'name' =>  $this->validated['firstname'].' '.$this->validated['lastname'] ,
-            'gender' => $this->validated['gender'],
+            'gender_id' => $this->validated['gender'],
             'email' => $this->validated['email'],
+            'bloodtype_id' => $this->bloodtype??null,
             'phone' => '+251'.$this->validated['phone'],
             'dob' => $this->validated['dob'],
             'card_number' => $this->generateCardNumber($this->hospital->id),
@@ -101,6 +107,7 @@ class PatientIndex extends Component
             'email',
             'phone',
             'dob',
+            'bloodtype'
         ]);
 
         
@@ -117,7 +124,6 @@ class PatientIndex extends Component
             return[
                'firstname'=>'required',
                'lastname'=>'required',
-
                 'gender'=>'required',
                 'email'=>'unique:patients',
                 'phone'=>'required|min:9|numeric',

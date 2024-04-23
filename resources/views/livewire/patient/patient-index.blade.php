@@ -174,8 +174,30 @@
                             </div>
                         @enderror
                     </div>
-
+                    <div class="md:col-span-6 col-span-12">
+                        <label class="form-control w-full max-w-xs">
+                            <div class="label">
+                                <span class="label-text">Blood Type</span>
+                                <span class="badge badge-warning badge-outline">Not Mandatory</span>
+                            </div>
+                            <select class="select select-success  w-full max-w-xs" wire:model='bloodtype'>
+                                <option  selected> Blood Type</option>
+                                @foreach ($allblood as $blood)
+                                <option value="{{$blood->id}}">{{$blood->name}}</option>
+                                    
+                                @endforeach
+                                
+                              </select>
+                        </label>
+                        @error('bloodtype')
+                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
                   
+                    
 
 
                     <div class="md:col-span-6 col-span-12">
