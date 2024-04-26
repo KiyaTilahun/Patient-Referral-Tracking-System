@@ -8,6 +8,8 @@ use App\Livewire\Admin\Users\UserEdit;
 use App\Livewire\Admin\Users\UserIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
+use App\Livewire\Hospital\Inbound\InboundIndex;
+use App\Livewire\Hospital\Outbound\OutboundIndex;
 use App\Livewire\Hospital\Pending\PendingIndex;
 use App\Livewire\Hospital\Register;
 use App\Livewire\Patient\PatientIndex;
@@ -85,6 +87,12 @@ Route::get('/patient/add', PatientIndex::class)
 Route::get('/referral/add', ReferralIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('referral.add');
+    Route::get('/hospital/inbound', InboundIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('hospital.inbound');
+    Route::get('/hospital/outbound', OutboundIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('hospital.outbound');
 Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 
 

@@ -205,7 +205,7 @@
                         <span class="ms-3"> {{ __('Book Referral') }}</span>
                     </div>
                 </x-nav-link>
-                <x-nav-link :href="route('department.add')" :active="request()->routeIs('department.add')" wire:navigate>
+                <x-nav-link :href="route('hospital.inbound')" :active="request()->routeIs('hospital.inbound')" wire:navigate>
                     <div class="inline-flex">
 
                         <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -224,7 +224,7 @@
                     </div>
                 </x-nav-link>
 
-                <x-nav-link :href="route('department.add')" :active="request()->routeIs('department.add')" wire:navigate>
+                <x-nav-link :href="route('hospital.outbound')" :active="request()->routeIs('hospital.outbound')" wire:navigate>
                     <div class="inline-flex">
                         <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"

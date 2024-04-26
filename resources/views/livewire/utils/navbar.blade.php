@@ -20,7 +20,7 @@
                     <span
                         class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">PRTS</span>
                         <span
-                                                    class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{auth()->user()->hospital->name}}  <div class="ml-4 badge text-[#00ca92]">{{auth()->user()->hospital->region->name}},Ethiopia
+                                                    class="hidden md:inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">{{auth()->user()->hospital->name}}  <div class="ml-4 badge text-[#00ca92]">{{auth()->user()->hospital->region->name}},Ethiopia
                                                      </div></span>
                                                     </span>
             </div>
