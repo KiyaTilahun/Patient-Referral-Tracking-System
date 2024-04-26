@@ -458,11 +458,14 @@ class ReferralIndex extends Component
         if ($this->fileattach != null) {
             $hospitalname = Hospital::where('id', $this->secondvalidation['selectedcenter'])->first()->name;
             $hospitalname = str_replace(' ', '_', $hospitalname);
-            $extension = $this->secondvalidation['fileattach']->getClientOriginalExtension();
-            $name = $this->card_number . '_' . now()->format('Ymd') . '.' . $extension;
+            $extension = "pdf";
+            $name = $hospitalname.'/'.$this->card_number . '_' . now()->format('Ymd') . '.' . $extension;
 
-            $this->secondvalidation['fileattach']->storeAs('Centers/' . $hospitalname, $name, 'public');
+            $this->fileattach->storeAs('Centers/', $name, 'public');
+            // dd($this->fileattach);
             $this->secondvalidation['fileattach'] = $name;
+            // $this->secondvalidation['fileattach']->storeAs('Centers/', $name, 'public');
+            // $this->secondvalidation['fileattach'] = $name;
         }
 
         // dd($this->fileattach);

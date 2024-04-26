@@ -122,8 +122,8 @@ class PatientIndex extends Component
        
         
             return[
-               'firstname'=>'required',
-               'lastname'=>'required',
+               'firstname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
+               'lastname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
                 'gender'=>'required',
                 'email'=>'unique:patients',
                 'phone'=>'required|min:9|numeric',
