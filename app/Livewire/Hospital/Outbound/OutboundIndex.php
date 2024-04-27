@@ -64,6 +64,15 @@ public bool $myModal3=false;
         $this->reset();
         $this->render();
     }
+    public function register($referral){
+
+        // dd($referral['card_number']);
+        return redirect()->route('hospital.referral', [
+            'card_number' => $referral['card_number'],
+            'date' => $referral['referral_date']
+        ]);
+        
+    }
     public function render()
     {
       
@@ -76,7 +85,7 @@ public bool $myModal3=false;
             $query->where('card_number', 'LIKE', '%' . $this->search . '%');
         })->when($this->chooseddate, function ($query) {
             $query->where('referral_date',  $this->chooseddate);
-        })->withAggregate('receivingHospital', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(5);
+        })->withAggregate('receivingHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(5);
 
 
         $headers = [
@@ -85,7 +94,7 @@ public bool $myModal3=false;
             ['key' => 'receiving_hospital_name', 'label' => 'Referral To'],
             ['key' => 'patient_name', 'label' => 'Patient Name'],
             ['key' => 'referrtype_name', 'label' => 'Type'],
-            ['key' => 'status', 'label' => 'Status'],      # <-- nested attributes
+            ['key' => 'statustype_name', 'label' => 'Status'],      # <-- nested attributes
 
         ];
 

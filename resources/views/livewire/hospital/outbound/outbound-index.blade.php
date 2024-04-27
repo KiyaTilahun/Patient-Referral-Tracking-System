@@ -22,23 +22,45 @@
        
             <x-mary-badge 
                 :value="$center->referrtype_name" 
-                class="{{ 
-                    $center->referrtype_name== 'diagonal' ? 'btn-outline btn-info btn-disabled' : '' 
+                class="{{
+                    $center->referrtype_name== 'diagonal' ? 'text-info' : '' 
                 }} 
                 {{
-                    $center->referrtype_name== 'vertical' ? 'btn-outline btn-info btn-disabled' : ''
+                    $center->referrtype_name== 'vertical' ? 'text-info' : ''
                 }} 
                 {{
-                    $center->referrtype_name== 'horizontal' ? 'btn-outline btn-warning btn-disabled' : ''
+                    $center->referrtype_name== 'horizontal' ? 'text-warning' : ''
                 }} 
                " 
             />
       
     @endscope
+
+
+    @scope('cell_statustype_name', $center)
+       
+    <x-mary-badge 
+        :value="$center->statustype_name" 
+        class="{{ 
+            $center->statustype_name== 'pending' ? 'btn-outline btn-warning btn-disabled' : '' 
+        }} 
+        {{
+            $center->statustype_name== 'completed' ? 'btn-outline btn-info btn-disabled' : ''
+        }} 
+      
+       " 
+    />
+
+@endscope
     @scope('cell_referral_date', $center)
     <x-mary-button label="{{$center->referral_date}}"   icon="o-calendar"  class="btn-sm" link="outbound/{{$center->referral_date}}" />
 
     @endscope
+    @scope('cell_receiving_hospital_name', $center)
+    <strong>{{ Str::limit($center->receiving_hospital_name, 20, '...')}}</strong>
+    @endscope
+   
+    
     @scope('actions', $center)
   <x-mary-button  icon="m-eye" class="text-warning btn-sm" wire:click="show({{$center->id}})" spinner  />
 @endscope
@@ -77,12 +99,19 @@
 
             <div class=" p-4 w-full max-w-md max-h-full">
                 <!-- Modal content -->
+               
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal header -->
                  
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
                         <p class="text-sm font-normal text-gray-500 dark:text-gray-400"></p>
+                        <span class=" text-right mb-2  flex justify-end gap-4">
+                            <x-mary-button label="Close" class="btn-error"  @click="$wire.myModal3 = false" />
+                
+                            <x-mary-button label="Expand" class="btn-primary" wire:click="register({{$referral}})" icon="s-clipboard-document-list"/>
+                      
+                            </span>
                         <ul class="my-4 space-y-3">
 
                             <li>
@@ -163,12 +192,7 @@
                     </div>
                 </div>
                 
-                <span class="pt-4 text-right m-4 flex justify-end gap-4">
-                    <x-mary-button label="Cancel" @click="$wire.myModal3 = false" />
-        
-                    <x-mary-button label="Confirm" class="btn-primary" wire:click='register' />
-              
-                    </span>
+                
 
             </div>
            

@@ -6,6 +6,7 @@ use App\Models\Admin\Department;
 use App\Models\Admin\Hospital;
 use App\Models\Admin\ReferralType;
 use App\Models\Admin\Referrtype;
+use App\Models\Admin\Statustype;
 use App\Models\Admin\Type;
 use App\Models\Users\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +21,8 @@ class Referral extends Model
         'referral_date',
         'referring_hospital_id',
         'receiving_hospital_id',
-        'referrtype_id', 
+        'referrtype_id',
+        'statustype_id', 
         'doctor_id',
         'department_id',
         'history',
@@ -46,6 +48,11 @@ class Referral extends Model
     {
         return $this->belongsTo(Referrtype::class);
     }
+    public function statustype()
+    {
+        return $this->belongsTo(Statustype::class);
+    }
+
 
     public function referringHospital()
     {

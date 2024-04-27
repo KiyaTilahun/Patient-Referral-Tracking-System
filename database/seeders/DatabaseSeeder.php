@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             GenderSeeder::class,
             PatientSeeder::class,
             ReferrtypeSeeder::class,
+            StatustypeSeeder::class,
             ReferralSeeder::class,
             RolePermissionSeeder::class,
             SuperSeeder::class,

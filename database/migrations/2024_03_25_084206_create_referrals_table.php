@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('referrtype_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->foreignId('doctor_id')->nullable()->constrained();
             $table->foreignId('department_id')->nullable()->constrained();
+            $table->foreignId('statustype_id')->default(1)->constrained();
+
             $table->text('history'); // Reason for the referral
             $table->text('findings'); // Additional notes
             $table->text('treatment'); // Additional notes
