@@ -54,23 +54,23 @@ Route::view('profile', 'profile')
 
 // live wire routes
 
-Route::get('/pending', PendingIndex::class)
-    ->middleware(['auth', 'verified'])
-    ->name('pending');
-Route::get('/centers/all', CenterIndex::class)
-    ->middleware(['auth', 'verified'])
-    ->name('centers.all');
 
-Route::get('/rolepermission', RpIndex::class)
-    ->middleware(['auth', 'verified'])
-    ->name('rolepermission');
+
+    Route::middleware(['auth','role:superadmin', 'verified'])
+    ->group(function () {
+        Route::get('/pending', PendingIndex::class)->name('pending');
+        Route::get('/centers/all', CenterIndex::class)->name('centers.all');
+        Route::get('/rolepermission', RpIndex::class)->name('rolepermission');
+    });
+
+
 
 
 Route::get('/adduser', Adduser::class)
     ->middleware(['auth', 'verified'])
     ->name('adduser');
     Route::get('/edituser/{id}', UserEdit::class)
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth','role:superadmin', 'verified'])
     ->name('edituser');
 
     Route::get('/users', UserIndex::class)
@@ -113,5 +113,11 @@ Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 // Route::get('/contact',function(){
 //     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));
 // });
+
+// fall back pages
+
+Route::fallback(function () {
+    return response()->view('utils.errors.404', []); // Custom 404 view
+});
 
 require __DIR__ . '/auth.php';

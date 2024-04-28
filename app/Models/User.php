@@ -52,6 +52,11 @@ class User extends Authenticatable
     ];
 
 
+    public function getIsSuperAdminAttribute()
+    {
+        return $this->role === 'superadmin'; // or check against multiple roles
+    }
+    
     public function doctors(){
         return $this->hasMany(Doctor::class);
     }

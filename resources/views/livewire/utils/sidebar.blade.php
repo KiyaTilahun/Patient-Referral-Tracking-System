@@ -27,7 +27,7 @@
 
 
             {{-- Center Management --}}
-
+            @if ((auth()->user()->hasRole('superadmin')))
             <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
@@ -86,7 +86,7 @@
 
 
 
-
+@endif
 
             {{-- User Management --}}
 
@@ -306,7 +306,7 @@
             </ul>
             {{-- Role and Permission --}}
 
-
+            @if ((auth()->user()->hasRole('superadmin')))
             <x-nav-link :href="route('rolepermission')" :active="request()->routeIs('rolepermission')" wire:navigate>
                 <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -320,6 +320,7 @@
 
                 <span class="ms-3"> {{ __('Role & Permission ') }}</span>
             </x-nav-link>
+            @endif
             
            
 
