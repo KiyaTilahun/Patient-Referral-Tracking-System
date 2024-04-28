@@ -8,6 +8,7 @@ use App\Livewire\Admin\Users\UserEdit;
 use App\Livewire\Admin\Users\UserIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Hospital\Center\CenterIndex;
+use App\Livewire\Hospital\Inbound\InboundDate;
 use App\Livewire\Hospital\Inbound\InboundIndex;
 use App\Livewire\Hospital\Outbound\OutboundDate;
 use App\Livewire\Hospital\Outbound\OutboundIndex;
@@ -98,6 +99,9 @@ Route::get('/referral/add', ReferralIndex::class)
     Route::get('/hospital/outbound/{date}', OutboundDate::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.outbound.date');
+    Route::get('/hospital/inbound/{date}', InboundDate::class)
+    ->middleware(['auth', 'verified'])
+    ->name('hospital.inbound.date');
     Route::get('/hospital/referral/{card_number}/date/{date}', ReferralDetail::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.referral');

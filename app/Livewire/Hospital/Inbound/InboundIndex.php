@@ -83,7 +83,7 @@ public bool $myModal3=false;
             $query->where('card_number', 'LIKE', '%' . $this->search . '%');
         })->when($this->chooseddate, function ($query) {
             $query->where('referral_date',  $this->chooseddate);
-        })->withAggregate('referringHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(5);
+        })->withAggregate('referringHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(20);
 
 
         $headers = [

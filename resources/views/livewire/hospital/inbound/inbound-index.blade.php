@@ -1,5 +1,5 @@
 <div wire:poll class="w-full">
-    <x-mary-header title="OutBound Referrals" subtitle="Search Referral by Card Number">
+    <x-mary-header title="InBound Referrals" subtitle="Search Referral by Card Number">
         <x-slot:middle class="!justify-end">
             <span class="flex items-center gap-6">
                
@@ -53,7 +53,7 @@
 
 @endscope
     @scope('cell_referral_date', $center)
-    <x-mary-button label="{{$center->referral_date}}"   icon="o-calendar"  class="btn-sm" link="outbound/{{$center->referral_date}}" />
+    <x-mary-button label="{{$center->referral_date}}"   icon="o-calendar"  class="btn-sm" link="inbound/{{$center->referral_date}}" />
 
     @endscope
     @scope('cell_receiving_hospital_name', $center)

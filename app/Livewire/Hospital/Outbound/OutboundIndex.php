@@ -19,14 +19,14 @@ class OutboundIndex extends Component
     public $search;
     public $config1;
     public $referral;
-    public $chooseddate;
+    public  $chooseddate;
 // modals
 public bool $myModal3=false;
     public function mount()
     {
        
         $this->config1 = [  'dateFormat' => 'Y-m-d',
-                       'enableTime' => false,];
+                       'selected'=>'today'];
     }
 
     public function show($id)
@@ -85,7 +85,7 @@ public bool $myModal3=false;
             $query->where('card_number', 'LIKE', '%' . $this->search . '%');
         })->when($this->chooseddate, function ($query) {
             $query->where('referral_date',  $this->chooseddate);
-        })->withAggregate('receivingHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(5);
+        })->withAggregate('receivingHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(20);
 
 
         $headers = [

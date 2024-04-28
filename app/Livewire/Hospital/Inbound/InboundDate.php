@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Hospital\Outbound;
+namespace App\Livewire\Hospital\Inbound;
 
 use App\Models\Referral\Referral;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class OutboundDate extends Component
+class InboundDate extends Component
 {
     use WithPagination;
     public $date;
@@ -19,7 +19,6 @@ class OutboundDate extends Component
     public $chooseddate;
 
     public bool $myModal3 = false;
-
     public function mount($date)
     {
         $this->date = $date;
@@ -41,7 +40,7 @@ class OutboundDate extends Component
     }
     // see patient in detail
 
-    public function register($referral)
+    public function expand($referral)
     {
 
         // dd($referral['card_number']);
@@ -68,25 +67,21 @@ class OutboundDate extends Component
     {
         $this->hospitalid = auth()->user()->hospital->id;
         // dd($this->hospitalid);
-        $centers = Referral::where('referring_hospital_id', $this->hospitalid)->where('referral_date', $this->date)->when($this->search, function ($query) {
+        $centers = Referral::where('receiving_hospital_id', $this->hospitalid)->where('referral_date', $this->date)->when($this->search, function ($query) {
             $query->where('card_number', 'LIKE', '%' . $this->search . '%');
-        })->withAggregate('receivingHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(20);
+        })->withAggregate('referringHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(20);
 
 
         $headers = [
             ['key' => 'card_number', 'label' => 'Referral Id'],
-            ['key' => 'receiving_hospital_name', 'label' => 'Referral To'],
+            ['key' => 'referring_hospital_name', 'label' => 'Referral To'],
             ['key' => 'patient_name', 'label' => 'Patient Name'],
             ['key' => 'referrtype_name', 'label' => 'Type'],
             ['key' => 'statustype_name', 'label' => 'Status'],       # <-- nested attributes
 
         ];
 
-
-
-        return view('livewire.hospital.outbound.outbound-date', [
-            'centers' => $centers, 'headers' => $headers,
-            'sortBy' => $this->sortBy
-        ]);
+        return view('livewire.hospital.inbound.inbound-date',['centers' => $centers, 'headers' => $headers,
+        'sortBy' => $this->sortBy]);
     }
 }
