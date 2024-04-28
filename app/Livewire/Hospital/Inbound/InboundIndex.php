@@ -3,6 +3,8 @@
 namespace App\Livewire\Hospital\Inbound;
 
 use App\Models\Admin\Hospital;
+use App\Models\Referral\Referral;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,45 +12,96 @@ use Livewire\WithPagination;
 class InboundIndex extends Component
 {
     use WithPagination;
-
-    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
+    public $hospitalid;
+    public array $sortBy = ['column' => 'referral_date', 'direction' => 'asc'];
     public $search;
-        public function show($id){
+    public $config1;
+    public $referral;
+    public $chooseddate;
+// modals
+public bool $myModal3=false;
+    public function mount()
+    {
+       
+        $this->config1 = [  'dateFormat' => 'Y-m-d',
+                       'enableTime' => false,];
+    }
+
+    public function show($id)
+    {
+        // dd($id);
         
-            $this->dispatch('hospital_selected', id: $id);
+        $this->referral = Referral::where('id',$id)->with('patient')->first();
         
+        $this->myModal3=true;
+
+    
+    }
+
+    public function openpdf($fileName){
+
+       
+        $filePath = "Centers/{$fileName['file_path']}"; // Adjust the path based on your storage setup
+        // dd($filePath);
+        if (!Storage::disk('public')->exists($filePath)) {
+            
+            abort(404, 'File not found');
         }
     
-    
-        #[On('resettable')]
-        public function reload()
-        {
-    
-    
-           $this->reset();
-           $this->render();
+ 
+        return Storage::download('public/'.$filePath);
         
-        }
-        public function render()
-        {
-              
-    
-            $centers=Hospital::where('registered','1')->when($this->search, function ($query) {
-                $query->where('name', 'LIKE', '%' . $this->search . '%');
-            })->withAggregate('region','name')->orderBy(...array_values($this->sortBy))->paginate(5);
-         
-    
-            $headers = [
-                
-                ['key' => 'name', 'label' => 'Center Name'],
-                ['key' => 'region_name', 'label' => 'Region Name'],
-                ['key' => 'status', 'label' => 'Status'],      # <-- nested attributes
-          
-            ];
-    
-    
-         
-        return view('livewire.hospital.inbound.inbound-index',['centers'=>$centers,'headers'=>$headers,
-        'sortBy'=> $this->sortBy]);
+   
+    }
+
+    #[On('resettable')]
+    public function reload()
+    {
+
+
+        $this->reset();
+        $this->render();
+    }
+    public function register($referral){
+
+        // dd($referral['card_number']);
+        return redirect()->route('hospital.referral', [
+            'card_number' => $referral['card_number'],
+            'date' => $referral['referral_date']
+        ]);
+        
+    }
+    public function render()
+    {
+      
+       if($this->search!=null){
+        $this->chooseddate=null;
+       }
+        $this->hospitalid = auth()->user()->hospital->id;
+        // dd($this->hospitalid);
+        $centers = Referral::where('receiving_hospital_id', $this->hospitalid)->when($this->search, function ($query) {
+            $query->where('card_number', 'LIKE', '%' . $this->search . '%');
+        })->when($this->chooseddate, function ($query) {
+            $query->where('referral_date',  $this->chooseddate);
+        })->withAggregate('referringHospital', 'name')->withAggregate('statustype', 'name')->withAggregate('referrtype', 'name')->withAggregate('patient', 'name')->orderBy(...array_values($this->sortBy))->paginate(5);
+
+
+        $headers = [
+            ['key' => 'card_number', 'label' => 'Referral Id'],
+            ['key' => 'referral_date', 'label' => 'Appointment Date'],
+            ['key' => 'referring_hospital_name', 'label' => 'Referred By'],
+            ['key' => 'patient_name', 'label' => 'Patient Name'],
+            ['key' => 'referrtype_name', 'label' => 'Type'],
+            ['key' => 'statustype_name', 'label' => 'Status'],      # <-- nested attributes
+
+        ];
+
+
+
+        
+        return view('livewire.hospital.inbound.inbound-index', [
+            'centers' => $centers, 'headers' => $headers,
+            'sortBy' => $this->sortBy
+        ]);
     }
 }

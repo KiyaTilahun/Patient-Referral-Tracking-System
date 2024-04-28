@@ -37,6 +37,21 @@
       
     @endscope
   
+    @scope('cell_statustype_name', $center)
+       
+    <x-mary-badge 
+        :value="$center->statustype_name" 
+        class="{{ 
+            $center->statustype_name== 'pending' ? 'btn-outline btn-warning btn-disabled' : '' 
+        }} 
+        {{
+            $center->statustype_name== 'completed' ? 'btn-outline btn-info btn-disabled' : ''
+        }} 
+      
+       " 
+    />
+
+@endscope
     @scope('actions', $center)
   <x-mary-button  icon="m-eye" class="text-warning btn-sm" wire:click="show({{$center->id}})" spinner  />
 @endscope
@@ -82,7 +97,7 @@
                         <span class=" text-right mb-2  flex justify-end gap-4">
                             <x-mary-button label="Close" class="btn-error"  @click="$wire.myModal3 = false" />
                 
-                            <x-mary-button label="Expand" class="btn-primary" wire:click='register'  icon="s-clipboard-document-list"/>
+                            <x-mary-button label="Expand" class="btn-primary" wire:click="register({{$referral}})"  icon="s-clipboard-document-list"/>
                       
                             </span>
                         <ul class="my-4 space-y-3">

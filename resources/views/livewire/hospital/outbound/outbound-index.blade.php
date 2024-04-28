@@ -110,7 +110,7 @@
                             <x-mary-button label="Close" class="btn-error"  @click="$wire.myModal3 = false" />
                 
                             <x-mary-button label="Expand" class="btn-primary" wire:click="register({{$referral}})" icon="s-clipboard-document-list"/>
-                      
+                    
                             </span>
                         <ul class="my-4 space-y-3">
 

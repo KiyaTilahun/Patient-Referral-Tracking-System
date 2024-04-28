@@ -17,8 +17,8 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
     <style>
         body,
         html {
@@ -35,10 +35,12 @@
             /* Height of A4 paper */
             position: relative;
         }
-        /* .table-striped tbody tr:nth-of-type(odd)
+        .table-striped tbody tr:nth-of-type(odd)
         {background-color:rgba(0,0,0,.05)}
-        .table{width:100%;max-width:100%;margin-bottom:1rem;background-color:transparent}.table td,.table th{padding:.75rem;vertical-align:top;border-top:1px solid #dee2e6}.table thead th{vertical-align:bottom;border-bottom:2px solid #dee2e6}.table tbody+tbody{border-top:2px solid #dee2e6}.table .table{background-color:#fff} */
-
+        .table{width:100%;max-width:100%;margin-bottom:1rem;background-color:transparent}.table td,.table th{padding:.75rem;vertical-align:top;border-top:1px solid #dee2e6}.table thead th{vertical-align:bottom;border-bottom:2px solid #dee2e6}.table tbody+tbody{border-top:2px solid #dee2e6}.table .table{background-color:#fff}
+.th{
+    text-align:left !important;
+}
         .header-container {
             display: table;
             width: 100%;
@@ -52,6 +54,11 @@
             text-align: right;
         }
 
+        .col{-ms-flex-preferred-size:0;flex-basis:0;-ms-flex-positive:1;flex-grow:1;max-width:100%}
+        .row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}
+        .text-center{text-align:center!important}
+        .font-weight-bold{font-weight:700!important}
+        .figure-caption{font-size:90%;color:#6c757d}
         .figure {
             padding-top: 40px;
         }
@@ -97,7 +104,7 @@
         {{-- <img src="..." class="img-fluid" alt="Responsive image"> --}}
         {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('http://google.com')) !!} "> --}}
         <div class="text-center">
-            <figure class="figure text=center">
+            <figure class="figure text-center">
                 <img src="data:image/png;base64, {!! $qr !!}">
                 <figcaption class="figure-caption text-right">You can scan the QR code on your mobile app</figcaption>
             </figure>

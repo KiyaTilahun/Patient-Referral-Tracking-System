@@ -39,7 +39,17 @@ class OutboundDate extends Component
 
         $this->myModal3 = true;
     }
+    // see patient in detail
 
+    public function register($referral)
+    {
+
+        // dd($referral['card_number']);
+        return redirect()->route('hospital.referral', [
+            'card_number' => $referral['card_number'],
+            'date' => $referral['referral_date']
+        ]);
+    }
     public function openpdf($fileName)
     {
 
