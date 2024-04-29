@@ -1,18 +1,19 @@
 <div class="bg-white shadow dark:bg-gray-700 min-h-screen  p-0 m-0">
+    <x-mary-toast />
     <div class="p-4 md:p-5">
         <div class="flex justify-between w-full mb-6 "> <x-mary-button label="Go Back" wire:click="goBack"
                 icon="o-arrow-left" />
-                <span class="flex gap-4 flex-col md:flex-row">
-                    <select
-                    class="select select-primary " wire:model.live='selectedday'>
-                    <option  selected class="text-sm pt-0 mt-0">Choose Referral Date </option>
-                   @foreach ($alldays as $day)
-                   <option>{{$day}}</option>
-                   @endforeach
+            <span class="flex gap-4 flex-col md:flex-row">
+                <select class="select select-primary " wire:model.live='selectedday'>
+                    <option selected class="text-sm pt-0 mt-0">Choose Referral Date </option>
+                    @foreach ($alldays as $day)
+                        <option>{{ $day }}</option>
+                    @endforeach
                 </select>
-            <x-mary-button label="{{ $referral->referral_date }}" icon="o-calendar" class="btn-warning cursor-default" />
-            
-        </span>
+                <x-mary-button label="{{ $referral->referral_date }}" icon="o-calendar"
+                    class="btn-warning cursor-default" />
+
+            </span>
         </div>
         <p class="text-lg font-normal text-gray-500 dark:text-gray-400 flex gap-4"><span>Referral Detail</span> </p>
 
@@ -99,8 +100,26 @@
                         <div class="form-control w-52">
                             <label class="cursor-default ">
 
-                                <input type="checkbox" class="toggle toggle-accent"
-                                    @if ($referral->statustype->name === 'completed') checked @endif disabled />
+
+
+                                @if ($referral->receivingHospital->id === auth()->user()->hospital->id)
+
+                                    @foreach ($status as $key => $value)
+                                        <button type="button"
+                                            class="btn  {{ $key === $referral->statustype_id ? 'text-warning' : 'btn btn-outline btn-warning border border-sky-500' }}"
+                                            wire:click="changeStatus({{ $key }})"
+                                            @if ($key === $referral->statustype_id) disabled @endif>
+                                            {{ Str::of($value)->headline() }}
+                                        </button>
+                                    @endforeach
+
+                                    <input type="checkbox" class="toggle toggle-accent border-red-300"
+                                        @if ($referral->statustype->name === 'completed') checked @endif />
+                                @else
+                                    <input type="checkbox" class="toggle toggle-accent"
+                                        @if ($referral->statustype->name === 'completed') checked @endif disabled />
+                                @endif
+
                                 <span
                                     class="label-text {{ $referral->statustype->name !== 'completed' ? 'text-error' : '' }}
                         }}">{{ $referral->statustype->name }}</span>
@@ -110,6 +129,38 @@
 
                 </tr>
 
+                <tr>
+                    <td>
+
+
+
+
+
+                      
+                        <x-mary-modal wire:model="appointmentmodal" class="backdrop-blur">
+                            <form wire:submit="updateappointment">
+                           
+                            <div  class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"> Edit Appointment</div>
+                            @if ($config1 !== null)
+                                <div> <x-mary-datepicker wire:model="updateddate" class="input input-bordered input-success" icon="o-calendar" :config="$config1" />    
+                                </div>
+                            @endif
+                           
+                            
+
+                            <span class="flex flex-end gap-4 w-full mt-4">
+                               <x-mary-button label="Cancel" @click="$wire.appointmentmodal = false" />
+                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary"  />
+                            </span>
+                        
+
+                        </form>
+                        </x-mary-modal>
+                    
+
+                        <x-mary-button label="Open" wire:click='changeAppointmentModal()' />
+                    </td>
+                </tr>
 
 
 

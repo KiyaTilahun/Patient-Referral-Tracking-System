@@ -11,7 +11,9 @@ class Appointmentslot extends Model
     protected $fillable=['date' ,
     'slotused',
     'hospital_id',
-    'department_id'];
+    'slotalotted',
+    'department_id',
+'availability'];
 
     public function hospital(){
         return $this->belongsTo(Hospital::class);
@@ -21,24 +23,24 @@ class Appointmentslot extends Model
         return $this->belongsTo(Department::class);
      }
 
-     public function getSlotalottedAttribute()
-     {
+    //  public function getSlotalottedAttribute()
+    //  {
         
-         $department = $this->department()->first();
+    //      $department = $this->department()->first();
  
          
-         if ($department) {
+    //      if ($department) {
            
-             $pivot = $department->hospitals()->where('hospital_id', $this->hospital_id)->first();
+    //          $pivot = $department->hospitals()->where('hospital_id', $this->hospital_id)->first();
  
-             if ($pivot) {
+    //          if ($pivot) {
             
-                 return $pivot->slot;
-             }
-         }
+    //              return $pivot->slot;
+    //          }
+    //      }
          
-         return null;
-     }
+    //      return null;
+    //  }
 
 
     //  public function save(array $options = [])
