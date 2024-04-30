@@ -1,4 +1,12 @@
-<div class="bg-white shadow dark:bg-gray-700 min-h-screen  p-0 m-0">
+@php
+    use Carbon\Carbon;
+
+    
+    $currentDate = Carbon::now()->format('Y-m-d');
+    $referralDate = Carbon::parse($referral->referral_date)->format('Y-m-d');
+   
+@endphp
+<div class="bg-white shadow dark:bg-gray-700 min-h-screen w-full  p-0 m-0">
     <x-mary-toast />
     <div class="p-4 md:p-5">
         <div class="flex justify-between w-full mb-6 "> <x-mary-button label="Go Back" wire:click="goBack"
@@ -18,10 +26,18 @@
         <p class="text-lg font-normal text-gray-500 dark:text-gray-400 flex gap-4"><span>Referral Detail</span> </p>
 
         <table class="table-auto table">
-            <div class="flex justify-end w-full">
+            <div class="flex justify-end w-full gap-4">
+              
+             
+
+                @if (($currentDate < $referralDate)&& ($referral->referrtype_id!=3))
+               
+                <x-mary-button label="Change Appointment" class="btn btn-error" wire:click='changeAppointmentModal()' />
+                @endif
                 <a href="{{ route('generate', ['id' => $referral->card_number]) }}" target="_blank">
                     <x-mary-button label="PRINT" icon="o-printer" class=" cursor-default" />
                 </a>
+
             </div>
             <thead>
                 <tr>
@@ -158,7 +174,7 @@
                         </x-mary-modal>
                     
 
-                        <x-mary-button label="Open" wire:click='changeAppointmentModal()' />
+                       
                     </td>
                 </tr>
 

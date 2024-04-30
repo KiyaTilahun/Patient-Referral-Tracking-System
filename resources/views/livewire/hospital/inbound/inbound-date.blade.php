@@ -95,9 +95,9 @@
                       <div class="p-4 md:p-5">
                           <p class="text-sm font-normal text-gray-500 dark:text-gray-400"></p>
                           <span class=" text-right mb-2  flex justify-end gap-4">
-                              <x-mary-button label="Close" class="btn-error"  @click="$wire.myModal3 = false" />
+                              {{-- <x-mary-button label="Close" class="btn-error"  @click="$wire.myModal3 = false" /> --}}
                   
-                              <x-mary-button label="Expand" class="btn-primary" wire:click="expand({{$referral}})"  icon="s-clipboard-document-list"/>
+                              <x-mary-button label="Expand" class="btn-primary" wire:click="expand({{$referral}})"  icon="o-arrows-pointing-out"/>
                         
                               </span>
                           <ul class="my-4 space-y-3">

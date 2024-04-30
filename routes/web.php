@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\SmsController;
 use App\Livewire\Admin\Adduser;
 use App\Livewire\Admin\Department\AddIndex;
 use App\Livewire\Admin\Department\DepIndex;
+use App\Livewire\Admin\Departmentlist;
+use App\Livewire\Admin\Holidaylist;
+use App\Livewire\Admin\Settings;
 use App\Livewire\Admin\Users\UserEdit;
 use App\Livewire\Admin\Users\UserIndex;
 use App\Livewire\Dashboard;
@@ -61,6 +65,12 @@ Route::view('profile', 'profile')
         Route::get('/pending', PendingIndex::class)->name('pending');
         Route::get('/centers/all', CenterIndex::class)->name('centers.all');
         Route::get('/rolepermission', RpIndex::class)->name('rolepermission');
+        Route::get('/settings', Settings::class)->name('settings');
+        Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');
+        Route::get('/holidaylist', Holidaylist::class)->name('holidaylist');
+
+
+
     });
 
 
@@ -107,7 +117,8 @@ Route::get('/referral/add', ReferralIndex::class)
     ->name('hospital.referral');
 Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 
-
+Route::get('/sms', [SmsController::class,'sms'])
+->name('sms');
 
 // Route::get(/rolepermission,)
 // Route::get('/contact',function(){
@@ -115,6 +126,7 @@ Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 // });
 
 // fall back pages
+
 
 Route::fallback(function () {
     return response()->view('utils.errors.404', []); // Custom 404 view
