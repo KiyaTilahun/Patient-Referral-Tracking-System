@@ -113,10 +113,10 @@ class ReferralDetail extends Component
 
 
 
-
+dd($upcomingDates);
         $this->config1 = $this->getConfig1($upcomingDates);
-        // dd($upcomingDates);
-        $this->appointmentmodal = true;
+        // // dd($upcomingDates);
+        // $this->appointmentmodal = true;
     }
 
 

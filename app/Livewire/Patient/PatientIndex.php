@@ -7,10 +7,14 @@ use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
 use App\Models\Users\Patient;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Livewire\Component;
 
 class PatientIndex extends Component
 {
+    
     public $departments;
     public $hospital;
     public bool $savedmodal=false;
@@ -93,6 +97,9 @@ class PatientIndex extends Component
             
            
         ]);
+        $token = $patient->createToken('authpatient');
+       dd($token->plainTextToken);
+
         $this->copiedref= $this->generateCardNumber($this->hospital->id);
         $this->savedmodal=true;
 

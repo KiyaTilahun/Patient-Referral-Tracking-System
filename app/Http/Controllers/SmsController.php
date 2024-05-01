@@ -8,8 +8,17 @@ use Illuminate\Support\Facades\Http;
 class SmsController extends Controller
 {
     //
-    public function sms(){
+   
+    public function sms($phonenumbers,$messages){
 
+        $name=[];
+        $phone=[];
+
+        foreach($phonenumbers as $key=>$value){
+            $name[]=$key;
+            $phone[]=$value;
+                     }
+        // dd($name);
 //         $basic  = new \Vonage\Client\Credentials\Basic("9670a0ae", "vqoak6G8DCgCIzMi");
 // $client = new \Vonage\Client($basic);
 
@@ -38,38 +47,61 @@ $apiEndpoint = env('SMS_API_ENDPOINT');
 //     'message' => "hello",
 // ];
 
-try {
-    // Send the POST request with authorization header
-    // $response = Http::withHeaders([
-    //     'Authorization' => 'Bearer ' . $apiKey,
-    // ])->post($apiEndpoint, $formData);
-// dd($apiEndpoint);
+ $phonearray=[];
+ $phonearray=$phonenumbers;
+$failedphones=[];
 
-$response = Http::withHeaders([
-    'Authorization' => $apiKey, // Include the API key as a Bearer token
-])->post($apiEndpoint, [
-    "to" => "+251943072433", // Example phone number
-    "message" => "Hello, this is a test SMS!", // Example message
-]);
-    // Check if the request was successful
-    if ($response->successful()) {
-        return [
-            'success' => true,
-            'message' => 'SMS sent successfully',
-        ];
-    } else {
+
+for ($i = 0; $i < count($name); $i++) {
+    try {
+        // Send the POST request with authorization header
+        // $response = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . $apiKey,
+        // ])->post($apiEndpoint, $formData);
+    // dd($apiEndpoint);
+    
+// dd($phone[$i]);
+    
+    $response = Http::withHeaders([
+        'Authorization' => $apiKey, // Include the API key as a Bearer token
+    ])->post($apiEndpoint, [
+        "to" => $phone[$i], // Example phone number
+        "message" => "To ".$name[$i]." , ".$messages, // Example message
+    ]);
+    // dd($response);
+        // Check if the request was successful
+        if ($response->successful()) {
+            // dd("true");
+            return [
+                'success' => true,
+                'message' => 'SMS sent successfully',
+            ];
+
+
+        
+        } else {
+            dd("false");
+
+            $failedphones[]=$phone;
+            return [
+                'success' => false,
+                'message' => 'Failed to send SMS',
+            ];
+            continue;
+        }
+    } catch (\Exception $e) {
+        // Handle errors during the request
         return [
             'success' => false,
-            'message' => 'Failed to send SMS',
+            'message' => 'Error sending SMS: ' . $e->getMessage(),
         ];
     }
-} catch (\Exception $e) {
-    // Handle errors during the request
-    return [
-        'success' => false,
-        'message' => 'Error sending SMS: ' . $e->getMessage(),
-    ];
-}
+ }
+//  dd($failedphones);
+
+
+
+
 }
  
 }

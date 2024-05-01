@@ -1,8 +1,16 @@
+@php
+    use Carbon\Carbon;
+
+    
+    $currentDate = Carbon::now()->format('Y-m-d');
+    $referralDate = Carbon::parse($date)->format('Y-m-d');
+   
+@endphp
 <div wire:poll class="w-full">
+    <x-mary-toast/>
     <div class="flex justify-between w-full mb-6 ">  <x-mary-button label="Go Back" wire:click="goBack" icon="o-arrow-left" />
       <x-mary-button label="{{$date}}"   icon="o-calendar"  class="btn-warning cursor-default"  /></div>
-  
-  
+      
       <x-mary-header title="InBound Referrals" subtitle="Search Referral by Card Number">
           <x-slot:middle class="!justify-end">
   
@@ -10,13 +18,23 @@
                   wire:model.live='search' placeholder="Search..." />
   
           </x-slot:middle>
-  
-  
-  
-  
-  
+
       </x-mary-header>
-  
+      <div class="md:w-1/2 flex justify-between gap-2">
+        <select class="select select-bordered w-full max-w-xs" wire:model.live='department'>
+            <option value="{{null}}">All Departments</option>
+            @foreach ($avadepartments as $item)
+                
+            <option value="{{$item->id}}">{{$item->name}}</option>
+            @endforeach
+          </select>
+
+          @if (($currentDate < $referralDate) && ($department!=null))
+               
+          <x-mary-button label="Postoponed {{count($centers)}} Appointments " class="btn btn-error" icon="s-calendar-days" wire:click='changeAppointmentModal()' />
+          @endif
+      </div>
+
       <x-mary-table :headers="$headers" :rows="$centers" :sort-by="$sortBy" with-pagination>
   
           @scope('cell_referrtype_name', $center)
@@ -187,9 +205,42 @@
               @endisset
           </div>
         
-  
-  
-        
       </x-mary-modal>
+
+      <x-mary-modal wire:model="appointmentmodal" class="backdrop-blur">
+                            <form wire:submit="updateapp">
+                           
+                            <div  class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"> Edit Appointment</div>
+                            @if ($upcomingdate !== null)
+                                <div>
+                                    <select class="select select-bordered w-full" wire:model='updateappointment'>
+                                        <option value="{{null}}" class="text-warning" selected>Available Days</option>
+                                        <div></div>
+                                        @foreach ($upcomingdate as $item)
+                                            
+                                        <option value="{{$item}}">{{$item}}</option>
+                                        @endforeach
+                                      </select>
+                                     {{-- <x-mary-datepicker wire:model="updateddate" class="input input-bordered input-success" icon="o-calendar" :config="$config1" />     --}}
+
+                                     @error('updateappointment')
+                                     <div class="p-2 text-sm text-red-800 rounded-lg dark:bg-gray-800 dark:text-red-600"
+                                         role="alert">
+                                         <span class="font-medium">{{ $message }}</span>
+                                     </div>
+                                 @enderror
+                                </div>
+                            @endif
+                           
+                            
+
+                            <span class="flex flex-end gap-4 w-full mt-4">
+                               <x-mary-button label="Cancel" @click="$wire.appointmentmodal = false" />
+                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary" spinner />
+                            </span>
+                        
+
+                        </form>
+                        </x-mary-modal>
   </div>
   

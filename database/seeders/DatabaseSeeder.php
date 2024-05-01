@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             DaySeeder::class,
             DayDepartmentSeeder::class,
             SpecialdaysSeeder::class,
+            HolidaylistSeeder::class
 
             // AppointmentslotSeeder::class,
 

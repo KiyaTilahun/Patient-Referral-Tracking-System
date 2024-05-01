@@ -74,7 +74,7 @@
                                             available</x-checkmark>
                                         <x-checkmark>Enter a real woreda number if there is no one kebele number can be
                                             used </x-checkmark>
-
+                                            <x-checkmark  class="text-warning inline">Attach all the necessary credentials of your center in format </x-checkmark>
 
 
 
@@ -260,7 +260,7 @@
                                             @enderror
                                         </div>
 
-                                        <div wire:ignore class="md:col-span-5 w-full">
+                                        {{-- <div wire:ignore class="md:col-span-5 w-full">
                                             <label class="form-control w-full ">
                                                 <div class="label">
                                                     <span class="label-text">Available Departments</span>
@@ -274,7 +274,7 @@
                                                     @endforeach
                                                 </select>
                                             </label>
-                                        </div>
+                                        </div> --}}
 
 
                                     </div>
@@ -498,7 +498,7 @@
                                         </label>
 
                                     </div>
-
+{{-- 
                                     <div wire:ignore class="md:col-span-5 w-full">
                                         <label class="form-control w-full ">
                                             <div class="label">
@@ -513,7 +513,7 @@
                                                 @endforeach
                                             </select>
                                         </label>
-                                    </div>
+                                    </div> --}}
 
 
                                 </div>

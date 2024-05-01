@@ -5,11 +5,14 @@ namespace Database\Seeders;
 use App\Models\Users\Patient;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Faker\Factory as Faker;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class PatientSeeder extends Seeder
 {
+   
     /**
      * Run the database seeds.
      */
@@ -44,7 +47,7 @@ class PatientSeeder extends Seeder
 
         // Loop through and create dummy data for patients
         for ($i = 0; $i < $numberOfPatients; $i++) {
-            Patient::create([
+           $patient= Patient::create([
                 'name' => $faker->unique()->name(),
                 'gender_id' => rand(1, 2),
                 'bloodtype_id' => rand(1, 8), // Assuming 0 for male and 1 for female
@@ -60,6 +63,8 @@ class PatientSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            // $token = $patient->createToken('auth-patient')->plainTextToken();
         }
     }
 }
