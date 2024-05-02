@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patient;
 
+use App\Http\Controllers\SmsController;
 use App\Models\Admin\Bloodtype;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
@@ -93,12 +94,28 @@ class PatientIndex extends Component
             'dob' => $this->validated['dob'],
             'card_number' => $this->generateCardNumber($this->hospital->id),
             'hospital_id' =>$this->hospital->id,
-
+             
             
            
         ]);
         $token = $patient->createToken('authpatient');
-       dd($token->plainTextToken);
+
+
+    //    dd($token->plainTextToken);
+
+    
+       $sender = new SmsController();
+       $message = "Referral Id: " . $patient->card_number . " Unique Id: " .$token->plainTextToken ;
+
+       //  $message="hellp";
+         $checkresponse=$sender->patientsms($patient->name,$patient->phone,$message);
+           if($checkresponse){
+               // dd($checkresponse);
+            //    $this->success("SMS  sent to patients");
+         dd("true");
+              
+
+           }
 
         $this->copiedref= $this->generateCardNumber($this->hospital->id);
         $this->savedmodal=true;

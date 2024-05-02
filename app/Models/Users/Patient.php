@@ -30,6 +30,7 @@ class Patient extends Model
         'address',
         'hospital_id',
         'doctor_id'
+        
     ];
     public function hospital()
     {

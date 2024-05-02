@@ -168,7 +168,7 @@ class InboundDate extends Component
             ->where('hospital_id', $this->hospitalid)
             ->pluck('day_id')
             ->toArray();
-        // dd($availableDays);
+        
         $upcomingDates = [];
 
         while ($currentDate <= $endDate) {
@@ -177,7 +177,7 @@ class InboundDate extends Component
             }
             $currentDate->addDay();
         }
-        // dd($upcomingDates);
+        
 
         $slots = Appointmentslot::whereRaw('slotalotted - slotused < ?', $this->appcount)
             ->where('availability', 'available')
@@ -186,7 +186,7 @@ class InboundDate extends Component
             ->pluck('date')
             ->unique()
             ->toArray();
-        // dd($slots);
+      
 
         if (count($slots) > 0) {
             $upcomingDates = array_diff($upcomingDates, $slots);
