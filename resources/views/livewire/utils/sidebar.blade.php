@@ -89,7 +89,7 @@
 @endif
 
             {{-- User Management --}}
-
+          
             <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="usermanage" data-collapse-toggle="usermanage">
@@ -107,6 +107,7 @@
                 </svg>
             </button>
             <ul id="usermanage" class="hidden py-1 space-y-2 pl-6">
+                @if ((auth()->user()->hasRole('admin')))
                 <x-nav-link :href="route('adduser')" :active="request()->routeIs('adduser')">
                     <div class="inline-flex">
 
@@ -125,7 +126,7 @@
                     </div>
                 </x-nav-link>
 
-
+@endif
 
                 <x-nav-link :href="route('allusers')" :active="request()->routeIs('allusers')" wire:navigate>
                     <div class="inline-flex">

@@ -20,7 +20,8 @@ class ReferralResource extends JsonResource
             'receiving_hospital' => $this->receivingHospital->name,
             'receiving_hospital_id'=>$this->receiving_hospital_id,
             'statustype'=>$this->statustype->name,
-            'referral_date'=>$this->referral_date
+            'referral_date'=>$this->referral_date,
+            'card_number'=>$this->card_number
             // Other referral data
         ];
     }

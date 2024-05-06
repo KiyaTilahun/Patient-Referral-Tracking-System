@@ -29,12 +29,13 @@ class UserController extends Controller
         }
 
         $patientData = [
-            'id' => $patient->id,
-            'name' => $patient->name,
-            'dob' => $patient->dob,
-            'card_number' => $patient->card_number,
-            'email' => $patient->email,
-            'phone' => $patient->phone,
+            'Full Name' => $patient->name,
+            'Referral Id' => $patient->card_number,
+            'Phone Number' => $patient->phone,
+            'Gender' => $patient->gender->name,
+            'Email' => $patient->email,
+            'Registering Center' => $patient->hospital->name,
+           
         ];
         // $patient->load(['referrals.referringHospital', 'referrals.receivingHospital']);
         // $referrals=$patient->referrals;

@@ -440,8 +440,7 @@ class ReferralIndex extends Component
                 ->first();
 
 
-            // dd($slot);
-            // dd($slot);
+            
             if (!$slot) {
                 // dd("hello");
                 $slotalot = $hospital->departments()->where('department_id', $this->secondvalidation['selecteddep'])->firstOrFail()->pivot->slot;
@@ -455,7 +454,7 @@ class ReferralIndex extends Component
                     'slotused' => 1,
 
                 ]);
-                // dd($slot);
+                
             } else {
                 if ($slot->slotused >= $slot->slotalotted) {
                     $this->myModal3 = false;

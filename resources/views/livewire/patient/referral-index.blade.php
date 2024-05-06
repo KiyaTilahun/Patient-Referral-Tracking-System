@@ -89,7 +89,7 @@
                         </div>
                     </li>
                 </x-breadcrumb>
-                <x-page-heading :title="'Add Referral'" />
+               <div class="flex justify-between items-center"> <x-page-heading :title="'Add Referral'" /><span ></span></div>
 
 
             </div>

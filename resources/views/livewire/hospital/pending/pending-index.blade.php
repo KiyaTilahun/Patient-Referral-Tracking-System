@@ -53,8 +53,8 @@
         {{-- <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-2xl text-left md:pl-6"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">health center
                 detail</span> </h1> --}}
-                <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
-                  <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 text-xl">Health Center Detail</span> 
+                <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500  dark:text-gray-400">
+                  <span class="mb-4 text-lg font-extrabold leading-none tracking-tight text-gray-900 md:text-lg dark:text-white">Health Center Detail</span> 
                  </span>
                 <div class="sm:max-h-[50vh] overflow-y-scroll">
         <livewire:hospital.pending.pending-detail />

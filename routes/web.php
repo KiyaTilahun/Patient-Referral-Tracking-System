@@ -77,7 +77,7 @@ Route::view('profile', 'profile')
 
 
 Route::get('/adduser', Adduser::class)
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth','role:admin', 'verified'])
     ->name('adduser');
     Route::get('/edituser/{id}', UserEdit::class)
     ->middleware(['auth','role:superadmin', 'verified'])

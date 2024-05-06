@@ -63,6 +63,8 @@ class CenterDetail extends Component
         $this->dispatch('swal_deactivate', [
             
         ]);
+
+        // dd("hello");
         
     }
 

@@ -21,7 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('auth:sanctum')->get('/patient/{id}', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/referral/{card}/{id}', [ReferralController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/referral/{card}/referrid/{id}', [ReferralController::class, 'show']);
+
 Route::get('/referral', [ReferralController::class, 'apirefer']);
 
-Route::get('/referral/change/{card}/date/{date}/dep/{department}/hos/{hospital}', [ReferralController::class, 'change']);
+Route::get('/referral/change/{card}/date/{date}/appointment', [ReferralController::class, 'change']);
+Route::patch('/referral/change/{card}/date/{date}/appointment/update', [ReferralController::class, 'update']);
+
 
