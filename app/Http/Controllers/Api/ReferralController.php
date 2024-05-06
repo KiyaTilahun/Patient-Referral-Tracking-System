@@ -192,7 +192,7 @@ class ReferralController extends Controller
         }
 
         if($slots->slotused==0){
-            $slot->delete();
+            $slots->delete();
         }
 
         return  response()->json([

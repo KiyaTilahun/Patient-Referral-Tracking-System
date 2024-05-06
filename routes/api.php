@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/referral/{card}/referrid/{id}', [Referr
 
 Route::get('/referral', [ReferralController::class, 'apirefer']);
 
-Route::get('/referral/change/{card}/date/{date}/appointment', [ReferralController::class, 'change']);
-Route::patch('/referral/change/{card}/date/{date}/appointment/update', [ReferralController::class, 'update']);
+Route::middleware('auth:sanctum')->get('/referral/change/{card}/date/{date}/appointment', [ReferralController::class, 'change']);
+Route::middleware('auth:sanctum')->patch('/referral/change/{card}/date/{date}/appointment/update', [ReferralController::class, 'update']);
 
 
