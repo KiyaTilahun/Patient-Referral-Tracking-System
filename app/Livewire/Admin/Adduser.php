@@ -124,7 +124,7 @@ if($this->role=='doctor'){
     {
 
 
-        $this->hospital=Hospital::where('id',auth()->user()->hospital_id)->first();
+        $this->hospital=Hospital::where('id',auth()->user()->hospital->id)->first();
         $roles=Role::whereNotIn('name', $this->rolesnot)->get();
         return view('livewire.admin.adduser',['hospital'=>$this->hospital,'roles'=>$roles]);
     }

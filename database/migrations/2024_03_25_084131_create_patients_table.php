@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('hospital_id')->constrained();
             $table->foreignId('gender_id')->constrained();
-            $table->foreignId('bloodtype_id')->constrained();
+            $table->foreignId('bloodtype_id')->nullable()->constrained();
 
 
             // $table->foreignId('doctor_id')->constrained();

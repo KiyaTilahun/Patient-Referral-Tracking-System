@@ -25,20 +25,22 @@
         </div>
         <p class="text-lg font-normal text-gray-500 dark:text-gray-400 flex gap-4"><span>Referral Detail</span> </p>
 
-        <table class="table-auto table">
+        
             <div class="flex justify-end w-full gap-4">
               
-             
-
+                @if(auth()->user()->hospital->id==$referral->referring_hospital_id)
+                <x-mary-button label="Edit Referral" class="btn btn-error" wire:click='tonewreferral()' />
+             @endif
                 @if (($currentDate < $referralDate)&& ($referral->referrtype_id!=3))
                
                 <x-mary-button label="Change Appointment" class="btn btn-error" wire:click='changeAppointmentModal()' />
                 @endif
-                <a href="{{ route('generate', ['id' => $referral->card_number]) }}" target="_blank">
+                <a href="{{ route('generate.referralreport', ['id' => $referral->card_number,'date'=>$date]) }}" target="_blank">
                     <x-mary-button label="PRINT" icon="o-printer" class=" cursor-default" />
                 </a>
 
             </div>
+            <table class="table-auto table">
             <thead>
                 <tr>
                     <th scope="col"></th>

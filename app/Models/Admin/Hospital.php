@@ -58,6 +58,11 @@ class Hospital extends Model
         return $this->hasOne(Liaison::class);
     }
 
+    public function departmentServices(){
+        return $this->belongsToMany(DepartmentService::class,'hospital_service','hospital_id','department_service_id')->using(
+            HospitalService::class )->withPivot(['department_id'])->withTimestamps();
+     }
+
     
 
 }

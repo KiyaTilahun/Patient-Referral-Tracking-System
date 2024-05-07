@@ -8,6 +8,7 @@ use App\Models\DayDepartment;
 use App\Models\Referral\Referral;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -143,6 +144,11 @@ dd($upcomingDates);
 
 
     }
+    // mounting referral 
+    public function tonewreferral(){
+        Session::put('referral_data', $this->referral);
+        return redirect()->route('referral.add');
+    }
     public function changeStatus($id)
     {
 
@@ -158,8 +164,11 @@ dd($upcomingDates);
 
         if ($this->selectedday != null) {
             $this->referral = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->selectedday)->first();
+            $this->date=$this->selectedday;
+            // dd($this->date);
         } else {
             $this->referral = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->date)->first();
+           
         }
         $this->alldays = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->pluck('referral_date');
 

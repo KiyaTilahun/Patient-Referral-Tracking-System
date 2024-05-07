@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patient;
 
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SmsController;
 use App\Models\Admin\Bloodtype;
 use App\Models\Admin\DepartmentHospital;
@@ -12,10 +13,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Livewire\Component;
+use Mary\Traits\Toast;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PatientIndex extends Component
 {
-    
+    use Toast;
     public $departments;
     public $hospital;
     public bool $savedmodal=false;
@@ -33,6 +36,10 @@ class PatientIndex extends Component
     public $allblood;
     public $validated;
     public $copiedref;
+    public $tokentext;
+    public $temporarypatient;
+    public bool $smsstatus=false;
+    public bool $emailstatus=false;
 
     // public $name;
     public bool $openref=false;
@@ -50,7 +57,7 @@ class PatientIndex extends Component
             ['value' => 1, 'label' => 'Male'],
             ['value' => 2, 'label' => 'Female'],
         ];
-        $this->hospital=Hospital::where('id',auth()->user()->hospital_id)->with('departments')->first();
+        $this->hospital=Hospital::where('id',auth()->user()->hospital->id)->with('departments')->first();
         $this->departments=$this->hospital->departments;
     }
     public function updated($name)
@@ -100,44 +107,70 @@ class PatientIndex extends Component
         ]);
         $token = $patient->createToken('authpatient');
 
-
+        $this->temporarypatient=$patient;
     //    dd($token->plainTextToken);
 
     
-       $sender = new SmsController();
-       $message = "Referral Id: " . $patient->card_number . " Unique Id: " .$token->plainTextToken ;
+      
 
-       //  $message="hellp";
-         $checkresponse=$sender->patientsms($patient->name,$patient->phone,$message);
-           if($checkresponse){
-               // dd($checkresponse);
-            //    $this->success("SMS  sent to patients");
-         dd("true");
-              
+    
+      
+      
 
-           }
-
-        $this->copiedref= $this->generateCardNumber($this->hospital->id);
+        $this->copiedref=$patient->card_number; 
+        $this->tokentext=$token->plainTextToken;
         $this->savedmodal=true;
-
+       
 
         $this->resetValidation();
 
         // Clear form fields
-        $this->reset([
-            'firstname',
-            'lastname',
-            'gender',
-            'email',
-            'phone',
-            'dob',
-            'bloodtype'
-        ]);
+        // $this->reset([
+        //     'firstname',
+        //     'lastname',
+        //     'gender',
+        //     'email',
+        //     'phone',
+        //     'dob',
+        //     'bloodtype'
+        // ]);
 
         
         
        
     }
+
+
+    // sms sending logic 
+    public function smssend(){
+        
+        $sender = new SmsController();
+        $message = "Referral Id: " . $this->copiedref . " Unique Id: " .$this->tokentext ;
+        // $message="hellp";
+        $checkresponse=$sender->patientsms($this->temporarypatient->name,$this->temporarypatient->phone,$message);
+          if($checkresponse['success']==true){
+       $this->smsstatus=true;
+          }
+          else{
+$this->error($checkresponse["message"]);
+          }
+    }
+
+    // email sending logic
+    public function emailsend(){
+
+           if($this->temporarypatient->email!=null){
+        $mailer=new EmailController();
+       $response=$mailer->sendpatientmail($this->temporarypatient->card_number,$this->tokentext,$this->temporarypatient->email);
+       if ($response['status'] == 'success') {
+        $this->emailstatus=true;
+        ; 
+    } else {
+        $this->error($response['message']); 
+    }
+      }
+    }
+
     // validation rules 
 
     public function rules() 

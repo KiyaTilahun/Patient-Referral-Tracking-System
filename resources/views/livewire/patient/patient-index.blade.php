@@ -4,7 +4,7 @@
 	  $clipboard(this.link)
 	}
   }" x-init="$refs.answer.focus()">
-
+<x-mary-toast/>
         
   <x-mary-modal wire:model="savedmodal" class="backdrop-blur">
     <x-mary-alert title="Patient Has been saved" icon="o-check" class="alert-success"/>
@@ -34,9 +34,31 @@
         </div>
     </div>
     
-    <div class="flex justify-end gap-4">
-        <x-mary-button label="OK" @click="$wire.savedmodal = false" class="btn btn-" />
-    <x-mary-button label="To Referral" class="btn btn-warning" link="/referral/add"/>
+    <div class="flex justify-between gap-4">
+
+        
+        <span>
+            @if(!$emailstatus)<x-mary-button tooltip-left="EMAIL"  class="btn  w-12 h-12  text-green-500 p-2 rounded-full" icon="o-device-phone-mobile"  wire:click="emailsend" spinner/>
+            @else
+            <x-mary-button tooltip-left="Email"  class="btn  w-12 h-12  text-orange-500 p-2 rounded-full" icon="o-device-phone-mobile"  label="Email sent" disabled /> 
+            @endif
+             @if(!$smsstatus)
+            <x-mary-button tooltip-left="SMS"  class="btn  w-12 h-12  text-orange-500 p-2 rounded-full" icon="s-envelope"  wire:click="smssend" spinner />
+                
+            @else
+            <x-mary-button tooltip-left="SMS"  class="btn  w-12 h-12  text-orange-500 p-2 rounded-full" icon="s-envelope"  label="SMS sent" disabled /> 
+            @endif
+            @isset($copiedref, $tokentext)
+            <a href="{{ route('generate.patient', ['id' => $copiedref,'token'=>$tokentext]) }}" target="_blank">
+
+            <x-mary-button tooltip-left="PRINT"  class="btn  w-12 h-12  text-info p-2 rounded-full" icon="o-printer"  />
+            @endisset
+            </a>
+        </span>
+        <span><x-mary-button label="OK" @click="$wire.savedmodal = false" class="btn btn-" />
+        
+
+            <x-mary-button label="To Referral" class="btn btn-warning" link="/referral/add"/></span>
     </div>
 
 </x-mary-modal>

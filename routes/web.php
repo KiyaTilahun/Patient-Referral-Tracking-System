@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\SmsController;
 use App\Livewire\Admin\Adduser;
 use App\Livewire\Admin\Department\AddIndex;
 use App\Livewire\Admin\Department\DepIndex;
+use App\Livewire\Admin\Department\ServiceIndex;
 use App\Livewire\Admin\Departmentlist;
 use App\Livewire\Admin\Holidaylist;
 use App\Livewire\Admin\Settings;
@@ -94,6 +96,9 @@ Route::get('/department', DepIndex::class)
 Route::get('/department/add', AddIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('department.add');
+    Route::get('/department/services', ServiceIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('department.services');
 Route::get('/patient/add', PatientIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('patient.add');
@@ -116,6 +121,12 @@ Route::get('/referral/add', ReferralIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.referral');
 Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
+Route::get('generate/patient/{id}/{token}',[ReferrReport::class,'createqr'])->name('generate.patient');
+Route::get('generate/referralreport/{id}/{date}',[ReferrReport::class,'referralreport'])->name('generate.referralreport');
+
+
+Route::get('generate/',[ReferrReport::class,'demo'])->name('demo');
+
 
 Route::get('/sms', [SmsController::class,'sms'])
 ->name('sms');

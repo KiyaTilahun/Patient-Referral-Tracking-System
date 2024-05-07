@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PatientEmail;
 use App\Mail\RegisterEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,5 +39,28 @@ class EmailController extends Controller
    $response=Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
    dd($response);
 
+  }
+
+  public function sendpatientmail($card_number,$token,$email){
+
+    $jsonData = json_encode([
+      "referral_id"=>$card_number,
+      "token"=>$token,
+  ]);
+  try {
+    Mail::to($email)->send(new PatientEmail($card_number, $token, $jsonData));
+
+    return [
+        'status' => 'success',
+        'message' => 'Email sent successfully'
+    ];
+} catch (\Exception $e) {
+ 
+
+    return [
+        'status' => 'error',
+        'message' => 'Failed to send email'
+    ];
+}
   }
 }

@@ -103,7 +103,12 @@
         </div>
         {{-- <img src="..." class="img-fluid" alt="Responsive image"> --}}
         {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('http://google.com')) !!} "> --}}
-       
+        <div class="text-center">
+            <figure class="figure text-center">
+                <img src="data:image/png;base64, {!! $qr !!}">
+                <figcaption class="figure-caption text-right">You can scan the QR code on your mobile app</figcaption>
+            </figure>
+        </div>
         <table class="table mx-auto table-striped" style="padding-top:50px">
             <thead>
                 <tr>
@@ -113,53 +118,32 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">Referral Id</th>
-                    <td>{{$patient->card_number}}</td>
                     <th scope="row">Full Name</th>
                     <td>{{$patient->name}}</td>
                 </tr>
                 <tr>
-                    
+                    <th scope="row">Referral Id</th>
+                    <td>{{$patient->card_number}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Private Token</th>
+                    <td>{{$token}}</td>
+                </tr>
+            
+                <tr>
                     <th scope="row">Gender</th>
                     <td>{{$patient->gender->name}}</td>
+                </tr>
+                <tr>
                     <th scope="row">Blood Type</th>
                     <td>{{$patient->bloodtype->name}}</td>
-
                 </tr>
                 <tr>
-                    <th scope="row">Referred By</th>
-                    <td >{{$latestAppointment->referringHospital->name}}</td>
-                    <th scope="row">Referred To</th>
-                    <td >{{$latestAppointment->receivingHospital->name}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Appointment Day:</th>
-                    <td >{{$latestAppointment->referral_date}}</td>
-                    <th scope="row">Department:</th>
-                    @if ($latestAppointment->referrtype_id != 3)
-                    <td >{{$latestAppointment->department->name}}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-                </tr>
-                
-                <tr>
-                    <th scope="row">History:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->history}}</u></td>
+                    <th scope="row">Registering Center</th>
+                    <td><u class="small">{{$patient->hospital->name}}</u></td>
                 </tr>
                
-                <tr>
-                    <th scope="row">Findings:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->findings}}</u></td>
-                </tr>
-                <tr>
-                    <th scope="row">Treatment:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->treatment}}</u></td>
-                </tr>
-                <tr>
-                    <th scope="row">Type:</th>
-                    <td colspan="3">{{$latestAppointment->referrtype->name}}</td>
-                </tr>
+              
                 
                    
                 
@@ -173,9 +157,9 @@
                 <div class="liaison">
                 
                     <div class="copyright" >
-                        <span class="font-weight-bold">Liaison Officer:</span>{{$latestAppointment->referringHospital->liaison->liaison_officer}}</div>
+                        <span class="font-weight-bold">Liaison Officer:</span>{{$patient->hospital->liaison->liaison_officer}}</div>
                     <div class="copyright" >
-                        <span class="font-weight-bold">Phone Number:</span>{{$latestAppointment->referringHospital->liaison->phone_number}}</div>
+                        <span class="font-weight-bold">Phone Number:</span>{{$patient->hospital->liaison->phone_number}}</div>
     
                     
                 </div>

@@ -62,7 +62,7 @@ class AddIndex extends Component
         //    $this->dispatch('reload_select');
 
 
-        $this->hospital = Hospital::where('id', auth()->user()->id)->with('departments')->first();
+        $this->hospital = Hospital::where('id', auth()->user()->hospital->id)->with('departments')->first();
         $this->deps = Department::all();
 
         foreach ($this->deps as $department) {

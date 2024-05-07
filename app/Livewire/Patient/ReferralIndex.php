@@ -6,6 +6,7 @@ use App\Models\Admin\Appointmentslot;
 use App\Models\Admin\Department;
 use App\Models\Admin\DepartmentHospital;
 use App\Models\Admin\Hospital;
+use App\Models\Admin\HospitalService;
 use App\Models\Admin\Referrtype;
 use App\Models\Admin\Type;
 use App\Models\DayDepartment;
@@ -21,6 +22,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Session;
 
 class ReferralIndex extends Component
 {
@@ -66,11 +68,29 @@ class ReferralIndex extends Component
     public $config;
     // routing
     public $route;
+    public $mounted_referral;
+
+
+    // service
+    public $departmentServices;
 
     public function mount()
     {
         $this->config = ['mode' => 'range'];
+       
+        $this->mounted_referral = Session::get('referral_data');
+        Session::remove('referral_data');
+        if($this->mounted_referral!=null){
+            // dd($this->mounted_referral->doctor_id);
+            $this->card_number=$this->mounted_referral->card_number;
+           $this->name=$this->mounted_referral->patient->name;
+           $this->history=$this->mounted_referral->history;
+            $this->finding=$this->mounted_referral->findings;
+            $this->treatment=$this->mounted_referral->treatment;
+           $this->reason=$this->mounted_referral->reason;
+           $this->doctor=$this->mounted_referral->doctor_id??null;
 
+        }
         $this->route = url()->previous();
         $this->hosid = auth()->user()->hospital_id;
         $this->currentStep;
@@ -181,6 +201,7 @@ class ReferralIndex extends Component
         $this->reset('selecteddep');
         $this->reset('selectedcenter');
         $this->reset('initial');
+        $this->reset('departmentServices');
 
 
 
@@ -188,7 +209,7 @@ class ReferralIndex extends Component
 
         $this->referralname = Referrtype::where('id', $this->referral_type)->value('name');
         if ($this->referral_type != '3') {
-            $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
+            $hospital = Hospital::where('id', auth()->user()->hospital->id)->first();
 
             // $this->notdiagonal = true;
             if ($this->referral_type == '2') {
@@ -240,13 +261,13 @@ class ReferralIndex extends Component
     // when department is choosen
     public function updatedSelecteddep()
     {
-
+        $this->reset('departmentServices');
         $this->reset('availablecenter');
         $this->reset('selectedcenter');
 
         // dd($this->selecteddep);
         $avail = $this->selecteddep;
-        $hospital = Hospital::where('id', auth()->user()->hospital_id)->first();
+        $hospital = Hospital::where('id', auth()->user()->hospital->id)->first();
         if ($this->referral_type == '1') {
             $this->notdiagonal = true;
             if ($hospital->type_id == '2') {
@@ -311,7 +332,12 @@ class ReferralIndex extends Component
         // day maker
         $this->reset('appday');
         $this->reset('referredcenter');
+        
+
         $this->referredcenter = Hospital::where('id', $this->selectedcenter)->value('name');
+
+        $this->departmentServices=HospitalService::where('hospital_id',$this->selectedcenter)->where('department_id',$this->selecteddep)->get();
+        // dd($this->departmentServices);
 
 
 

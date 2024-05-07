@@ -87,17 +87,10 @@ class SmsController extends Controller
     public function patientsms($name,$phonenumber, $messages)
     {
 
-       
-
-
-
 
 
         $apiKey = env('SMS_API_KEY');
         $apiEndpoint = env('SMS_API_ENDPOINT');
-
-
-      
 
 
        

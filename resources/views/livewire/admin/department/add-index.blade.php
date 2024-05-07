@@ -1,5 +1,6 @@
 <div>
     <x-mary-toast />
+    {{-- <div class="flex justify-start my-4"> <x-mary-button label="Go Back" wire:click="goBack" icon="o-arrow-left" /></div> --}}
     <x-breadcrumb>
         <li class="inline-flex items-center">
             <a href="{{ route('dashboard') }}"

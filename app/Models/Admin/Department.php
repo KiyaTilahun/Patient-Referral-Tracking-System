@@ -21,6 +21,9 @@ class Department extends Model
         return $this->belongsToMany(Hospital::class)->using(
             DepartmentHospital::class )->withPivot(['active','slot'])->withTimestamps();
      }
-
+     public function services(){
+        return $this->belongsToMany(Service::class)->using(
+            DepartmentService::class )->withTimestamps();
+     }
      
 }

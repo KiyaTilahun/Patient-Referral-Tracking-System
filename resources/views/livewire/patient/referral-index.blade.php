@@ -355,6 +355,30 @@
                         @endif
                     @endif
 
+                    @isset ($departmentServices)
+
+                    <div class="md:col-span-5 col-span-12 w-full ">
+                        <label class="form-control w-full ">
+                            <div class="label">
+                                <span class="label-text">All Available Services</span>
+                                <span class="text-warning text-sm">Please! check the services bedore giving referral</span>
+
+                             
+                            </div>
+                            <select class="select select-bordered w-full ">
+                    <option >Available Services</option>
+                                @foreach ($departmentServices as $service)
+                                <option class="text-warning">{{$service->departmentService->service->name}}</option>
+                                @endforeach
+            
+                              </select>
+                              
+                            
+                        </label>
+                      
+                    </div>
+
+                    @endisset
 
 
                     {{-- choosing appointment day --}}
@@ -435,6 +459,7 @@
                             </div>
                         @enderror
                     </div>
+
 
 
                 </div>
