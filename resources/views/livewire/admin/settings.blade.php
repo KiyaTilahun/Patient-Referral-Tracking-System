@@ -48,7 +48,7 @@
                 </td>
                 
             </tr>
-            <tr class=" ">
+            {{-- <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                    
                     <x-nav-link :href="route('holidaylist')" wire:navigate>
@@ -59,11 +59,27 @@
                     
                 </td>
                 
+            </tr> --}}
+            <tr class=" ">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
+                    <x-nav-link :href="route('deletedusers')" wire:navigate>
+                    <span class="flex items-center gap-2 cursor-pointer"><x-mary-icon name="m-cursor-arrow-rays" class="text-green-500 mr-4"/>    <span>   Deleted Users   </span><x-mary-icon name="o-trash" class="text-error mr-4" /></span>
+                </x-nav-link>
+
+
+                   
+                
+                </th>
+                <td class=" py-4">
+                    
+                </td>
+                
             </tr>
             <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                    
                     <livewire:logout>
+                </th>
                 <td class=" py-4">
                     
                 </td>

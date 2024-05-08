@@ -6,7 +6,11 @@
     class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500  dark:text-gray-400">
     <span
         class="mb-4 text-lg font-extrabold leading-none tracking-tight text-gray-900 md:text-lg dark:text-white">User details</span>  </span>
-    <x-mary-button label="Edit User" wire:click="edituser" icon="c-pencil-square"  /></div>
+        @if (!(auth()->user()->hasRole('superadmin')))
+    <x-mary-button label="Edit User" wire:click="edituser" icon="c-pencil-square"  />   @endif
+  </div>
+ 
+
 
 <div class="grid grid-cols-12  ">
 
@@ -29,7 +33,11 @@
             {{ Str::upper($role['name']) }}
           </span>
         @endforeach
-        </x-checkmark></div>
+      </x-checkmark> 
+    </div>
+        <div class="p-4 col-span-12 md:col-span-12"> <x-checkmark>  <x-mary-button label="Delete User" icon="o-trash" wire:click="try_delete({{ $detail->id }})" spinner class="btn-sm text-error" />
+        </x-checkmark> 
+      </div>
 
 
 
@@ -93,7 +101,9 @@
   class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500  dark:text-gray-400">
   <span
       class="mb-4 text-lg font-extrabold leading-none tracking-tight text-gray-900 md:text-lg dark:text-white">User details</span>  </span>
-    <x-mary-button label="Edit User"  icon="c-pencil-square" disabled /></div>
+      @if (!(auth()->user()->hasRole('superadmin')))
+    <x-mary-button label="Edit User"  icon="c-pencil-square" disabled />@endif</div>
+    
         <div class="p-4 col-span-12 md:col-span-12"> <x-checkmark>Name:
         </x-checkmark></div>
         
@@ -111,54 +121,28 @@
 
 <script>
 
-
-
-    window.addEventListener('swal_deactivate',function(e){
-        Swal.fire({
-      icon: "warning",
-      title : 'Are you sure to Deactivate center? ',
-      showCancelButton: true,
-    text:"Will be saved if you choose OK!",
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#00ca92",
-      confirmButtonText: "Yes, Deactivate it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        @this.dispatch('godeactivate');
-        Swal.fire({
-            position: "top-end",
-          title: "Deactivated!",
-          text: "Centere  has been deactivated.",
-          icon: "warning"
-        });
-      }
-     
-     
+window.addEventListener('deletedialog',function(e){
+    Swal.fire({
+  icon: "warning",
+  title : 'Are you sure to Delete User? ',
+  showCancelButton: true,
+text:"Will be saved if you choose OK!",
+  confirmButtonColor: "#d33",
+  cancelButtonColor: "#00ca92",
+  confirmButtonText: "Yes, Delete User!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    @this.dispatch('godelete');
+    Swal.fire({
+      title: "Deleted!",
+      text: "Centered  has been activated.",
+      icon: "warning"
     });
-            });
-
-
-            window.addEventListener('swal_activate',function(e){
-        Swal.fire({
-      icon: "warning",
-      title : 'Are you sure to Activate center? ',
-      showCancelButton: true,
-    text:"Will be saved if you choose OK!",
-      confirmButtonColor: "#00ca92",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Activate it it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        @this.dispatch('goactivate');
-        Swal.fire({
-            position: "top-end",
-          title: "Activated!",
-          text: "Centere  has been activated.",
-          icon: "success"
+  }
+ 
+ 
+});
         });
-      }
-     
-     
-    });
-            });
+
+    
 </script>

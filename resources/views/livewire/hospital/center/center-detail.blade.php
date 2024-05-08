@@ -30,7 +30,7 @@
              
               @if ($detail->status)
               <button type='button'  class="btn btn-outline  btn-warning" wire:click='deactivate' > 
-               Deactivate  User  <div class="text-green-500" wire:loading>
+               Deactivate  Center  <div class="text-green-500" wire:loading>
                   @include('utils.spinner')
               </div></button> 
               @else

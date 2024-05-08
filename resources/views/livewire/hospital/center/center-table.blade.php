@@ -76,7 +76,30 @@
 
          
   </x-mary-header>
-
+  
+  <div class="w-full">
+    <div class="flex justify-between">
+      <span class="flex gap-4 flex-col md:flex-row">
+        <select class="select select-primary " wire:model.live='selectedregion'>
+            <option selected class="text-sm pt-0 mt-0" value="{{null}}">All Regions</option>
+            @foreach ($allregions as $region)
+                <option value="{{$region->id}}">{{$region->name}}</option>
+            @endforeach
+        </select>
+        
+        <select class="select select-primary " wire:model.live='selectedtype'>
+          <option selected class="text-sm pt-0 mt-0" value="{{null}}">All  Type</option>
+          @foreach ($alltypes as $type)
+              <option value="{{$type->id}}">{{$type->name}}</option>
+          @endforeach
+      </select>
+    
+    </span>
+    <span>
+      <x-mary-button label="Export pdf" icon="o-printer" class="text-sm btn-warning " wire:click='printpdf' spinner />
+    </span>
+    </div>
+  </div>
     <x-mary-table :headers="$headers" :rows="$centers" :sort-by="$sortBy" with-pagination >
 
     @scope('cell_status', $center)

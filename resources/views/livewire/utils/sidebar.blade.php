@@ -107,7 +107,7 @@
                 </svg>
             </button>
             <ul id="usermanage" class="hidden py-1 space-y-2 pl-6">
-                @if ((auth()->user()->hasRole('admin')))
+                @if ((auth()->user()->hasRole('superadmin'))||(auth()->user()->hasRole('admin')))
                 <x-nav-link :href="route('adduser')" :active="request()->routeIs('adduser')">
                     <div class="inline-flex">
 

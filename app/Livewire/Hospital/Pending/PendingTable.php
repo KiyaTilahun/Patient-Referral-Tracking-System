@@ -3,6 +3,8 @@
 namespace App\Livewire\Hospital\Pending;
 
 use App\Models\Admin\Hospital;
+use App\Models\Admin\Region;
+use App\Models\Admin\Type;
 use Illuminate\Contracts\Session\Session;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -13,9 +15,17 @@ class PendingTable extends Component
 use WithPagination;
 public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 public $search;
+public $selectedregion;
+public $selectedtype;
+public $allregions;
+public $alltypes;
 
   
 
+public function mount(){
+    $this->allregions=Region::all();
+    $this->alltypes=Type::all();
+}
 
 public function show($id){
     
@@ -40,6 +50,10 @@ public function reset_table()
         // $pendings=Hospital::where('registered','0') ->orderBy('name', 'asc')->paginate(5);
         $pendings=Hospital::where('registered','0')->when($this->search, function ($query) {
             $query->where('name', 'LIKE', '%' . $this->search . '%');
+        })->when($this->selectedregion, function ($query) {
+            $query->where('region_id',$this->selectedregion);
+        })->when($this->selectedtype, function ($query) {
+            $query->where('type_id',$this->selectedtype);
         })->withAggregate('region','name')->orderBy(...array_values($this->sortBy))->paginate(5);
      
 

@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -28,12 +29,23 @@ class Dashboard extends Component
     public $referralcount;
     public $regioncount;
     public $patientcount;
+    public $hospitalusers;
+    public $inboundcount;
+public $outboundcount;
+public $user;
 
 
     public function mount()
     {
+        $userid=auth()->user()->id;
+$this->user=User::where('id',$userid)->first();
 
-        $this->referralcount = Referral::count(); 
+        
+        $username=$this->user->name;
+        Session::put('user', $username);
+        if($this->user->hasRole('superadmin')){
+
+            $this->referralcount = Referral::count(); 
         $this->centercount = Hospital::where('registered',1)->count();
         $this->patientcount = Patient::count();
         $hospitalsByRegion = Hospital::selectRaw('region_id, COUNT(*) as center_count')
@@ -86,6 +98,36 @@ class Dashboard extends Component
             ]
         ]
     ];
+        }
+        elseif ($this->user->hasRole('admin')){
+            // dd("Admin");
+ $this->hospitalusers = User::where('hospital_id',$this->user->hospital_id)->count(); 
+        $this->patientcount = Patient::where('hospital_id',$this->user->id)->count();
+        $this->outboundcount = Referral::where('referring_hospital_id',$this->user->hospital_id)->count();
+        $this->inboundcount = Referral::where('receiving_hospital_id',$this->user->hospital_id)->count();
+
+        $typeCounts[]=[$this->outboundcount,3];
+        $types[]=["Out Bound Refrrals","Inobund Referrals"];
+        // dd($typeCounts);
+        $this->myChart2= [
+            'type' => 'pie',
+            'data' => [
+                'labels' => $types, // The different types of hospitals
+                'datasets' => [
+                    [
+                        'label' => 'Count of Hospitals by Type',
+                        'data' => $typeCounts, // The counts corresponding to each type
+                    ]
+                ]
+            ]
+        ];
+
+      
+        }
+        else{
+            $this->outboundcount = Referral::where('referring_hospital_id',$this->user->hospital_id)->count();
+        $this->inboundcount = Referral::where('receiving_hospital_id',$this->user->hospital_id)->count();
+        }
     }
     
     public function switch()

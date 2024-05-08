@@ -10,6 +10,7 @@ use App\Livewire\Admin\Department\ServiceIndex;
 use App\Livewire\Admin\Departmentlist;
 use App\Livewire\Admin\Holidaylist;
 use App\Livewire\Admin\Settings;
+use App\Livewire\Admin\Users\DeletedUsers;
 use App\Livewire\Admin\Users\UserEdit;
 use App\Livewire\Admin\Users\UserIndex;
 use App\Livewire\Dashboard;
@@ -68,14 +69,15 @@ Route::view('profile', 'profile')
         Route::get('/centers/all', CenterIndex::class)->name('centers.all');
         Route::get('/rolepermission', RpIndex::class)->name('rolepermission');
         Route::get('/settings', Settings::class)->name('settings');
-        Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');
+        Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');   //alldepartment
+        Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
         Route::get('/holidaylist', Holidaylist::class)->name('holidaylist');
 
 
 
     });
 
-    Route::middleware(['auth','role:admin', 'verified'])
+    Route::middleware(['auth','role:admin|superadmin', 'verified'])
     ->group(function () {
         Route::get('/department', DepIndex::class)
         ->name('department');
@@ -88,7 +90,7 @@ Route::view('profile', 'profile')
 
 
    Route::get('/adduser', Adduser::class)
-    ->middleware(['auth','role:admin', 'verified'])
+    ->middleware(['auth','role:admin|superadmin', 'verified'])
     ->name('adduser');
     Route::get('/edituser/{id}', UserEdit::class)
     ->middleware(['auth','role:superadmin', 'verified'])

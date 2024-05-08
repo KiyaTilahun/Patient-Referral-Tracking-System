@@ -38,6 +38,24 @@ public $role=[];
         $this->render();
     }
 
+    public function try_delete(){
+      
+        $this->dispatch('deletedialog', [
+            
+        ]);
+        
+    }
+    #[On('godelete')]
+    public function delete()
+    {
+
+
+       
+        $this->detail->delete();
+        
+        $this->dispatch('deleted');
+    }
+
     public function edituser(){
 
         $this->myModal1=true;

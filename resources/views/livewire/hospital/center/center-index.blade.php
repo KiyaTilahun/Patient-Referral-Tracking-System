@@ -40,6 +40,7 @@
         <x-page-heading :title="'Center Management'" />
 
     </div>
+    
     <div class="col-span-12 rounded-lg sm:col-span-7 max-h-[70vh] overflow-y-auto">
         <livewire:hospital.center.center-table />
     </div>

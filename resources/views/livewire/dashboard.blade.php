@@ -1,4 +1,6 @@
 <div class="flex-col w-full">
+<x-login-session-status class="pt-4" :status="session('user')" />
+
     <div class="header col-span-12 rounded-lg bord py-4">
         {{-- <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Center</span> Management   </h1> --}}
         <x-breadcrumb>
@@ -29,6 +31,8 @@
 
     </div>
 
+    @if ($user->hasRole('superadmin'))
+
     <div class="w-full inline-flex"> 
         <x-mary-stat title="Regions" description="Total Regions" value="{{$regioncount}}" icon="o-arrow-trending-down"
         tooltip-left="region!" class="text-orange-500" />
@@ -48,16 +52,102 @@
 
    
     <div class="grid grid-cols-3 md:mt-6">
-        <div class="col-span-2 flex flex-col items-start ">
+        <div class="md:col-span-2 col-span-3 flex flex-col items-start ">
             <div class="my-6">Number of Medical Centers by Region</div><x-mary-chart wire:model="myChart" class="w-full" />
            
         </div>
-        <div class="col-span-1 flex flex-col items-start">
+        <div class="md:col-span-1 col-span-3 flex flex-col items-start">
             <div class="my-6">Number of Medical Centers by Type</div><x-mary-chart wire:model="myChart2" class="w-full" />
            
         </div>
 
     </div>
+   
+        
+    @else
+        
+    @if ($user->hasRole('admin'))
+
+    <div class="w-full inline-flex"> 
+        <x-mary-stat title="Users" description="Total Regions" value="{{$hospitalusers}}" icon="o-user-circle"
+        tooltip-left="users!" class="text-orange-500" />
+     
+
+      
+
+        <x-mary-stat title="Patients" description="Total Patients" value="{{$patientcount}}" icon="o-user-group"
+            class="text-orange-500" color="text-pink-500" tooltip-right="patients!" />
+            
+            <x-mary-stat title="Referrals" description="Total Outbound Referrals" value="{{$outboundcount}}" icon="o-clipboard-document-check"
+            class="text-orange-500" color="text-blue-500" tooltip-right="Outobund Referrals!" />
+        <x-mary-stat title="Referrals" description="Total Inbound Referrals" value="{{$inboundcount}}" icon="o-clipboard-document-check"
+        class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!" />
+            
+       
+    </div>
+    
+        
+  
+    
+
+@else
+
+<x-mary-stat title="Referrals" description="Total Outbound Referrals" value="{{$outboundcount}}" icon="o-clipboard-document-check"
+class="text-orange-500" color="text-blue-500" tooltip-right="Outobund Referrals!" />
+<x-mary-stat title="Referrals" description="Total Inbound Referrals" value="{{$inboundcount}}" icon="o-clipboard-document-check"
+class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!" />
+    @endif
+    @endif
+
+    
+   
+
+   
+    <div class=" p-3 shadow-sm rounded-sm">
+        <div class="flex items-center space-x-2 font-semibold  leading-8">
+          
+            <span class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">My Profile</span>
+        </div>
+        <div >
+            <div class="grid md:grid-cols-2 text-sm">
+               
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Full Name</div>
+                    <div class="px-4 py-2">{{$user->name}}</div>
+                </div>
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Email.</div>
+                    <div class="px-4 py-2">
+                        <a class="text-blue-800" href="mailto:jane@example.com">{{$user->email}}</a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Role</div>
+                    <div class="px-4 py-2">{{$user->getRoleNames()->first()}}</div>
+                </div>
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Health Center</div>
+                    <div class="px-4 py-2">{{$user->hospital->name}}</div>
+                </div>
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Current Address</div>
+                    <div class="px-4 py-2">{{$user->hospital->zone}},{{$user->hospital->region->name}}</div>
+                </div>
+              
+                @if($user->getRoleNames()->first()=='doctor') 
+                <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Department</div>
+                    <div class="px-4 py-2">{{$user->doctor->department->name }} </div>
+                </div>
+                @endif
+            </div>
+        </div>
+        <button
+            class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Edit Profile</button>
+    </div>
+ 
+
+    
     
 </div>
 
