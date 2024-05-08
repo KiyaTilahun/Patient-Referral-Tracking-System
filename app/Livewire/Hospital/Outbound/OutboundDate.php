@@ -46,6 +46,7 @@ class OutboundDate extends Component
 
         // dd($referral['card_number']);
         return redirect()->route('hospital.referral', [
+            'type'=>2,
             'card_number' => $referral['card_number'],
             'date' => $referral['referral_date']
         ]);

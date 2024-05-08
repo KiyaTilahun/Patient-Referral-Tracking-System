@@ -38,6 +38,20 @@
       }
       }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let countdown = 5; // Countdown time in seconds
+            const interval = setInterval(() => {
+                if (countdown > 0) {
+                    document.getElementById('countdown').textContent = countdown;
+                    countdown -= 1;
+                } else {
+                    clearInterval(interval);
+                    window.location.href = "{{ route('login') }}"; // Redirect to the login page
+                }
+            }, 1000); // Update every second
+        });
+        </script>
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -45,12 +59,13 @@
 <div class="w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
 <div class="bg-gray-800 overflow-hidden sm:rounded-lg pb-8">
 <div class="  text-center pt-8">
-<h1 class="text-9xl font-bold text-purple-400">404</h1>
-<h1 class="text-6xl font-medium py-8 "> Page not found</h1>
-<p class="text-2xl pb-8 px-12 font-medium">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
-<a href="{{ route('dashboard') }}">
+<h1 class="text-9xl font-bold text-purple-400">401</h1>
+<h1 class="text-6xl font-medium py-8 "> UnAuthorized Access </h1>
+<p class="text-2xl pb-8 px-12 font-medium">Please login before access.</p>
+<p class="text-2xl pb-8 px-12 font-medium">Redirecting in <span id="countdown">5</span> seconds...</p>
+<a href="{{ route('login') }}">
 <button class="btn btn-info  font-semibold px-6 py-3 rounded-md mr-6">
-    Go to Home
+Login
 </button>
 </a>
 

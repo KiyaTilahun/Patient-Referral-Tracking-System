@@ -66,6 +66,7 @@ public bool $myModal3=false;
 
         // dd($referral['card_number']);
         return redirect()->route('hospital.referral', [
+            'type'=>1,
             'card_number' => $referral['card_number'],
             'date' => $referral['referral_date']
         ]);

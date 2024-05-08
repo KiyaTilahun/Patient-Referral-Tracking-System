@@ -31,11 +31,16 @@
 
             <div class="flex items-center ">
                 <div class="flex items-center ms-3">
-                    <div class="avatar online placeholder mr-2">
+                    <div class="avatar  placeholder mr-2 bg-none text-none">
                         <div class="bg-neutral text-neutral-content rounded-full w-10">
                             <span class="text-xl ">{{ substr(auth()->user()->name, 0, 1) }}</span>
                         </div>
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-success"></span>
+                          </span>
                     </div>
+                    
                     {{-- {{auth()->user()->hospital->name}} --}}
                     <div class="flex flex-col gap-1">
                         <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">

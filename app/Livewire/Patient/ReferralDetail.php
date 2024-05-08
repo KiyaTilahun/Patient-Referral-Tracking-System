@@ -31,11 +31,12 @@ class ReferralDetail extends Component
     public $myDate1;
     public bool $appointmentmodal;
     public $updateddate;
+public $type;
 
-
-    public function mount($card_number, $date)
+    public function mount($type,$card_number, $date)
     {
         $this->appointmentmodal = false;
+        $this->type=$type;
         $this->card_number = $card_number;
         $this->date = $date;
         $this->status = [
@@ -163,11 +164,20 @@ dd($upcomingDates);
         $this->hospitalid = auth()->user()->hospital->id;
 
         if ($this->selectedday != null) {
+            if($this->type==2){
             $this->referral = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->selectedday)->first();
+           }
+            else{
+$this->referral = Referral::where('receiving_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->selectedday)->first();
+            }
             $this->date=$this->selectedday;
-            // dd($this->date);
+           
         } else {
-            $this->referral = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->date)->first();
+            if($this->type==2){
+            $this->referral = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->date)->first();}
+            else{
+                $this->referral = Referral::where('receiving_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->where('referral_date', $this->date)->first(); 
+            }
            
         }
         $this->alldays = Referral::where('referring_hospital_id', $this->hospitalid)->where('card_number', $this->card_number)->pluck('referral_date');

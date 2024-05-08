@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="loader1 flex flex-col h-screen w-full items-center justify-center bg-blue-600-">
+    {{-- <div class="loader1 flex flex-col h-screen w-full items-center justify-center bg-blue-600-">
         <h1 class="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-3xl lg:text-5xl">Welcome to <span
             class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Patient Referral Tracking System</span>
          </h1>
@@ -81,9 +81,9 @@
             <rect class="spinner_9Mto" x="1" y="1" rx="1" width="10" height="10" />
             <rect class="spinner_9Mto spinner_bb12" x="1" y="1" rx="1" width="10" height="10" />
         </svg>
-    </div>
+    </div> --}}
    
-    <div class="hidden min-h-screen  flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900"
+    <div  style="background-image:url('{{ asset('images/loginlogo.jpg') }}');background-size: cover;" class="w-full h-screen  min-h-screen  flex justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900  bg-center bg-no-repeat bg-[url('{{ asset('images/loginlogo.jpg') }}')] bg-gray-700 bg-blend-multiply"
         id="content">
         <div>
             <a href="/" wire:navigate>
@@ -92,12 +92,18 @@
         </div>
 
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            class="sm:w-1/2 w-md mt-6  bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
             
             {{ $slot }}
         </div>
     </div>
-    <script>
+    <div class="fixed right-2 bottom-2">
+        @include('utils.theme')
+
+             <!-- this hidden checkbox controls the state -->
+         
+     </div>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             const loader = document.querySelector(".loader1");
             const content = document.getElementById("content");
@@ -110,7 +116,7 @@
                 content.style.display = "flex";
             }, 3000);
         });
-    </script>
+    </script> --}}
 </body>
 
 </html>
