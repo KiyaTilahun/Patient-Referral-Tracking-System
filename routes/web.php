@@ -14,6 +14,8 @@ use App\Livewire\Admin\Users\DeletedUsers;
 use App\Livewire\Admin\Users\UserEdit;
 use App\Livewire\Admin\Users\UserIndex;
 use App\Livewire\Dashboard;
+use App\Livewire\EditPassword;
+use App\Livewire\EditProfile;
 use App\Livewire\Hospital\Center\CenterIndex;
 use App\Livewire\Hospital\Inbound\InboundDate;
 use App\Livewire\Hospital\Inbound\InboundIndex;
@@ -123,6 +125,13 @@ Route::get('/referral/add', ReferralIndex::class)
     Route::get('/hospital/referral/{type}/{card_number}/date/{date}', ReferralDetail::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.referral');
+
+    Route::get('/editprofile', EditProfile::class)
+    ->middleware(['auth', 'verified'])
+    ->name('editprofile');
+    Route::get('/editpassowrd', EditPassword::class)
+    ->middleware(['auth', 'verified'])
+    ->name('editpassword');
 Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
 Route::get('generate/patient/{id}/{token}',[ReferrReport::class,'createqr'])->name('generate.patient');
 Route::get('generate/referralreport/{id}/{date}',[ReferrReport::class,'referralreport'])->name('generate.referralreport');

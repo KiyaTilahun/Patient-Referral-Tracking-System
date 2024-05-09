@@ -13,9 +13,11 @@ class DeletedUsers extends Component
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
     public $search;
     public $route;
+    public $usercurrent;
     public function mount()
     {
-        
+        $user = auth()->user();
+        $this->usercurrent = User::where('id', $user->id)->first();
         $this->route = url()->previous();
     }
     public function goBack()
@@ -36,19 +38,37 @@ $this->render();
 
     }
     public function render()
-    {
-        $hospitalid=auth()->user()->hospital_id;
+    {  
+       
 
-        $deletedUsers = User::onlyTrashed()->where('hospital_id',$hospitalid)->when($this->search, function ($query) {
-            $query->where('name', 'LIKE', '%' . $this->search . '%');
-        })->get();
-
+        if ($this->usercurrent->hasRole('superadmin')) {
+            $deletedUsers = User::onlyTrashed()->withAggregate('hospital', 'name')->when($this->search, function ($query) {
+                $query->where('name', 'LIKE', '%' . $this->search . '%');
+            })->get();
+            $headers = [
+                ['key' => 'id', 'label' => '#'],
+                ['key' => 'name', 'label' => 'Full Name'],
+                ['key' => 'email', 'label' => 'User Email'],
+                ['key' => 'hospital_name', 'label' => 'Center Name'],
+    
+            ];
+        }else{
+            $deletedUsers = User::onlyTrashed()->where('hospital_id',$this->usercurrent->hospital_id)->when($this->search, function ($query) {
+                $query->where('name', 'LIKE', '%' . $this->search . '%');
+            })->get();
+            
         $headers = [
             ['key' => 'id', 'label' => '#'],
             ['key' => 'name', 'label' => 'Full Name'],
             ['key' => 'email', 'label' => 'User Email'],
 
         ];
+        }
+       
+        
+
+       
+
         // dd($deletedUsers);
 
 

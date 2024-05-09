@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Admin\Department;
+use App\Models\Admin\Service;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,11 +23,14 @@ class Departmentlist extends Component
     public $route;
     public bool $myModal2=false;
     public bool $modal17=false;
+    public bool $serviceModal=false;
+public $allservices;
 
     public function mount()
     {
         
         $this->route = url()->previous();
+        $this->allservices=Service::all();
     }
     public function goBack()
 {
@@ -44,6 +48,18 @@ public function updated($newdepartment)
         if($this->selecteddep!=null){
             $this->updatedepartment=$this->selecteddep->name;
             $this->myModal2=true;
+        }
+        // dd($this->selecteddep);
+    }
+
+    public function attachservice($id)
+    {
+        $this->reset('selecteddep');
+        $this->selecteddep = Department::where('id', $id)->first();
+        
+        if($this->selecteddep!=null){
+            $this->updatedepartment=$this->selecteddep->name;
+            $this->serviceModal=true;
         }
         // dd($this->selecteddep);
     }
@@ -103,11 +119,12 @@ $this->modal17=false;
     public function render()
     {
 
-        $departments = Department::query()
+        $departments = Department::all()
             ->when($this->search, function ($query) {
-                return $query->where('name', 'LIKE', '%' . $this->search . '%');
+                return $query->where('name', 'LIKE', '%' . $this->search . '%')->get();
             })
-            ->get();
+           ;
+        //    dd(count($departments));
         // dd($departments);
 
         // dd($this->departments);

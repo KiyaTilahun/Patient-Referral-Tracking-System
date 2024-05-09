@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
-
+use Mary\Traits\Toast;
 
 class Adduser extends Component
 {
-
+use Toast;
 
 public $holder;
 public $hospital;
-    public $name;
+    public $firstname;
+    public $lastname;
+
     public $phone;
     public $email;
     public $type;
@@ -52,7 +54,7 @@ if($this->role=='doctor'){
      $doctor = Doctor::create([
        
           
-        'name' =>   $this->name,
+        'name' =>   $this->firstname.' '.$this->lastname,
         'email' =>  $this->email,
         'phone' => $this->phone,
         'department_id' => $this->dep,
@@ -68,7 +70,7 @@ if($this->role=='doctor'){
         $password=Str::random(10);
        
        $user=User::create(
-        ['name'=>$validated['name'],'email'=>$validated['email'],'email_verified_at'=> now(),'hospital_id'=>$this->hospital->id,'password'=>Hash::make($password)]
+        ['name'=>$validated['firstname'].' '.$validated['lastname'],'email'=>$validated['email'],'email_verified_at'=> now(),'hospital_id'=>$this->hospital->id,'password'=>Hash::make($password)]
        );
        
        if($this->role=='admin'){
@@ -78,8 +80,25 @@ if($this->role=='doctor'){
         $user=$user->assignRole('staff');
        }
      $user->save();
-       $response=Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
-       dd($response);
+      //  $response=Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
+       $message=[];
+       try {
+        
+         Mail::to($user->email)->send(new RegisterEmail($user->email, $password));
+         $this->success("User name and Password sent via email");
+
+         $message[]=["status"=>true];
+
+     } catch (\Exception $e) {
+     
+         // Return a failure response
+         $message[]=["status"=>false];
+         $this->error("Error, Email is not sent");
+
+     }
+
+     
+      
 
     }
     
@@ -91,8 +110,9 @@ if($this->role=='doctor'){
     
        if($this->isdoctor){
          return[
-            'name'=>'required',
-             'email'=>'required|unique:doctors',
+            'firstname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
+            'lastname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
+             'email'=>'required|unique:users',
              'phone'=>'required|min:9|numeric',
              'role'=>'required',
              'dep'=>'required',
@@ -101,7 +121,8 @@ if($this->role=='doctor'){
        ];}
        else{
          return[
-            'name'=>'required',
+            'firstname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
+            'lastname'=>'required|regex:/^[a-zA-Z]+(?:\'[a-zA-Z]+)*$/|string',
             'email'=>'required|unique:users',
             'phone'=>'required|min:9|numeric',
             'role'=>'required',

@@ -1,4 +1,5 @@
 <div>
+    <x-mary-toast />
     <div class="pt-4 py-10"> <x-breadcrumb> <li class="inline-flex items-center">
         <a href="{{route('dashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
           <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -51,17 +52,34 @@
        
             <div class="lg:col-span-2">
                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                    <div class="md:col-span-3">
+                        <label class="form-control w-full max-w-xs">
+                            <div class="label">
+                                <span class="label-text">First Name</span>
+
+                            </div>
+                            <input type="text" placeholder="First Name" class="input input-bordered w-full max-w-xs"
+                                wire:model='firstname' />
+
+                        </label>
+                        @error('firstname')
+                            <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
+                                role="alert">
+                                <span class="font-medium">{{ $message }}</span>
+                            </div>
+                        @enderror
+                    </div>
                     <div class="md:col-span-2">
                         <label class="form-control w-full max-w-xs">
                             <div class="label">
-                                <span class="label-text">User Name</span>
+                                <span class="label-text">Last Name</span>
 
                             </div>
-                            <input type="text" placeholder="name" class="input input-bordered w-full max-w-xs"
-                                wire:model='name' />
+                            <input type="text" placeholder="Last Name" class="input input-bordered w-full max-w-xs"
+                                wire:model='lastname' />
 
                         </label>
-                        @error('name')
+                        @error('lastname')
                             <div class="p-2 text-sm text-red-800 rounded-lg  dark:bg-gray-800 dark:text-red-600"
                                 role="alert">
                                 <span class="font-medium">{{ $message }}</span>
@@ -145,6 +163,7 @@
                                         @if (count($hospital->departments) == 0)
                                             <option value="">No Department</option>
                                         @else
+                                        <option value="{{null}}">Departments</option>
                                             @foreach ($hospital->departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}
                                                 </option>

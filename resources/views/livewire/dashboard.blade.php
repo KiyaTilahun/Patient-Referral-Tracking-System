@@ -106,7 +106,7 @@ class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!
     <div class=" p-3 shadow-sm rounded-sm">
         <div class="flex items-center space-x-2 font-semibold  leading-8">
           
-            <span class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">My Profile</span>
+            <span class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white">My Profile</span>
         </div>
         <div >
             <div class="grid md:grid-cols-2 text-sm">
@@ -125,6 +125,7 @@ class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!
                     <div class="px-4 py-2 font-semibold">Role</div>
                     <div class="px-4 py-2">{{$user->getRoleNames()->first()}}</div>
                 </div>
+                @if (!auth()->user()->hasRole('superadmin'))
                 <div class="grid grid-cols-2">
                     <div class="px-4 py-2 font-semibold">Health Center</div>
                     <div class="px-4 py-2">{{$user->hospital->name}}</div>
@@ -133,6 +134,7 @@ class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!
                     <div class="px-4 py-2 font-semibold">Current Address</div>
                     <div class="px-4 py-2">{{$user->hospital->zone}},{{$user->hospital->region->name}}</div>
                 </div>
+                @endif
               
                 @if($user->getRoleNames()->first()=='doctor') 
                 <div class="grid grid-cols-2">
@@ -142,8 +144,16 @@ class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!
                 @endif
             </div>
         </div>
-        <button
-            class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Edit Profile</button>
+        <div class="fit-content">
+        <x-nav-link :href="route('editprofile')" wire:navigate>
+            <x-mary-button label="Edit Profile"  icon="s-user-circle" class="text-warning" />
+            
+        </x-nav-link>
+    </div>
+        
+        {{-- <button
+            class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Edit Profile</button> --}}
+            {{-- <x-mary-button label="Change Password"  icon="s-lock-closed" class="text-warning" /> --}}
     </div>
  
 

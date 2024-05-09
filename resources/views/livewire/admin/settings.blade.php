@@ -27,7 +27,7 @@
     <table class="w-1/2 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
        
         <tbody>
-            <tr class="">
+            {{-- <tr class="">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                     <span class="flex items-center gap-2 p-2"><x-mary-icon name="m-cursor-arrow-rays" class="text-green-500 mr-4"/>  <span>Change Theme Color</span></span>
                 </th>
@@ -35,7 +35,8 @@
                     @include('utils.theme')
                 </td>
                 
-            </tr>
+            </tr> --}}
+            @if (auth()->user()->hasRole(['superadmin']))
             <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                    
@@ -48,6 +49,7 @@
                 </td>
                 
             </tr>
+            @endif
             {{-- <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                    
@@ -64,6 +66,21 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                     <x-nav-link :href="route('deletedusers')" wire:navigate>
                     <span class="flex items-center gap-2 cursor-pointer"><x-mary-icon name="m-cursor-arrow-rays" class="text-green-500 mr-4"/>    <span>   Deleted Users   </span><x-mary-icon name="o-trash" class="text-error mr-4" /></span>
+                </x-nav-link>
+
+
+                   
+                
+                </th>
+                <td class=" py-4">
+                    
+                </td>
+                
+            </tr>
+            <tr class=" ">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
+                    <x-nav-link :href="route('editprofile')" wire:navigate>
+                    <span class="flex items-center gap-2 cursor-pointer"><x-mary-icon name="m-cursor-arrow-rays" class="text-green-500 mr-4"/>    <span>   Edit Your Profile   </span><x-mary-icon name="s-user-circle" class="text-warning mr-4" /></span>
                 </x-nav-link>
 
 

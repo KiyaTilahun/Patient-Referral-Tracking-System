@@ -104,6 +104,7 @@
         {{-- <img src="..." class="img-fluid" alt="Responsive image"> --}}
         {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('http://google.com')) !!} "> --}}
        
+        <div class="text-center title">Centers Report</div>
         <table class="table mx-auto table-striped" style="padding-top:50px">
             <thead>
                 <tr>

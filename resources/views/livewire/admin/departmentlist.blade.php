@@ -33,7 +33,7 @@
     </x-mary-header>
 
     {{-- <div>{{$departments}}</div> --}}
-    <x-mary-table :headers="$headers" :rows="$departments" :sort-by="$sortBy">
+    <x-mary-table :headers="$headers" :rows="$departments" :sort-by="$sortBy" >
         @scope('actions', $department)
             <span class="flex gap-4">
 
@@ -41,6 +41,8 @@
                     class="btn-sm text-success" />
                 <x-mary-button icon="o-trash" wire:click="delete({{ $department->id }})" spinner
                     class="btn-sm text-error" />
+                    <x-mary-button icon="c-cog" wire:click="attachservice({{ $department->id }})" spinner
+                        class="btn-sm text-warning" />
             </span>
         @endscope
 
@@ -73,6 +75,49 @@
                         <x-mary-input placeholder="Your name" icon="o-shield-check" wire:model='updatedepartment'
                             autofocus />
                     </div>
+                    <div class="text-right mt-4"> <x-mary-button label="Update" class="btn btn-outline btn-primary"
+                            type="submit" />
+                    </div> 
+                    @endisset 
+                       
+                   
+                </div>
+                    
+            </form>
+
+        </x-mary-modal>
+
+        <x-mary-modal wire:model="serviceModal" class="backdrop-blur">
+            <form wire:submit.prevent="try_update">
+                <div class="flex items-center justify-end p-2 ">
+
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        @click="$wire.serviceModal = false">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+
+                    </button>
+                </div>
+                <div class="flex flex-col ">
+                    <span class=" cursor-default w-fit">Edit
+                        Department</span>
+
+
+                    @isset($selecteddep)
+                    <div class="mt-4">
+                        <x-mary-input placeholder="Your name" icon="o-shield-check" wire:model='updatedepartment'
+                            autofocus />
+                    </div>
+                    <select class="select select-primary " wire:model.live='selectedregion'>
+                        <option selected class="text-sm pt-0 mt-0" value="{{null}}">All Regions</option>
+                        @foreach ($allservices as $region)
+                            <option value="{{$region->id}}">{{$region->name}}</option>
+                        @endforeach
+                    </select>
                     <div class="text-right mt-4"> <x-mary-button label="Update" class="btn btn-outline btn-primary"
                             type="submit" />
                     </div> 

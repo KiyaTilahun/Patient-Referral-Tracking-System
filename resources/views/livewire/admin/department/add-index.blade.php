@@ -30,11 +30,11 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="m1 9 4-4-4-4" />
                 </svg>
-                <span class="ms-1 text-sm font-medium  dark:text-white text-blue-600">Add Departments</span>
+                <span class="ms-1 text-sm font-medium  dark:text-white text-blue-600">Update Departments</span>
             </div>
         </li>
     </x-breadcrumb>
-    <x-page-heading :title="'Add Departments'" />
+    <x-page-heading :title="'Update Departments'" />
     <div class="grid grid-cols-12">
         <div class="header col-span-12 rounded-lg bord py-8">
             {{-- <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Add</span> Department   </h1> --}}
@@ -64,7 +64,7 @@
                 <span class="font-medium">{{ $message }}</span>
             </div>
         @enderror --}}
-                <div class="pt-4"> <x-mary-button label="Add Departments" class="btn-accent "
+                <div class="pt-4"> <x-mary-button label="Update Departments" class="btn-accent "
                         badge="{{ $numberchoosed }}" badge-classes="badge-warning" type="submit" spinner="save" />
                 </div>
             </form>
