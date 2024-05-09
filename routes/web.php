@@ -66,7 +66,7 @@ Route::view('profile', 'profile')
 
 
 
-    Route::middleware(['auth','role:superadmin', 'verified'])
+Route::middleware(['auth', 'role:superadmin', 'verified'])
     ->group(function () {
         Route::get('/pending', PendingIndex::class)->name('pending');
         Route::get('/centers/all', CenterIndex::class)->name('centers.all');
@@ -74,34 +74,29 @@ Route::view('profile', 'profile')
         Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');   //alldepartment
         Route::get('/holidaylist', Holidaylist::class)->name('holidaylist');
         Route::get('/allreferrals', AllReferrals::class)->name('allreferrals');
-
-
-
-
     });
-
-    Route::middleware(['auth','role:admin|superadmin', 'verified'])
+Route::middleware(['auth', 'role:admin|superadmin', 'verified'])
     ->group(function () {
-        Route::get('/settings', Settings::class)->name('settings');
+        
         Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
         Route::get('/department', DepIndex::class)
-        ->name('department');
-    Route::get('/department/add', AddIndex::class)
-        ->name('department.add');
+            ->name('department');
+        Route::get('/department/add', AddIndex::class)
+            ->name('department.add');
         Route::get('/department/services', ServiceIndex::class)
-        ->name('department.services');
-
+            ->name('department.services');
     });
 
-
-   Route::get('/adduser', Adduser::class)
-    ->middleware(['auth','role:admin|superadmin', 'verified'])
+    // settings 
+    Route::get('/settings', Settings::class)->name('settings')->middleware(['auth', 'verified']);
+Route::get('/adduser', Adduser::class)
+    ->middleware(['auth', 'role:admin|superadmin', 'verified'])
     ->name('adduser');
-    Route::get('/edituser/{id}', UserEdit::class)
-    ->middleware(['auth','role:superadmin', 'verified'])
+Route::get('/edituser/{id}', UserEdit::class)
+    ->middleware(['auth', 'role:superadmin', 'verified'])
     ->name('edituser');
 
-    Route::get('/users', UserIndex::class)
+Route::get('/users', UserIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('allusers');
 
@@ -113,52 +108,38 @@ Route::get('/patient/add', PatientIndex::class)
 Route::get('/referral/add', ReferralIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('referral.add');
-    Route::get('/hospital/inbound', InboundIndex::class)
+Route::get('/hospital/inbound', InboundIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.inbound');
-    Route::get('/hospital/outbound', OutboundIndex::class)
+Route::get('/hospital/outbound', OutboundIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.outbound');
-    Route::get('/hospital/outbound/{date}', OutboundDate::class)
+Route::get('/hospital/outbound/{date}', OutboundDate::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.outbound.date');
-    Route::get('/hospital/inbound/{date}', InboundDate::class)
+Route::get('/hospital/inbound/{date}', InboundDate::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.inbound.date');
-    Route::get('/hospital/referral/{type}/{card_number}/date/{date}', ReferralDetail::class)
+Route::get('/hospital/referral/{type}/{card_number}/date/{date}', ReferralDetail::class)
     ->middleware(['auth', 'verified'])
     ->name('hospital.referral');
-
-    Route::get('/editprofile', EditProfile::class)
+Route::get('/editprofile', EditProfile::class)
     ->middleware(['auth', 'verified'])
     ->name('editprofile');
-    Route::get('/editpassowrd', EditPassword::class)
+Route::get('/editpassowrd', EditPassword::class)
     ->middleware(['auth', 'verified'])
     ->name('editpassword');
-Route::get('generate/{id}',[ReferrReport::class,'create'])->name('generate');
-Route::get('generate/patient/{id}/{token}',[ReferrReport::class,'createqr'])->name('generate.patient');
-Route::get('generate/referralreport/{id}/{date}',[ReferrReport::class,'referralreport'])->name('generate.referralreport');
-
-
-Route::get('generate/',[ReferrReport::class,'demo'])->name('demo');
-
-
-Route::get('/sms', [SmsController::class,'sms'])
-->name('sms');
-
-// Route::get(/rolepermission,)
-// Route::get('/contact',function(){
-//     Mail::to('kiyatilahun0@gmail.com')->send(new RegisterEmail('hello','12345666'));
-// });
-
-// fall back pages
-
-
+Route::get('generate/{id}', [ReferrReport::class, 'create'])->name('generate');
+Route::get('generate/patient/{id}/{token}', [ReferrReport::class, 'createqr'])->name('generate.patient');
+Route::get('generate/referralreport/{id}/{date}', [ReferrReport::class, 'referralreport'])->name('generate.referralreport');
+Route::get('generate/', [ReferrReport::class, 'demo'])->name('demo');
+Route::get('/sms', [SmsController::class, 'sms'])
+    ->name('sms');
 Route::fallback(function () {
     return response()->view('utils.errors.404', []); // Custom 404 view
 });
 Route::get('/unauthorized', function () {
- 
+
     return response()->view('utils.errors.401', [], 401); // View for 401 Unauthorized
 })->name('unauthorized');
 

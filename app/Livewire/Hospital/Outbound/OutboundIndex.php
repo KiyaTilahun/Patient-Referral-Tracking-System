@@ -94,7 +94,7 @@ public bool $myModal3=false;
             ['key' => 'referral_date', 'label' => 'Appointment Date'],
             ['key' => 'receiving_hospital_name', 'label' => 'Referral To'],
             ['key' => 'patient_name', 'label' => 'Patient Name'],
-            ['key' => 'referrtype_name', 'label' => 'Type'],
+        
             ['key' => 'statustype_name', 'label' => 'Status'],      # <-- nested attributes
 
         ];

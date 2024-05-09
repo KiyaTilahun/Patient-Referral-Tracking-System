@@ -135,13 +135,7 @@ class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!
                     <div class="px-4 py-2">{{$user->hospital->zone}},{{$user->hospital->region->name}}</div>
                 </div>
                 @endif
-              
-                @if($user->getRoleNames()->first()=='doctor') 
-                <div class="grid grid-cols-2">
-                    <div class="px-4 py-2 font-semibold">Department</div>
-                    <div class="px-4 py-2">{{$user->doctor->department->name }} </div>
-                </div>
-                @endif
+           
             </div>
         </div>
         <div class="fit-content">

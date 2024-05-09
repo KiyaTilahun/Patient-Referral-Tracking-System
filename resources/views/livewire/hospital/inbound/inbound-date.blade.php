@@ -208,7 +208,7 @@
       </x-mary-modal>
 
       <x-mary-modal wire:model="appointmentmodal" class="backdrop-blur">
-                            <form wire:submit="updateapp">
+                            <form wire:submit="appmassupdate">
                            
                             <div  class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"> Edit Appointment</div>
                             @if ($upcomingdate !== null)

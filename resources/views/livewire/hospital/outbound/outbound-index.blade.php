@@ -13,12 +13,14 @@
 
     </x-mary-header>
     <div class="w-1/3">
-    <x-mary-datepicker  wire:model.live="chooseddate" icon="o-calendar" hint="Choose Day" class="input-sm" :config="$config1"/>
+    {{-- <x-mary-datepicker  wire:model.live="chooseddate" icon="o-calendar" hint="Choose Day" class="input-sm" :config="$config1"/> --}}
+    <x-mary-datetime  wire:model.live="chooseddate" icon="o-calendar" />
+
     </div>
 
     <x-mary-table :headers="$headers" :rows="$centers" :sort-by="$sortBy" with-pagination>
 
-        @scope('cell_referrtype_name', $center)
+        {{-- @scope('cell_referrtype_name', $center)
        
             <x-mary-badge 
                 :value="$center->referrtype_name" 
@@ -35,7 +37,7 @@
             />
       
     @endscope
-
+ --}}
 
     @scope('cell_statustype_name', $center)
        

@@ -30,7 +30,9 @@ class ReferrReport extends Model
         ->first(); 
         $patient = Patient::where('card_number', $id)->first();
 
-
+        if ($patient === null) {
+            return redirect()->back(); 
+        }
         // $availbledep =  Department::all()->toArray();
 
         $qr = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($latestAppointment->card_number));
@@ -51,6 +53,9 @@ class ReferrReport extends Model
 
 
         $patient = Patient::where('card_number', $id)->first();
+        if ($patient === null) {
+            return redirect()->back(); 
+        }
         // dd($id);
       $jsonData = json_encode([
             "referral_id"=>$id,
@@ -77,6 +82,10 @@ class ReferrReport extends Model
         $latestAppointment = Referral::where('card_number', $id)
         ->where('referral_date',$date) // Order by created_at column in descending order
         ->first(); 
+        if ($latestAppointment === null) {
+            return redirect()->back(); 
+
+        }
         $patient = Patient::where('card_number', $id)->first();
 
 

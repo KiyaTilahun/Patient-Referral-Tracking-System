@@ -202,6 +202,7 @@ class ReferralIndex extends Component
         $this->reset('selectedcenter');
         $this->reset('initial');
         $this->reset('departmentServices');
+        $this->reset('availbledep');
 
 
 
@@ -213,12 +214,19 @@ class ReferralIndex extends Component
 
             // $this->notdiagonal = true;
             if ($this->referral_type == '2') {
-
+                if ($hospital->type_id == 3) {
+                    $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
+                        $query
+                            ->where('hospitals.id', '!=', $hospital->id)
+                            ->where('type_id', $hospital->type_id);
+                    })->get();
+                }
+                else{
                 $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
                     $query->where('region_id', $hospital->region_id)
                         ->where('hospitals.id', '!=', $hospital->id)
                         ->where('type_id', $hospital->type_id);
-                })->get();
+                })->get();}
             }
 
             if ($this->referral_type == '1') {
@@ -227,7 +235,7 @@ class ReferralIndex extends Component
                         $query->where('region_id', $hospital->region_id)
                             ->where('hospitals.id', '!=', $hospital->id)
                             ->where('type_id', '>', $hospital->type_id)
-                            ->where('type_id', '<=', 3);
+                            ->where('type_id', '<=', 2);
                     })->with('hospitals')->get();
                 } else {
                     $this->availbledep =  Department::whereHas('hospitals', function ($query) use ($hospital) {
@@ -250,10 +258,18 @@ class ReferralIndex extends Component
                 $this->warning('No Department is found');
             }
         } else {
+           
             $initial = Patient::where('card_number', $this->card_number)->first();
+
+            if($this->hosid==$initial->hospital_id){
+
+                $this->warning('User Registered in this Center'); 
+                $this->notdiagonal = false;
+            }
+            else{
             $this->initial = $initial->hospital;
             $this->notdiagonal = false;
-
+            }
             // $this->selectedcenter=$initial->hospital->id;
 
         }

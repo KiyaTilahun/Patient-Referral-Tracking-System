@@ -177,8 +177,7 @@ class ReferralController extends Controller
 
     $referral->update(['referral_date'=>$validated['changedate']]);
    
-        $slots = Appointmentslot
-                ::where('department_id', $department)
+        $slots = Appointmentslot::where('department_id', $department)
                 ->where('hospital_id', $hospital)->where('date', $date)->first();
         
 

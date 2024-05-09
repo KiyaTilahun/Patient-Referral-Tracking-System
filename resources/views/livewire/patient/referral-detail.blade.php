@@ -7,8 +7,14 @@
    
 @endphp
 {{-- <div class="bg-white shadow dark:bg-gray-700 min-h-screen w-full  p-0 m-0"> --}}
-<div class="md:bg-white md:shadow md:dark:bg-gray-700 min-h-screen w-full  p-0 m-0">
 
+
+
+   
+ 
+<div class="md:bg-white md:shadow md:dark:bg-gray-700 min-h-screen w-full  p-0 m-0">
+    @if($patient!=null)
+        
     <x-mary-toast />
     <div class="p-4 md:p-5">
         <div class="flex justify-between w-full mb-6 "> <x-mary-button label="Go Back" wire:click="goBack"
@@ -31,7 +37,7 @@
             <div class="flex justify-end w-full gap-4">
               
                 @if(auth()->user()->hospital->id==$referral->referring_hospital_id)
-                <x-mary-button label="Edit Referral" class="btn btn-error" wire:click='tonewreferral()' />
+                <x-mary-button label="Use Referral" class="btn btn-error" wire:click='tonewreferral()' icon="s-pencil-square"/>
              @endif
                 @if (($currentDate < $referralDate)&& ($referral->referrtype_id!=3))
                
@@ -158,7 +164,7 @@
 
                       
                         <x-mary-modal wire:model="appointmentmodal" class="backdrop-blur">
-                            <form wire:submit="updateappointment">
+                            <form wire:submit="appointmentupdate">
                            
                             <div  class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"> Edit Appointment</div>
                             @if ($config1 !== null)
@@ -170,7 +176,7 @@
 
                             <span class="flex flex-end gap-4 w-full mt-4">
                                <x-mary-button label="Cancel" @click="$wire.appointmentmodal = false" />
-                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary"  />
+                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary" spinner/>
                             </span>
                         
 
@@ -189,4 +195,7 @@
 
         </table>
     </div>
+
+    @endif
 </div>
+

@@ -47,7 +47,7 @@ class InboundDate extends Component
     public bool $myModal3 = false;
     public function mount($date)
     {
-        $this->hospitalid = auth()->user()->id;
+        $this->hospitalid = auth()->user()->hospital_id;
         // dd($this->hospitalid);
         $this->date = $date;
         $this->route = url()->previous();
@@ -93,7 +93,7 @@ class InboundDate extends Component
         return Storage::download('public/' . $filePath);
     }
     // saving change
-    public function updateapp()
+    public function appmassupdate()
     {
 
         $this->validate([
@@ -111,7 +111,7 @@ class InboundDate extends Component
             $phones = Patient::whereIn('card_number', $cardnumber)->pluck('phone', 'name')->toArray();
             $hospitalname = $this->hospitalname;
            
-            $changeapp=Appointmentslot::where('date',$this->date)->where('department_id',$this->department)->first();
+            $changeapp=Appointmentslot::where('date',$this->date)->where('hospital_id',$this->hospitalid)->where('department_id',$this->department)->first();
 
             $changref=Referral::whereIn('card_number',$this->cardnumbers)->where('referral_date',$this->date)->where('department_id',$this->department)->get();
             // dd($this->updateappointment);   

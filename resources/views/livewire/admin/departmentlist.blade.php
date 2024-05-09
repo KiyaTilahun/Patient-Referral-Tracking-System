@@ -37,7 +37,7 @@
     </x-mary-header>
 
     {{-- <div>{{$departments}}</div> --}}
-    <x-mary-table :headers="$headers" :rows="$departments" :sort-by="$sortBy" withPagination>
+    <x-mary-table :headers="$headers" :rows="$departments" :sort-by="$sortBy" with-pagination>
         @scope('actions', $department)
             <span class="flex gap-4">
 

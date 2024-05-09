@@ -23,7 +23,7 @@ public bool $myModal3=false;
     public function mount()
     {
        
-        $this->config1 = [  'dateFormat' => 'Y-m-d',
+        $this->config1 = [  'altFormat' => 'Y-m-d',
                        'enableTime' => false,];
     }
 
@@ -70,6 +70,9 @@ public bool $myModal3=false;
             'card_number' => $referral['card_number'],
             'date' => $referral['referral_date']
         ]);
+
+
+        
         
     }
     public function render()
@@ -79,6 +82,7 @@ public bool $myModal3=false;
         $this->chooseddate=null;
        }
         $this->hospitalid = auth()->user()->hospital->id;
+        // dd($this->hospitalid);
         // dd($this->hospitalid);
         $centers = Referral::where('receiving_hospital_id', $this->hospitalid)->when($this->search, function ($query) {
             $query->where('card_number', 'LIKE', '%' . $this->search . '%');
@@ -92,7 +96,7 @@ public bool $myModal3=false;
             ['key' => 'referral_date', 'label' => 'Appointment Date'],
             ['key' => 'referring_hospital_name', 'label' => 'Referred By'],
             ['key' => 'patient_name', 'label' => 'Patient Name'],
-            ['key' => 'referrtype_name', 'label' => 'Type'],
+            
             ['key' => 'statustype_name', 'label' => 'Status'],      # <-- nested attributes
 
         ];

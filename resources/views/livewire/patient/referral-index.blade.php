@@ -104,16 +104,18 @@
                             </div>
                             <input type="text" placeholder="referral id" class="input input-bordered input-success "
                                 wire:model.live='card_number' x-ref="answer" />
-                            <div class="mt-2 w-full overflow-hidden rounded-md bg-white">
                                 @if (count($results) > 0)
+                            <div class="mt-2 w-full overflow-hidden rounded-md bg-white h-14 overflow-y-auto ">
+                               
                                     @foreach ($results as $result)
-                                        <div wire:click="fillSearchInput('{{ $result }}')"
+                                        <div wire:click="fillSearchInput('{{ $result }}') "
                                             class="cursor-pointer py-2 px-3 hover:bg-slate-100">
                                             <p class="text-sm font-medium text-gray-600">{{ $result }}</p>
                                         </div>
                                     @endforeach
-                                @endif
+                              
                             </div>
+                            @endif
 
 
                         </label>
