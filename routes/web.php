@@ -4,6 +4,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\SmsController;
 use App\Livewire\Admin\Adduser;
+use App\Livewire\Admin\AllReferrals;
 use App\Livewire\Admin\Department\AddIndex;
 use App\Livewire\Admin\Department\DepIndex;
 use App\Livewire\Admin\Department\ServiceIndex;
@@ -65,15 +66,15 @@ Route::view('profile', 'profile')
 
 
 
-    Route::middleware(['auth','role:superadmin|admin', 'verified'])
+    Route::middleware(['auth','role:superadmin', 'verified'])
     ->group(function () {
         Route::get('/pending', PendingIndex::class)->name('pending');
         Route::get('/centers/all', CenterIndex::class)->name('centers.all');
         Route::get('/rolepermission', RpIndex::class)->name('rolepermission');
-        Route::get('/settings', Settings::class)->name('settings');
         Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');   //alldepartment
-        Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
         Route::get('/holidaylist', Holidaylist::class)->name('holidaylist');
+        Route::get('/allreferrals', AllReferrals::class)->name('allreferrals');
+
 
 
 
@@ -81,6 +82,8 @@ Route::view('profile', 'profile')
 
     Route::middleware(['auth','role:admin|superadmin', 'verified'])
     ->group(function () {
+        Route::get('/settings', Settings::class)->name('settings');
+        Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
         Route::get('/department', DepIndex::class)
         ->name('department');
     Route::get('/department/add', AddIndex::class)

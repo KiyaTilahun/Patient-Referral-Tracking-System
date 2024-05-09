@@ -6,7 +6,9 @@
     $referralDate = Carbon::parse($referral->referral_date)->format('Y-m-d');
    
 @endphp
-<div class="bg-white shadow dark:bg-gray-700 min-h-screen w-full  p-0 m-0">
+{{-- <div class="bg-white shadow dark:bg-gray-700 min-h-screen w-full  p-0 m-0"> --}}
+<div class="md:bg-white md:shadow md:dark:bg-gray-700 min-h-screen w-full  p-0 m-0">
+
     <x-mary-toast />
     <div class="p-4 md:p-5">
         <div class="flex justify-between w-full mb-6 "> <x-mary-button label="Go Back" wire:click="goBack"

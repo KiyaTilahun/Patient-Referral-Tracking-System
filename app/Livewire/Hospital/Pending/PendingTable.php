@@ -38,7 +38,7 @@ public function show($id){
 public function reset_table()
 {
 
-     $this->reset();
+    
     $this->render();
 
 }

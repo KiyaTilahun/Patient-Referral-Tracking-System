@@ -65,6 +65,15 @@ if($this->role=='doctor'){
      ]);
      $mailer=new EmailController();
         $mailer->sendmaildoctor($doctor);
+
+       
+        if($mailer){
+            $this->success("User name and Password sent via email");
+        } else {
+        
+            $this->error("Error, Email is not sent");
+   
+        }
     }
     else{
         $password=Str::random(10);

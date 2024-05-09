@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('day_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('department_hospital_id')->constrained('department_hospital')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('hospital_id')->constrained('hospitals');
+            $table->foreignId('hospital_id')->constrained('hospitals')->cascadeOnDelete()->cascadeOnUpdate();
             // Additional columns if needed
             $table->timestamps();
             

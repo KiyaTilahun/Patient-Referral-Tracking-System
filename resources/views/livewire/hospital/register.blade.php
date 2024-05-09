@@ -1,33 +1,43 @@
-<div>
-    <div class="fixed right-4 ">
-        <button type="button" class="md:inline-flex gap-7 pt-5 hidden" wire:click='logout'>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login-2" width="20"
-                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00ca92" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                <path d="M3 12h13l-3 -3" />
-                <path d="M13 15l3 -3" />
-            </svg>
-            <span class="text-[#00ca92]"> Login Instead</span></button>
+<div class=" pt-2   shadow-md ">
+    
 
-        <!-- this hidden checkbox controls the state -->
-
-    </div>
+    
+    
     <form wire:submit.prevent="register">
 
         <!-- component -->
-        <div class="min-h-screen p-16 flex  justify-center">
+        <div class="min-h-screen p-6 flex  justify-center  bg-white dark:bg-gray-800 shadow-md relative">
+
+            <div class="absolute left-0 top-[-20px] w-36 sm:block hidden ">
+               
+                    <img src="{{ asset('images/mylogo.png') }}" class="backdrop-blur-lg w-full " alt="Example Image from Storage">
+                    
+        
+                <!-- this hidden checkbox controls the state -->
+        
+            </div>
+            <div class="absolute right-4 z-50 ">
+                {{-- <button type="button" class="md:inline-flex  hidden border-warning btn " wire:click='logout'>
+                    
+                    Login Instead</button> --}}
+                    <a href="{{route('login')}}">
+                    <x-mary-button icon="c-arrow-top-right-on-square" label=" Login Instead" class="border-warning" wire:click='logout' spinner />
+                    </a>
+        
+                <!-- this hidden checkbox controls the state -->
+        
+            </div>
             <div class="{{ !($currentStep == 4) ? ' pt-20' : 'pt-0' }} container max-w-screen-lg mx-auto relative">
+                
                 @if (!($currentStep == 4))
 
-
+                     
                     <div class="absolute top-[-10px] left-1/2  flex flex-col items-center">
                         <div>
                             Step
                         </div>
                         <div
-                            class="w-8  h-8 rounded-full bg-[#00ca92] text-white text-center flex justify-center items-center">
+                            class="w-8  h-8 rounded-full bg-warning text-white text-center flex justify-center items-center">
                             <div> {{ $currentStep }}</div>
 
                         </div>
@@ -93,7 +103,7 @@
 
                                                 </div>
                                                 <input type="text" placeholder="name"
-                                                    class="input input-bordered w-full max-w-xs" wire:model='name' />
+                                                    class="input input-bordered w-full max-w-xs" wire:model.live='name' />
 
                                             </label>
                                             @error('name')
@@ -113,7 +123,7 @@
                                                     +251
                                                     <input type="text" pattern="[0-9]{9}" maxlength=9 minlength="9"
                                                         class="grow outline-none" placeholder="Phone Number"
-                                                        wire:model='phone' />
+                                                        wire:model.live='phone' />
                                                 </label>
 
                                             </label>
@@ -132,7 +142,7 @@
 
                                                 </div>
                                                 <input type="email" placeholder="email"
-                                                    class="input input-bordered w-full max-w-xs" wire:model='email' />
+                                                    class="input input-bordered w-full max-w-xs" wire:model.live='email' />
 
                                             </label>
                                             @error('email')
@@ -176,7 +186,7 @@
                                                 </div>
                                                 <select
                                                     class="select select-bordered {{ !is_null($zones) ? ' select-accent' : 'select-bordered' }} "
-                                                    wire:model="zone">
+                                                    wire:model.live="zone">
                                                     @if (!is_null($zones))
                                                         @if (count($zones) == 0)
                                                             <option value="">No zone</option>
@@ -278,7 +288,15 @@
 
 
                                     </div>
+                                    <div class="flex justify-end mt-4">
+                                        <button type="button" class="btn btn-md btn-success " wire:click="increaseStep">Next
+                                            <div wire:loading>
+                                                @include('utils.spinner')
+                                            </div>
+                                        </button>
+                                    </div>
                                 </div>
+                               
                             </div>
                         </div>
                     @endif
@@ -317,7 +335,7 @@
                                                 </div>
                                                 <input type="text" placeholder="name"
                                                     class="input input-bordered w-full max-w-xs"
-                                                    wire:model='liaison_officer' />
+                                                    wire:model.live='liaison_officer' />
 
                                             </label>
                                             @error('liaison_officer')
@@ -337,7 +355,7 @@
                                                     +251
                                                     <input type="text" pattern="[0-9]{9}" maxlength=9
                                                         minlength="9" class="grow outline-none"
-                                                        placeholder="Phone Number" wire:model='phone_number' />
+                                                        placeholder="Phone Number" wire:model.live='phone_number' />
                                                 </label>
 
                                             </label>
@@ -350,7 +368,16 @@
                                         </div>
 
                                     </div>
+                                    <div class="flex justify-between mt-4">
+                                        <button type="button" class="btn btn-active" wire:click="decreaseStep()">Back</button>
+                                        <button type="button" class="btn btn-md btn-success " wire:click="increaseStep">Next
+                                            <div wire:loading>
+                                                @include('utils.spinner')
+                                            </div>
+                                        </button>
+                                    </div>
                                 </div>
+                               
                             </div>
                         </div>
                 </div>
@@ -498,22 +525,6 @@
                                         </label>
 
                                     </div>
-{{-- 
-                                    <div wire:ignore class="md:col-span-5 w-full">
-                                        <label class="form-control w-full ">
-                                            <div class="label">
-                                                <span class="label-text">Available Departments</span>
-
-                                            </div>
-                                            <select wire:model="departmentlist" multiple id="testdropdown"
-                                                class="select select-accent dark:border-gray-600" disabled>
-                                                @foreach ($departments as $department)
-                                                    <option value="{{ $department->id }}">{{ $department->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </label>
-                                    </div> --}}
 
 
                                 </div>
@@ -559,6 +570,12 @@
                                     </div>
 
                                 </div>
+
+                                <div class="flex justify-end mt-4">
+                                   
+                                    <button type="submit" class="btn btn-md btn-accent">Submit</button>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -599,18 +616,18 @@
                     @endif
 
                     @if ($currentStep == 2)
-                        <button type="button" class="btn btn-active" wire:click="decreaseStep()">Back</button>
+                        {{-- <button type="button" class="btn btn-active" wire:click="decreaseStep()">Back</button> --}}
                     @endif
 
-                    @if ($currentStep == 1 || $currentStep == 2)
+                    {{-- @if ($currentStep == 1 || $currentStep == 2)
                         <button type="button" class="btn btn-md btn-success" wire:click="increaseStep">Next
                             <div wire:loading>
                                 @include('utils.spinner')
                             </div>
                         </button>
-                    @endif
+                    @endif --}}
                     @if ($currentStep == 3)
-                        <button type="submit" class="btn btn-md btn-accent">Submit</button>
+                        {{-- <button type="submit" class="btn btn-md btn-accent">Submit</button> --}}
                     @endif
                 </div>
 

@@ -35,41 +35,41 @@ class ServiceSeeder extends Seeder
     // }
 
     // DepartmentService
-    // $services = Service::all(); 
+    $services = Service::all(); 
         
     // Get all departments
-    // $departments = Department::all();
-//     foreach ($departments as $department) {
-//         // Get 4 random services from the collection
-//         $randomServices = $services->random(4);
-// // dd($randomServices);
-//         // Attach these services to the department
-//         $department->services()->attach($randomServices);
-//     }
+    $departments = Department::all();
+    foreach ($departments as $department) {
+        // Get 4 random services from the collection
+        $randomServices = $services->random(4);
+// dd($randomServices);
+        // Attach these services to the department
+        $department->services()->attach($randomServices);
+    }
 
 
 // hospital service
-    $hospitals = Hospital::all();
-        $departmentServices = DepartmentService::all();
+    // $hospitals = Hospital::all();
+    //     $departmentServices = DepartmentService::all();
  
-        foreach ($hospitals as $hospital) {
-            $hospitalDepartments = $hospital->departments;
-            if ($hospitalDepartments->isEmpty()) {
-                continue;
-            }
-            $randomDepartment = $hospitalDepartments->random(1)->first();
-            $filteredDepartmentServices = $departmentServices->where('department_id', $randomDepartment->id);
+    //     foreach ($hospitals as $hospital) {
+    //         $hospitalDepartments = $hospital->departments;
+    //         if ($hospitalDepartments->isEmpty()) {
+    //             continue;
+    //         }
+    //         $randomDepartment = $hospitalDepartments->random(1)->first();
+    //         $filteredDepartmentServices = $departmentServices->where('department_id', $randomDepartment->id);
 
-            if ($filteredDepartmentServices->isEmpty()) {
+    //         if ($filteredDepartmentServices->isEmpty()) {
 
-                continue;
-            }
-            $randomDepartmentServices = $filteredDepartmentServices->random(1)->first();
+    //             continue;
+    //         }
+    //         $randomDepartmentServices = $filteredDepartmentServices->random(1)->first();
            
-            $hospital->departmentServices()->attach($randomDepartmentServices ,[
-                'department_id' => $randomDepartment->id]);
+    //         $hospital->departmentServices()->attach($randomDepartmentServices ,[
+    //             'department_id' => $randomDepartment->id]);
 
-        }
+    //     }
 
     }
 }

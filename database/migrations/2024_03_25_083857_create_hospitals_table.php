@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hospitals', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->rememberToken();
             $table->string('zone');
             $table->string('woreda')->nullable();

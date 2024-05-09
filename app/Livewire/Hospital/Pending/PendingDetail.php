@@ -47,7 +47,7 @@ class PendingDetail extends Component
     {
     
        
-        $this->reset();
+        $this->reset('detail');
         session()->flash('status', ' has been approved successfully.');
         $this->render();
         

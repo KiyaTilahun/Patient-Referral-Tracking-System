@@ -24,7 +24,7 @@
      
         
            
-        <div class="fixed right-2 bottom-2">
+        <div class="fixed right-2 bottom-2 z-50">
            @include('utils.theme')
   
                 <!-- this hidden checkbox controls the state -->

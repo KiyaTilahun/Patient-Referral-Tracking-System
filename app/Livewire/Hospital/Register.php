@@ -66,7 +66,10 @@ class Register extends Component
         $this->currentStep = 1;
         $this->registeredEmail;
     }
-
+    public function updated($name)
+    {
+        $this->resetValidation();
+    }
     public function increaseStep()
     {
         $this->resetErrorBag();
@@ -99,9 +102,9 @@ class Register extends Component
 
         if ($this->currentStep == 1) {
             return [
-                'name' => 'required|unique:hospitals',
+                'name' => 'required|unique:hospitals,name',
                 'selectedregion' => 'required|string',
-                'email' => 'required|unique:hospitals',
+                'email' => 'required|unique:hospitals,email',
                 'phone' => 'required|min:9|numeric',
                 'zone' => 'required',
                 'selectedregion' => 'required',
@@ -113,7 +116,7 @@ class Register extends Component
             ];
         } else {
             return [
-                'phone_number' => 'required|unique:liaisons|min:9|numeric',
+                'phone_number' => 'required|min:9|numeric',
                 'liaison_officer' => 'required|string',
 
 

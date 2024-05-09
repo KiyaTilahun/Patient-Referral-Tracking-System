@@ -54,6 +54,8 @@ public $role=[];
         $this->detail->delete();
         
         $this->dispatch('deleted');
+        $this->reset('detail');
+        $this->render();
     }
 
     public function edituser(){

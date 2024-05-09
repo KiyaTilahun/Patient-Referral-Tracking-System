@@ -10,9 +10,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Mary\Traits\Toast;
 
 class EmailController extends Controller
 {
+  
   public function sendmail($center){
 
 
@@ -23,7 +25,7 @@ class EmailController extends Controller
    )->assignRole('admin');
    
    $response=Mail::to($user->email)->send(new RegisterEmail($user->name,$password));
-   dd($response);
+  //  dd($response);
 
   }
 
@@ -36,8 +38,25 @@ class EmailController extends Controller
     ['name'=>$doctor->name,'email'=>$doctor->email,'email_verified_at'=> now(),'hospital_id'=>$doctor->hospital_id,'password'=>Hash::make($password)]
    )->assignRole('doctor');
    
-   $response=Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
-   dd($response);
+   
+  //  dd($response);
+
+
+  try {
+        
+    Mail::to($user->email)->send(new RegisterEmail($user->email,$password));
+    return true;
+
+ 
+
+} catch (\Exception $e) {
+
+    // Return a failure response
+    return false;
+  
+    // $this->error("Error, Email is not sent");
+
+}
 
   }
 

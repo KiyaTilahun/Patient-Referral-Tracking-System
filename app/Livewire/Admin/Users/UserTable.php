@@ -29,7 +29,7 @@ class UserTable extends Component
 
     public function mount()
     {
-        $this->allhospitals = Hospital::all();
+        $this->allhospitals = Hospital::orderBy('name', 'asc')->get();
         $this->allroles = Role::where('name', '!=', 'superadmin')->get();
 
     }
@@ -73,6 +73,7 @@ class UserTable extends Component
 
         $this->render();
     }
+    #[On('deleted')]
     public function render()
     {
 
