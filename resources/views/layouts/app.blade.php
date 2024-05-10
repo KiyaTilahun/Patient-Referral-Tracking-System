@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <livewire:layout.navigation />
 
             <!-- Page Heading -->
@@ -31,6 +31,44 @@
             <main>
                 {{ $slot }}
             </main>
-        </div>
+        </div> --}}
+        
+        <div class="fixed right-2 bottom-2 z-50">
+            @include('utils.theme')
+   
+                 <!-- this hidden checkbox controls the state -->
+             
+         </div>
+ 
+         
+                
+                 <div class="h-screen flex justify-center">
+                     <div class="container ">
+                               <div class="col-md-6 offset-md-3">
+                                   
+                                {{ $slot }}
+                               </div>
+                         
+                     </div>
+                 </div>
+ 
+                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                 <script>
+                     const themeToggle = document.getElementById('themeToggle');
+                     const html = document.querySelector('html');
+             
+                     themeToggle.addEventListener('change', () => {
+                         if (themeToggle.checked) {
+                             html.setAttribute('data-theme', 'light');
+                             html.classList.add('light');
+                             html.classList.remove('dark');
+                         } else {
+                             html.setAttribute('data-theme', 'dark');
+                             html.classList.add('dark');
+                             html.classList.remove('light');
+                         }
+                     });
+                 </script>
+
     </body>
 </html>

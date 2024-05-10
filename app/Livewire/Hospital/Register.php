@@ -18,7 +18,7 @@ use Livewire\WithFileUploads;
 
 use function Livewire\Volt\layout;
 
-#[Layout('layouts.guest')]
+#[Layout('layouts.app')]
 class Register extends Component
 {
 
@@ -180,6 +180,7 @@ class Register extends Component
     public function render()
     {
         $regions = Region::all();
+        // dd($regions);
         $types = Type::all();
         $departments = Department::all();
 

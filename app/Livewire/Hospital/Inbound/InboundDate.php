@@ -54,11 +54,10 @@ class InboundDate extends Component
         $this->date = $date;
 
         $checkupdate = Session::get('changeappointment');
-        if($checkupdate==true){
-            $this->success("updated success,notification is delivered");
-        }
-        else{
-            $this->info("updated success,notification is not delivered");
+        if ($checkupdate == true) {
+            // $this->success("updated success,notification is delivered");
+        } else {
+            // $this->info("updated success,notification is not delivered");
         }
         Session::remove('changeappointment');
         $this->route = url()->previous();
@@ -84,7 +83,7 @@ class InboundDate extends Component
 
         // dd($referral['card_number']);
         return redirect()->route('hospital.referral', [
-            'type'=>1,
+            'type' => 1,
             'card_number' => $referral['card_number'],
             'date' => $referral['referral_date']
         ]);
@@ -121,37 +120,36 @@ class InboundDate extends Component
         if (count($cardnumber) > 0) {
             $phones = Patient::whereIn('card_number', $cardnumber)->pluck('phone', 'name')->toArray();
             $hospitalname = $this->hospitalname;
-           
-            $changeapp=Appointmentslot::where('date',$this->date)->where('hospital_id',$this->hospitalid)->where('department_id',$this->department)->first();
 
-            $changref=Referral::whereIn('card_number',$this->cardnumbers)->where('referral_date',$this->date)->where('department_id',$this->department)->get();
+            $changeapp = Appointmentslot::where('date', $this->date)->where('hospital_id', $this->hospitalid)->where('department_id', $this->department)->first();
+
+            $changref = Referral::whereIn('card_number', $this->cardnumbers)->where('referral_date', $this->date)->where('department_id', $this->department)->get();
             // dd($this->updateappointment);   
-            foreach($changref as $chan){
-                $chan->update(['referral_date'=>$this->updateappointment]);
+            foreach ($changref as $chan) {
+                $chan->update(['referral_date' => $this->updateappointment]);
             }
 
-            
-            $changeapp->update(['slotused'=>$changeapp->slotalotted,'availability'=>'booked']);
+            if($changeapp!=null){
+            $changeapp->update(['slotused' => $changeapp->slotalotted, 'availability' => 'booked']);}
 
-            $changref=Referral::whereIn('referral_date',$this->cardnumbers)->get();
+            $changref = Referral::whereIn('referral_date', $this->cardnumbers)->get();
             // dd($changref);
             // dd($changeapp);
             // dd($message);    
             $sender = new SmsController();
             $message = "የነበሮት ቀጠሮ ከ" . $this->updateappointment . " ወደ " . $this->date . " ተቀይሯል::";
+            // $message="hello";
 
             //  $message="hellp";
-              $checkresponse=$sender->sms($phones,$message);
-                if($checkresponse){
-                    // dd($checkresponse);
-                    $this->success("SMS  sent to patients");
-                    $this->appointmentmodal=false;
+            $checkresponse = $sender->sms($phones, $message);
+            if ($checkresponse) {
+                // dd($checkresponse);
+                $this->success("SMS  sent to patients");
+                $this->appointmentmodal = false;
+            }
 
-                }
-
-                $this->render();
-        }
-        else{
+            $this->render();
+        } else {
             $this->error("some error happened");
         }
     }
@@ -180,7 +178,7 @@ class InboundDate extends Component
             ->where('hospital_id', $this->hospitalid)
             ->pluck('day_id')
             ->toArray();
-        
+
         $upcomingDates = [];
 
         while ($currentDate <= $endDate) {
@@ -189,7 +187,7 @@ class InboundDate extends Component
             }
             $currentDate->addDay();
         }
-        
+
 
         $slots = Appointmentslot::whereRaw('slotalotted - slotused < ?', $this->appcount)
             ->where('availability', 'available')
@@ -198,7 +196,7 @@ class InboundDate extends Component
             ->pluck('date')
             ->unique()
             ->toArray();
-      
+
 
         if (count($slots) > 0) {
             $upcomingDates = array_diff($upcomingDates, $slots);
@@ -234,8 +232,8 @@ class InboundDate extends Component
         if ($this->department == null) {
             $departments = $centers->pluck('department_id')->unique()->values()->all();
             $cardnumbers = $centers->pluck('card_number')->unique()->values()->all();
-// dd($cardnumbers);
-$this->cardnumbers=$cardnumbers;
+            // dd($cardnumbers);
+            $this->cardnumbers = $cardnumbers;
             $this->avadepartments = Department::whereIn('id', $departments)->get();
         }
         //   dd($this->avadepartments);

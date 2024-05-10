@@ -482,7 +482,7 @@
 
             {{-- setting --}}
 
-            @if (auth()->user()->hasAnyRole(['superadmin', 'admin']))
+          
 
             <x-nav-link :href="route('settings')" :active="request()->routeIs(['settings', 'holidaylist'])" wire:navigate>
                 <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -496,7 +496,7 @@
 
                 <span class="ms-3"> {{ __('Settings') }}</span>
             </x-nav-link>
-            @endif
+            
             @if (auth()->user()->hasAnyRole(['staff', 'doctor']))
             
               

@@ -62,6 +62,7 @@
                 </td>
                 
             </tr> --}}
+            @if (auth()->user()->hasRole(['superadmin','admin']))
             <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                     <x-nav-link :href="route('deletedusers')" wire:navigate>
@@ -77,6 +78,7 @@
                 </td>
                 
             </tr>
+            @endif
             <tr class=" ">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-lg">
                     <x-nav-link :href="route('editprofile')" wire:navigate>

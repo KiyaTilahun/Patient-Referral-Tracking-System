@@ -58,7 +58,9 @@
         <span><x-mary-button label="OK" @click="$wire.savedmodal = false" class="btn btn-" />
         
 
+            @if (auth()->user()->hasAnyRole(['doctor']))
             <x-mary-button label="To Referral" class="btn btn-warning" link="/referral/add"/></span>
+            @endif
     </div>
 
 </x-mary-modal>

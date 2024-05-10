@@ -72,7 +72,7 @@
 
         <div class="col-span-1"></div>
         <div class="md:col-span-4 max-h-80 overflow-y-scroll col-span-12 pt-6 md:pt-0">
-            <p class="font-medium text-lg"> Available Departments</p>
+            <p class="font-medium text-lg"> Centers Departments</p>
             <div class="overflow-x-auto">
                 <table class="table table-zebra">
                     <!-- head -->

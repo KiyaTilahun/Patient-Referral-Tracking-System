@@ -91,11 +91,12 @@
     
 
 @else
-
+<div class="w-full inline-flex"> 
 <x-mary-stat title="Referrals" description="Total Outbound Referrals" value="{{$outboundcount}}" icon="o-clipboard-document-check"
 class="text-orange-500" color="text-blue-500" tooltip-right="Outobund Referrals!" />
 <x-mary-stat title="Referrals" description="Total Inbound Referrals" value="{{$inboundcount}}" icon="o-clipboard-document-check"
 class="text-orange-500" color="text-green-500" tooltip-right="Inobund Referrals!" />
+</div>
     @endif
     @endif
 

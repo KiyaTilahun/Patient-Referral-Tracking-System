@@ -198,10 +198,13 @@ class ReferralDetail extends Component
         }
         $referral->update(['referral_date' => $this->updateddate]);
 
+        // dd($this->);
         $slots = AppointmentSlot::where('date', $this->date)->where('department_id', $this->referral->department_id)->where('hospital_id', $this->hospitalid)->first();
             // dd($slots);
 
         // dd($slots)
+        if($slots!=null){
+            // dd($slots);
         if ($slots->slotalotted == $slots->slotused) {
 
             $slots->decrement('slotused');
@@ -212,7 +215,7 @@ class ReferralDetail extends Component
 
         if ($slots->slotused == 0) {
             $slots->delete();
-        }
+        }}
 
         $sender = new SmsController();
         $message = "Hello,".$this->referral->patient->name." Your Referr at ".$this->referral->receivingHospital->name."has been changed from " .$this->date." to ".$this->updateddate ;

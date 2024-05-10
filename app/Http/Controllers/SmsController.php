@@ -47,7 +47,7 @@ class SmsController extends Controller
                     'Authorization' => $apiKey, // Include the API key as a Bearer token
                 ])->post($apiEndpoint, [
                     "to" => $phone[$i], // Example phone number
-                    "message" => "To " . $name . " , " . $messages, // Example message
+                    "message" => 'To '.$name[$i].' , '.$messages, 
                 ]);
                 // dd($response);
                 // Check if the request was successful

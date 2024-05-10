@@ -16,7 +16,7 @@
                 <!-- this hidden checkbox controls the state -->
         
             </div>
-            <div class="absolute right-4 z-50 ">
+            <div class="absolute right-4 z-50 hidden  sm:block">
                 {{-- <button type="button" class="md:inline-flex  hidden border-warning btn " wire:click='logout'>
                     
                     Login Instead</button> --}}
