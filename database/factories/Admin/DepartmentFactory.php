@@ -18,6 +18,8 @@ class DepartmentFactory extends Factory
     {
         return [
             //
+            'name' => fake()->unique()->name(),
+
         ];
     }
 }

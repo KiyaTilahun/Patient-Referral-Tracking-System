@@ -5,9 +5,9 @@ namespace Database\Factories\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin\Region>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin\Referrtype>
  */
-class RegionFactory extends Factory
+class ReferrtypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class RegionFactory extends Factory
         return [
             //
             'name' => fake()->unique()->name(),
-            
+
         ];
     }
 }

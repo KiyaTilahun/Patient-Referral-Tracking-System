@@ -16,7 +16,7 @@ class StatustypeSeeder extends Seeder
         $types = [
             "pending",
             "completed",
-            "diagonal"
+            "postponed"
          ];
  
          foreach ($types as $type) {
