@@ -200,7 +200,22 @@
                             <span class="ms-3"> {{ __('Register Patient') }}</span>
                         </div>
                     </x-nav-link>
-                   
+                    @if (auth()->user()->hasRole('admin'))
+                    <x-nav-link :href="route('allpatients')" :active="request()->routeIs('allpatients')" wire:navigate>
+                        <div class="inline-flex">
+        
+                          
+                            <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
+                              </svg>
+                              
+        
+        
+        
+                            <span class="ms-3"> {{ __('All Patients') }}</span>
+                        </div>
+                    </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('hospital.inbound')" :active="request()->routeIs('hospital.inbound')" wire:navigate>
                         <div class="inline-flex">
 
@@ -244,7 +259,7 @@
 
                 </ul>
             @endif
-
+          
 
             @if (auth()->user()->hasAnyRole(['doctor', 'staff']))
             <x-nav-link :href="route('patient.add')" :active="request()->routeIs('patient.add')" wire:navigate>
@@ -284,6 +299,7 @@
                 </div>
             </x-nav-link>
             @endif
+         
             <x-nav-link :href="route('hospital.inbound')" :active="request()->routeIs('hospital.inbound')" wire:navigate>
                 <div class="inline-flex">
 
@@ -396,6 +412,25 @@
 
                 </ul>
             @endif
+            @if (auth()->user()->hasRole('staff'))
+            <x-nav-link :href="route('department.services')" :active="request()->routeIs('department.services')" wire:navigate>
+                <div class="inline-flex">
+                    <svg class="w-[20px] h-[20px] text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z" />
+                    </svg>
+
+
+
+
+                    <span class="ms-3"> {{ __(' Department Services') }}</span>
+                </div>
+            </x-nav-link>
+            @endif
+
             {{-- Role and Permission --}}
 
             @if (auth()->user()->hasRole('superadmin'))

@@ -36,10 +36,10 @@
         
             <div class="flex justify-end w-full gap-4">
               
-                @if(auth()->user()->hospital->id==$referral->referring_hospital_id)
+                @if($hospitalid==$referral->referring_hospital_id)
                 <x-mary-button label="Use Referral" class="btn btn-error" wire:click='tonewreferral()' icon="s-pencil-square"/>
              @endif
-                @if (($currentDate < $referralDate)&& ($referral->referrtype_id!=3))
+                @if (($currentDate < $referralDate) && ($referral->referrtype_id!=3)&& !($hospitalid==$referral->referring_hospital_id))
                
                 <x-mary-button label="Change Appointment" class="btn btn-error" wire:click='changeAppointmentModal()' />
                 @endif
@@ -128,7 +128,7 @@
 
 
 
-                                @if ($referral->receivingHospital->id === auth()->user()->hospital->id)
+                                @if ($referral->receivingHospital->id === $hospitalid)
 
                                     @foreach ($status as $key => $value)
                                         <button type="button"
@@ -176,7 +176,7 @@
 
                             <span class="flex flex-end gap-4 w-full mt-4">
                                <x-mary-button label="Cancel" @click="$wire.appointmentmodal = false" />
-                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary" spinner/>
+                                <x-mary-button type="submit" label="Confirm Change" class="btn-primary" spinner="appointmentupdate"/>
                             </span>
                         
 

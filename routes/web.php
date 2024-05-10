@@ -4,6 +4,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\SmsController;
 use App\Livewire\Admin\Adduser;
+use App\Livewire\Admin\AllPatients;
 use App\Livewire\Admin\AllReferrals;
 use App\Livewire\Admin\Department\AddIndex;
 use App\Livewire\Admin\Department\DepIndex;
@@ -96,9 +97,14 @@ Route::get('/edituser/{id}', UserEdit::class)
     ->middleware(['auth', 'role:superadmin', 'verified'])
     ->name('edituser');
 
+
 Route::get('/users', UserIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('allusers');
+
+    Route::get('/allpatients', AllPatients::class)
+    ->middleware(['auth', 'verified'])
+    ->name('allpatients');
 
 
 

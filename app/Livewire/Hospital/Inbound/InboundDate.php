@@ -9,6 +9,8 @@ use App\Models\Admin\DepartmentHospital;
 use App\Models\DayDepartment;
 use App\Models\Referral\Referral;
 use App\Models\Users\Patient;
+use Illuminate\Support\Facades\Session;
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -50,6 +52,15 @@ class InboundDate extends Component
         $this->hospitalid = auth()->user()->hospital_id;
         // dd($this->hospitalid);
         $this->date = $date;
+
+        $checkupdate = Session::get('changeappointment');
+        if($checkupdate==true){
+            $this->success("updated success,notification is delivered");
+        }
+        else{
+            $this->info("updated success,notification is not delivered");
+        }
+        Session::remove('changeappointment');
         $this->route = url()->previous();
     }
 
