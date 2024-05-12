@@ -166,6 +166,11 @@ class ZoneSeeder extends Seeder
             'Yeka',
             'Nifas Silk-Lafto',
             'Lemi-Kura'
+        ],
+        14=>[
+           'gende kore',
+           'menaheriya',
+           'tailwan'
         ]
         ];
         

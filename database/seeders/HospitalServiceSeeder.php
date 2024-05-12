@@ -29,7 +29,7 @@ class HospitalServiceSeeder extends Seeder
 
                 $depsservice = DepartmentService::where('department_id', $departments)->pluck('id')->take(2);
 
-              
+            //   dd($hospital);
                     $hospital->departmentServices()->attach($depsservice,['department_id' => $departments]);
 
                 

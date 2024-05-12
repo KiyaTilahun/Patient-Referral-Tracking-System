@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin\DepartmentHospital;
+use App\Models\Admin\Hospital;
 use App\Models\Users\Doctor;
 use Faker\Factory as Faker;
 
@@ -18,13 +20,22 @@ class DoctorSeeder extends Seeder
         $faker=Faker::create();
         $numberOfDoctors = 10;
 
-        for ($i = 0; $i < $numberOfDoctors; $i++) {
+
+    $hospitals=Hospital::all();
+      foreach($hospitals as $hospital){
+        $hospitalname=strstr($hospital->name, ' ', true);
+$hospitaldeps=DepartmentHospital::where('hospital_id',$hospital->id)->first();
+
+if(count($hospitaldeps)){
+    $deparment_id=$hospitaldeps->deprtment_id;
+}
+
             Doctor::create([
                 'name' => $faker->unique()->name,
-                'email' => $faker->unique()->email,
+                'email' =>$hospitalname.'@doctor.com',
                 'status' => rand(0, 1), // Random status
-                'department_id' => rand(1, 5), // Assuming you have 5 departments
-                'hospital_id' => rand(1, 10), // Assuming you have 10 hospitals
+                'department_id' => $deparment_id??null, // Assuming you have 5 departments
+                'hospital_id' => $hospital->id, // Assuming you have 10 hospitals
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

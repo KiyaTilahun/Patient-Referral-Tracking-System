@@ -159,7 +159,7 @@ class ReferralIndex extends Component
                 'finding' => 'required|string',
                 'treatment' => 'required|string',
                 'reason' => 'required|string',
-                'doctor' => 'required',
+              
 
 
 
@@ -348,7 +348,7 @@ class ReferralIndex extends Component
         // day maker
         $this->reset('appday');
         $this->reset('referredcenter');
-        
+        $this->reset('departmentServices');
 
         $this->referredcenter = Hospital::where('id', $this->selectedcenter)->value('name');
 
@@ -537,7 +537,7 @@ class ReferralIndex extends Component
             'receiving_hospital_id' => $this->secondvalidation['selectedcenter'],
             'referrtype_id' => $this->secondvalidation['referral_type'],
             'department_id' => $this->secondvalidation['selecteddep'],
-            'doctor_id' => $this->validated['doctor'],
+            'doctor_id' => $this->validated['doctor']??null,
             'history' => $this->validated['history'],
             'findings' => $this->validated['finding'],
             'treatment' => $this->validated['treatment'],

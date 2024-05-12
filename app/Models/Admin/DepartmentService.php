@@ -20,7 +20,7 @@ class DepartmentService extends Pivot
     }
     public function hospitals(){
         // dd("hello");
-        return $this->belongsToMany(Hospital::class,'hospital_service','hospital_id','department_service_id')->using(
+        return $this->belongsToMany(Hospital::class,'hospital_service','department_service_id','hospital_id')->using(
             HospitalService::class )->withPivot(['department_id'])->withTimestamps();
      }
 }

@@ -108,7 +108,6 @@ class Register extends Component
                 'phone' => 'required|min:9|numeric',
                 'zone' => 'required',
                 'selectedregion' => 'required',
-                'woreda' => 'required|numeric',
                 'type' => 'required',
                 'file' => 'required|mimes:pdf|max:2048',
 
@@ -150,7 +149,6 @@ class Register extends Component
             'email' => $this->validated['email'],
             'phone' => '+251' . $this->validated['phone'],
             'zone' => $this->validated['zone'],
-            'woreda' => $this->validated['woreda'],
             'type_id' => $this->validated['type'],
         ]);
 

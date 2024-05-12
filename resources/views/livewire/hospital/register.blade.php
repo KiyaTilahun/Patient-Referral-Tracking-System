@@ -206,7 +206,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="md:col-span-1">
+                                        {{-- <div class="md:col-span-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
                                                     <span class="label-text">Woreda </span>
@@ -223,9 +223,9 @@
                                                     <span class="font-medium">{{ $message }}</span>
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="md:col-span-2">
+                                        <div class="md:col-span-3">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
                                                     <span class="label-text">Health Center Type</span>
@@ -479,7 +479,7 @@
                                         </label>
 
                                     </div>
-                                    <div class="md:col-span-1">
+                                    {{-- <div class="md:col-span-1">
                                         <label class="form-control w-full max-w-xs">
                                             <div class="label">
                                                 <span class="label-text">Woreda </span>
@@ -491,7 +491,7 @@
 
                                         </label>
 
-                                    </div>
+                                    </div> --}}
 
                                     <div class="md:col-span-2">
                                         <label class="form-control w-full max-w-xs">
