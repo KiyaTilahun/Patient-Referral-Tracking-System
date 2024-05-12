@@ -9,9 +9,10 @@ class SmsController extends Controller
 {
     //
 
-    public function sms($phonenumbers, $messages)
+    public function sms($phonenumbers, $messages,$hospitalname)
     {
 
+        // dd($messages);
         $name = [];
         $phone = [];
 
@@ -35,36 +36,24 @@ class SmsController extends Controller
 
         for ($i = 0; $i < count($name); $i++) {
             try {
-                // Send the POST request with authorization header
-                // $response = Http::withHeaders([
-                //     'Authorization' => 'Bearer ' . $apiKey,
-                // ])->post($apiEndpoint, $formData);
-                // dd($apiEndpoint);
-
-                // dd($phone[$i]);
+               
 
                 $response = Http::withHeaders([
                     'Authorization' => $apiKey, // Include the API key as a Bearer token
                 ])->post($apiEndpoint, [
                     "to" => $phone[$i], // Example phone number
-                    "message" => 'To '.$name[$i].' , '.$messages, 
+                    "message" =>$hospitalname."\n"."To ". $name[$i]." , ".$messages, 
                 ]);
                 // dd($response);
                 // Check if the request was successful
                 if ($response->successful()) {
                     // dd("true");
-                    return [
-                        'success' => true,
-                        'message' => 'SMS sent successfully',
-                    ];
+                 
                 } else {
-                    dd("false");
+                   
 
                     $failedphones[] = $phone;
-                    return [
-                        'success' => false,
-                        'message' => 'Failed to send SMS',
-                    ];
+                  
                     continue;
                 }
             } catch (\Exception $e) {
@@ -77,7 +66,10 @@ class SmsController extends Controller
         }
         //  dd($failedphones);
 
-
+        return [
+            'success' => true,
+            'message' => 'SMS sent successfully',
+        ];
 
 
     }
@@ -152,7 +144,7 @@ public function changeappsms($phonenumber, $messages){
                     'Authorization' => $apiKey, // Include the API key as a Bearer token
                 ])->post($apiEndpoint, [
                     "to" => $phonenumber, // Example phone number
-                    "message" => "To " . $name .",This is your information ".$messages, // Example message
+                    "message" => "To " . $name .",This is are your login credentials ".$messages, // Example message
                 ]);
                 // dd($response);
                 // Check if the request was successful

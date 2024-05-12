@@ -137,11 +137,16 @@ class InboundDate extends Component
             // dd($changeapp);
             // dd($message);    
             $sender = new SmsController();
-            $message = "የነበሮት ቀጠሮ ከ" . $this->updateappointment . " ወደ " . $this->date . " ተቀይሯል::";
-            // $message="hello";
+            // $message = "የነበሮት ቀጠሮ ከ".$this->updateappointment." ወደ ".$this->date." ተቀይሯል::";
+            $message = " Your Appointment on ".$this->updateappointment." has changed to ".$this->date;
+
+
+
+        //  dd($this->date);
 
             //  $message="hellp";
-            $checkresponse = $sender->sms($phones, $message);
+            // dd($phones);
+            $checkresponse = $sender->sms($phones, $message,$hospitalname);
             if ($checkresponse) {
                 // dd($checkresponse);
                 $this->success("SMS  sent to patients");
