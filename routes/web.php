@@ -52,7 +52,7 @@ Route::get('/', function () {
 });
 
 // Route::get('/registerhealth', [HospitalController::class, 'index'])->name('registerhealth');
-Route::get('/registerhealth',Register::class)->name('registerhealth');
+Route::get('/registerhealth', Register::class)->name('registerhealth');
 // 
 
 Route::get('dashboard', Dashboard::class)
@@ -76,11 +76,10 @@ Route::middleware(['auth', 'role:superadmin', 'verified'])
         Route::get('/departmentlist', Departmentlist::class)->name('departmentlist');   //alldepartment
         Route::get('/holidaylist', Holidaylist::class)->name('holidaylist');
         Route::get('/allreferrals', AllReferrals::class)->name('allreferrals');
-        Route::get('/allpatients', AllPatients::class)->name('allpatients');
     });
 Route::middleware(['auth', 'role:admin', 'verified'])
     ->group(function () {
-
+        Route::get('/allpatients', AllPatients::class)->name('allpatients');
         Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
         Route::get('/department', DepIndex::class)
             ->name('department');
@@ -95,13 +94,13 @@ Route::middleware(['auth', 'role:admin|superadmin', 'verified'])
     ->group(function () {
 
         Route::get('/deletedusers', DeletedUsers::class)->name('deletedusers');
-    
+        Route::get('/users', UserIndex::class)->name('allusers');
     });
 
-    Route::middleware(['auth', 'role:admin|staff', 'verified'])->get('/department/services', ServiceIndex::class)
+Route::middleware(['auth', 'role:admin|staff', 'verified'])->get('/department/services', ServiceIndex::class)
     ->name('department.services');
 
-    
+
 
 // settings 
 Route::get('/settings', Settings::class)->name('settings')->middleware(['auth', 'verified']);
@@ -111,9 +110,7 @@ Route::get('/settings', Settings::class)->name('settings')->middleware(['auth', 
 //     ->name('edituser');
 
 
-Route::get('/users', UserIndex::class)
-    ->middleware(['auth', 'verified'])
-    ->name('allusers');
+
 
 
 
@@ -123,7 +120,7 @@ Route::middleware(['auth', 'role:admin|staff|doctor', 'verified'])
     ->group(function () {
         Route::get('/patient/add', PatientIndex::class)
             ->name('patient.add');
-     
+
         Route::get('/hospital/inbound', InboundIndex::class)
             ->name('hospital.inbound');
         Route::get('/hospital/outbound', OutboundIndex::class)
@@ -135,7 +132,7 @@ Route::middleware(['auth', 'role:admin|staff|doctor', 'verified'])
         Route::get('/hospital/referral/{type}/{card_number}/date/{date}', ReferralDetail::class)
             ->name('hospital.referral');
     });
-    Route::middleware(['auth', 'verified','role:doctor|admin'])->get('/referral/add', ReferralIndex::class)
+Route::middleware(['auth', 'verified', 'role:doctor|admin'])->get('/referral/add', ReferralIndex::class)
     ->name('referral.add');
 
 Route::middleware(['auth', 'verified'])

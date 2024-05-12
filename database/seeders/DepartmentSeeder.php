@@ -35,6 +35,8 @@ class DepartmentSeeder extends Seeder
             'Private Wing',
         ];
 
+        
+
 
          foreach ($departments as $department) {
             Department::create([

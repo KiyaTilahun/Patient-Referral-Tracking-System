@@ -48,18 +48,36 @@ class UserTable extends Component
                 })->withAggregate('hospital', 'name')->withAggregate('roles', 'name')
                 ->orderBy(...array_values($this->sortBy))
                 ->get();
-        } else {
-        }
 
-        // dd($this->exportcenters);
-        $admins = $this->exportadmins;
-        $day = now()->format('d/m/Y');
+                $day = now()->format('d/m/Y');
 
         $pdf =  Pdf::loadView('utils.adminspdf', compact('admins', 'day'));
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
-        }, 'centers.pdf');
+        }, 'All Admins.pdf');
+        } else {
+
+            $admins =  $this->exportadmins = User:: where('hospital_id', $user->hospital_id)->where('id','!=',$user->id)
+            ->when($this->search, function ($query) {
+                $query->where('name', 'LIKE', '%' . $this->search . '%');
+            })->when($this->selectedrole, function ($query) {
+                $query->role($this->selectedrole);
+            })->withAggregate('hospital', 'name')->withAggregate('roles', 'name')
+            ->orderBy(...array_values($this->sortBy))
+            ->get();
+            $day = now()->format('d/m/Y');
+        $hospitalname=auth()->user()->hospital->name;
+        $pdf =  Pdf::loadView('utils.userspdf', compact('admins', 'day','hospitalname'));
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'Users.pdf');
+        }
+
+       
+      
+        
     }
     public function show($id)
     {

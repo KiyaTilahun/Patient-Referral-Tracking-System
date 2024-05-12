@@ -89,13 +89,8 @@
     text-align: right;
 }
 .title{
-    font-size: 30px;
-    text-align: start;
-    text-decoration: underline;
-    font-weight: 200;
-}
-.row-title{
-    font-style: italic !important;
+    font-size: 32px;
+    font-weight: 600;
 }
     </style>
 </head>
@@ -112,87 +107,37 @@
         </div>
         {{-- <img src="..." class="img-fluid" alt="Responsive image"> --}}
         {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('http://google.com')) !!} "> --}}
-        <div class="title">Referral Report</div>
+       <div class="text-center title">All Users</div>
+       <figcaption class="figure-caption text-right">{{$hospitalname}}</figcaption>
         <table class="table mx-auto table-striped" style="padding-top:50px">
             <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col" colspan="3"></th>
+                    <th scope="col">#</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Email</th>
+
                 </tr>
             </thead>
             <tbody>
+                @foreach ($admins as $index => $admin)
                 <tr>
-                    <th scope="row row-title">Referral Id</th>
-                    <td>{{$patient->card_number}}</td>
-                    <th scope="row row-title">Full Name</th>
-                    <td>{{$patient->name}}</td>
-                </tr>
-                <tr>
-                    
-                    <th scope="row row-title">Gender</th>
-                    <td>{{$patient->gender->name}}</td>
-                    <th scope="row row-title">Blood Type</th>
-                    <td>{{$patient->bloodtype->name}}</td>
+                 
+                        
+                   
+                    <th scope="row">{{$index+1}}</th>
+                     <td>{{$admin->name}}</td>
+                     <td>{{$admin->getRoleNames()->first()}}</td>
+                     <td>{{$admin->email}}</td>
+                     
 
                 </tr>
-                <tr>
-                    <th scope="row row-title">Referred By</th>
-                    <td >{{$latestAppointment->referringHospital->name}}</td>
-                    <th scope="row row-title">Referred To</th>
-                    <td >{{$latestAppointment->receivingHospital->name}}</td>
-                </tr>
-                <tr>
-                    <th scope="row row-title">Appointment Day:</th>
-                    <td >{{$latestAppointment->referral_date}}</td>
-                    <th scope="row row-title">Department:</th>
-                    @if ($latestAppointment->referrtype_id != 3)
-                    <td >{{$latestAppointment->department->name}}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-                </tr>
-                
-                <tr>
-                    <th scope="row row-title">History:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->history}}</u></td>
-                </tr>
-               
-                <tr>
-                    <th scope="row row-title">Findings:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->findings}}</u></td>
-                </tr>
-                <tr>
-                    <th scope="row row-title">Treatment:</th>
-                    <td colspan="3"><u class="small">{{$latestAppointment->treatment}}</u></td>
-                </tr>
-                <tr>
-                    <th scope="row row-title">Type:</th>
-                    <td colspan="3">{{$latestAppointment->referrtype->name}}</td>
-                </tr>
-                
-                   
-                
+                @endforeach
 
 
             </tbody>
         </table>
-        <div class="footer bg-transparent border-success position-fixed">
        
-            <div class="instructions">
-                <div class="liaison">
-                
-                    <div class="copyright" >
-                        <span class="font-weight-bold">Liaison Officer:</span>{{$latestAppointment->referringHospital->liaison->liaison_officer}}</div>
-                    <div class="copyright" >
-                        <span class="font-weight-bold">Phone Number:</span>{{$latestAppointment->referringHospital->liaison->phone_number}}</div>
-    
-                    
-                </div>
-            <em>Please use the mobile app of the Patient Referral Tracking App and scan the QR code to view your available appointments.</em>  </div>
-            <div class="copyright">
-                &copy; 2024 <span class="font-weight-bold">PRTS</span>
-            </div>
-        </div>
         
        
     </div>

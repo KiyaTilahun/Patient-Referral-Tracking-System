@@ -45,6 +45,8 @@ class AllPatients extends Component
    public function show($id)
 {
     // dd($id);
+    $this->emailstatus=false;
+    $this->smsstatus=false;
     $this->indvidualpatient = Patient::where('id',$id)->with('gender')->first();
     
     $this->patientdetail=true;
@@ -102,7 +104,7 @@ public function emailsend(){
         $token = $this->indvidualpatient->createToken('authpatient');
         $tokentext=$token->plainTextToken;
  $mailer=new EmailController();
-$response=$mailer->sendpatientmail($this->indvidualpatient->card_number,$this->tokentext,$this->indvidualpatient->email);
+$response=$mailer->sendpatientmail($this->indvidualpatient->card_number,$tokentext,$this->indvidualpatient->email);
 if ($response['status'] == 'success') {
  $this->emailstatus=true;
  ; 

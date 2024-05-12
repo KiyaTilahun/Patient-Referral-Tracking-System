@@ -73,10 +73,21 @@
                       <div class="">
                           
                           <div class="grid">
-                              @foreach ($allroles as $rol)
+                              {{-- @foreach ($allroles as $rol)
                                   <x-mary-checkbox label="{{ $rol }}" wire:model="role"
                                       class="checkbox-warning mt-2" value="{{ $rol}}" omit-error />
-                              @endforeach
+                                      
+                              @endforeach --}}
+                              @foreach ($allroles as $rol)
+                              <div class="form-control">
+                                <label class="label cursor-pointer">
+                                  <span class="label-text">{{$rol}}</span> 
+                                  <input type="radio" value="{{$rol}}"  class="radio checked:bg-red-500"  {{ $rol=="staff" ? 'checked' : ''}} wire:model='selection'/>
+                                </label>
+                              </div>
+                                  
+                          @endforeach
+                              {{-- <x-mary-radio label="Select one" :options="$allroles" wire:model="selectedUser" /> --}}
                           </div>
                       </div>
                   @endif

@@ -102,7 +102,9 @@
      <div class="text-right">
        
         <span>
+         @if (auth()->user()->hasAnyRole(['doctor']))
             <x-mary-button icon="c-arrow-top-right-on-square" label="Patient already registered" class="border-warning" wire:click='openreferral' spinner />
+            @endif
             <x-mary-button icon="o-information-circle" label="Help" class="text-green-500" onclick="modal17.showModal()" spinner />
         </span>
        </div>

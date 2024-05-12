@@ -17,6 +17,9 @@ public bool $myModal1=false;
 public $updatename;
 public $allroles;
 public $role=[];
+public $selection;
+public $userole;
+
 
 
     #[On('user_selected')]
@@ -25,14 +28,14 @@ public $role=[];
         
         $this->reset('role');
         $this->detail = User::findOrFail($id);
+        $this->userole=$this->detail->getRoleNames()->first();
+        $this->selection=$this->userole;
         $this->updatename=$this->detail->name;
         $role =$this->detail->roles;
 
         $this->allroles=Role::whereNotIn('name', ['superadmin'])->get()->pluck('name')->toArray();
         // dd($this->allroles);
-        foreach($role as $rol){
-            $this->role[]=$rol->name;
-        }
+        
       
         
         $this->render();
@@ -71,11 +74,21 @@ public $role=[];
         
         $this->validate(
             [
-                'role' => ['required'],
+                'selection' => ['required'],
             ]
         );
 
+        $this->reset('role');
+            $this->role[]=$this->selection;
+       
+            //  $this->detail->removeRoles();
+
+            foreach ($this->detail->roles as $role) {
+                $this->detail->removeRole($role);
+            }
+            // dd($this->role);
         $kk=$this->detail->syncRoles($this->role);
+        // dd($kk);
 // dd($kk);
 $this->success( 'User Roles Edited Successfully');
 
