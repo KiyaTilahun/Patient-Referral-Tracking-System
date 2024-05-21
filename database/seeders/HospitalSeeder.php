@@ -29,7 +29,7 @@ class HospitalSeeder extends Seeder
 foreach($regions as $region){
 foreach($hospitalType as $type){
     $zones=Zone::where('region_id',$region)->pluck('name');
-    for ($i = 0; $i <2; $i++) {
+    for ($i = 0; $i <3; $i++) {
 
         if($type==1){
             $name='Primary';

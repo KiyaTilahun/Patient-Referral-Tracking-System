@@ -218,7 +218,7 @@ class ReferralDetail extends Component
         }}
 
         $sender = new SmsController();
-        $message = "Hello There, ".$this->referral->patient->name." Your Referr at ".$this->referral->receivingHospital->name." has been changed from " .$this->date." to ".$this->updateddate."\nFor more info call:".$this->referral->receivingHospital->phone ;
+        $message = "Hello There, ".$this->referral->patient->name." Your Referral at ".$this->referral->receivingHospital->name." has been changed from " .$this->date." to ".$this->updateddate."\nFor more info call:".$this->referral->receivingHospital->phone ;
         // $message="hellp";
         $checkresponse=$sender->changeappsms($this->referral->patient->phone,$message);
           if($checkresponse['success']==true){

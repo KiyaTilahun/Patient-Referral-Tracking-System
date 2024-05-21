@@ -138,7 +138,7 @@ class InboundDate extends Component
             // dd($message);    
             $sender = new SmsController();
             // $message = "የነበሮት ቀጠሮ ከ".$this->updateappointment." ወደ ".$this->date." ተቀይሯል::";
-            $message = " Your Appointment on ".$this->updateappointment." has changed to ".$this->date;
+            $message = " Your Appointment on ".$this->date." has changed to ".$this->updateappointment;
 
 
 

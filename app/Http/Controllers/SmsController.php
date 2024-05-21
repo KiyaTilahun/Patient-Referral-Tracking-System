@@ -9,6 +9,7 @@ class SmsController extends Controller
 {
     //
 
+
     public function sms($phonenumbers, $messages,$hospitalname)
     {
 
@@ -73,6 +74,7 @@ class SmsController extends Controller
 
 
     }
+    
 
 public function changeappsms($phonenumber, $messages){
     $apiKey = env('SMS_API_KEY');
@@ -121,10 +123,10 @@ public function changeappsms($phonenumber, $messages){
         }  
 }
 
-    public function patientsms($name,$phonenumber, $messages)
+    public function patientsms($phonenumber, $messages)
     {
 
-
+// dd($name);
 
         $apiKey = env('SMS_API_KEY');
         $apiEndpoint = env('SMS_API_ENDPOINT');
@@ -144,7 +146,8 @@ public function changeappsms($phonenumber, $messages){
                     'Authorization' => $apiKey, // Include the API key as a Bearer token
                 ])->post($apiEndpoint, [
                     "to" => $phonenumber, // Example phone number
-                    "message" => "To " . $name .",This is are your login credentials ".$messages, // Example message
+                    "message" =>$messages, 
+                   
                 ]);
                 // dd($response);
                 // Check if the request was successful

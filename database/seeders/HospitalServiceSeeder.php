@@ -27,7 +27,7 @@ class HospitalServiceSeeder extends Seeder
 
             foreach ($hospitaldeps as $departments){
 
-                $depsservice = DepartmentService::where('department_id', $departments)->pluck('id')->take(2);
+                $depsservice = DepartmentService::where('department_id', $departments)->inRandomOrder()->pluck('id')->take(2);
 
             //   dd($hospital);
                     $hospital->departmentServices()->attach($depsservice,['department_id' => $departments]);

@@ -36,7 +36,7 @@
         
             <div class="flex justify-end w-full gap-4">
               
-                @if($hospitalid==$referral->referring_hospital_id)
+                @if($hospitalid==$referral->referring_hospital_id || $hospitalid==$referral->receiving_hospital_id)
                 <x-mary-button label="Use Referral" class="btn btn-error" wire:click='tonewreferral()' icon="s-pencil-square"/>
              @endif
                 @if (($currentDate < $referralDate) && ($referral->referrtype_id!=3)&& !($hospitalid==$referral->referring_hospital_id))

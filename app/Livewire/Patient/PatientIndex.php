@@ -88,6 +88,8 @@ class PatientIndex extends Component
    
 
     public function register(){
+        $this->smsstatus=false;
+        $this->emailstatus=false;
         $this->validated=$this->validate();
         // dd($this->validated['gender']);
         $patient = Patient::create([
@@ -145,9 +147,10 @@ class PatientIndex extends Component
     public function smssend(){
         
         $sender = new SmsController();
-        $message = "Referral Id: " . $this->copiedref . " Unique Id: " .$this->tokentext ;
+        // $message = "Referral Id: " . $this->copiedref . " Unique Id: " .$this->tokentext ;
+        $message = "To ".$this->temporarypatient->name.",This is are your login credentials, \nReferral Id: \n" . $this->copiedref . "\n Unique Id: \n" .$this->tokentext ;
         // $message="hellp";
-        $checkresponse=$sender->patientsms($this->temporarypatient->name,$this->temporarypatient->phone,$message);
+        $checkresponse=$sender->patientsms($this->temporarypatient->phone,$message);
           if($checkresponse['success']==true){
        $this->smsstatus=true;
           }

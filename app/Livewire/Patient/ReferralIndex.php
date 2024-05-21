@@ -467,6 +467,12 @@ class ReferralIndex extends Component
     public function register()
     {
 
+        $checkpatientreferral=Referral::where('referral_date',$this->secondvalidation['appday'])->where('card_number',$this->validated['card_number'])->get();
+        if(count($checkpatientreferral)>=1){
+            $this->error('Patient already has Referral On this Day,please change the day');
+            $this->myModal3=false;
+            return;
+        }
 
 
 
@@ -529,6 +535,8 @@ class ReferralIndex extends Component
         }
 
         // dd($this->fileattach);
+
+
 
         $referral = Referral::create([
             'card_number' => $this->validated['card_number'],

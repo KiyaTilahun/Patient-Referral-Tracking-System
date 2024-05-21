@@ -87,9 +87,9 @@ $this->success("patient updated successfully");
     $token = $this->indvidualpatient->createToken('authpatient');
     $tokentext=$token->plainTextToken;
     $sender = new SmsController();
-    $message = "Referral Id: " . $this->indvidualpatient->card_number . " Unique Id: " .$tokentext ;
+    $message = "To".$this->indvidualpatient->name .",This is are your login credentials,Referral Id: " . $this->indvidualpatient->card_number . " Unique Id: " .$tokentext ;
     // $message="hellp";
-    $checkresponse=$sender->patientsms($this->indvidualpatient->name,$this->indvidualpatient->phone,$message);
+    $checkresponse=$sender->patientsms($this->indvidualpatient->phone,$message);
       if($checkresponse['success']==true){
    $this->smsstatus=true;
       }

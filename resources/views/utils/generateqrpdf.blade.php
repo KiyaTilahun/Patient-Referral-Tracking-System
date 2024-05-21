@@ -135,10 +135,6 @@
                     <td>{{$patient->gender->name}}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Blood Type</th>
-                    <td>{{$patient->bloodtype->name}}</td>
-                </tr>
-                <tr>
                     <th scope="row">Registering Center</th>
                     <td><u class="small">{{$patient->hospital->name}}</u></td>
                 </tr>

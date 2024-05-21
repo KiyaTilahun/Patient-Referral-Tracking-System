@@ -40,6 +40,39 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
       </div>
 
+      <div class="toast toast-top  toast-end">
+        
+        {{-- <div class="alert alert-success bg-[#00ca92]"> --}}
+            <x-mary-button icon="o-information-circle" label="About" class="text-warning" onclick="modal17.showModal()" spinner />
+      </div>
+
+
+      <x-mary-modal id="modal17" class="backdrop-blur-sm" >
+        <p>
+
+            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Welcome To Patient Referral Tracking System </h2>
+            <h3 class="mb-2 text-warning text-xs"> Are you new to the system,dont worry we have got you covered</h3>
+            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+
+
+                <x-checkmark>PRTS is a referral tracking system for health centers connecting health centers depatments with their schedules</x-checkmark>
+                <span>Not intersted yet, <a href="{{route('registerhealth')}}" wire:navigate class="text-warning">Register</a> your center now and see all the things that the system gives you  </span>
+
+
+
+
+
+            </ul>
+
+            </p>
+     
+        <x-slot:actions>
+            {{-- Notice `onclick` is HTML --}}
+            
+            <x-mary-button label="Close" class="btn-warning" onclick="modal17.close()"  />
+        </x-slot:actions>
+    </x-mary-modal>
+
    
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -94,4 +127,6 @@ new #[Layout('layouts.guest')] class extends Component
     </div>
     </div>
  
+
+    
 </div>
